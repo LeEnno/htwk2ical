@@ -1,13 +1,8 @@
 // GENERAL
 // -----------------------------------------------------------------------------
-#choose-subjects {
-  display: block;
-  height:100px;
+.choose-subjects-wrapper {
+  height:100px; // for static animation scope without elements jumping up/down
   margin:0;
-
-  label {
-    display:none;
-  }
 }
 
 .subject-title-bg {
@@ -76,7 +71,7 @@ input.subject-titles {
   .transition(top 0.2s ease-in-out);
 }
 
-.not-landing-page #choose-subjects {height:auto;}
+.not-landing-page .choose-subjects-wrapper {height:auto;}
 
 .not-landing-page .subject-title-bg {margin-top:30px;}
 

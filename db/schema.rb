@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313195943) do
+ActiveRecord::Schema.define(:version => 20130901185316) do
 
   create_table "calendars", :force => true do |t|
     t.string   "secret"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20130313195943) do
     t.binary   "cached_schedule"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "extended_title"
   end
 
 end

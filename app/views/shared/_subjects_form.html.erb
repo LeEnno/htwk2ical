@@ -1,5 +1,4 @@
-<%= form_tag(calendar_courses_path, :id => 'choose-subjects') do -%>
-
+<div class="choose-subjects-wrapper">
   <% unless @landing_page.nil? %>
     <p id="create-calendar-wrapper">
       <%= link_to 'Kalender erstellen', calendar_path, :id => 'create-calendar-cta', :class => 'btn btn-primary' %>
@@ -7,21 +6,21 @@
     </p>
   <% end %>
 
-  <%= label_tag 'subject-title-1', 'Studiengangskürzel' %>
   <div id="subject-title-wrapper">
     <%
       id_counter = 1
-      unless @subject_titles.nil?
-        @subject_titles.each do |subject_title|
+      unless @subjects.nil?
+        @subjects.each do |subject|
           %>
           <span class="subject-title-bg">
             <%=
               # we have to overwrite ID because of "[]"-characters
               text_field_tag 'subject-titles[]', #name
-                             subject_title, # value
-                             :placeholder => 'Name des Studiengangs eintippen...',
-                             :id          => "subject-title-#{id_counter}",
-                             :class       => 'subject-titles'
+                             subject.extended_title, # value
+                             :placeholder       => 'Name des Studiengangs eintippen...',
+                             :id                => "subject-title-#{id_counter}",
+                             :class             => 'subject-titles',
+                             :'data-subject-id' => subject.id
             %>
           </span>
           <%
@@ -48,5 +47,4 @@
     </span>
     <%= next_btn if @landing_page.nil? %>
   </div>
-  <%= submit_tag 'Los gehts', :class => 'submit-btn' %>
-<% end -%>
+</div>

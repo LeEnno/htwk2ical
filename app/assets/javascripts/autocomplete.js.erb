@@ -3,25 +3,31 @@ $(function () {
   // Autocomplete
   // ---------------------------------------------------------------------------
 
-  var subjectData,          // complete data (title + value)
-      subjectDataArr = [],  // values only
-      $subjectForm = $('#choose-subjects');
+  var subjectData,          // complete data (label + id)
+      subjectDataArr = [],  // labels only
+      $submitLink    = $('#submit-link');
 
   // set up an input field for autocomplete, also used in calendar.js
   $.fn.setUpAutocomplete = function() {
     return $(this).autocomplete({
-      source: subjectData
+      source: subjectData,
+
+      // save subject-ID as data-attribute of input
+      select: function(event, ui) {
+        $(this).data('subject-id', ui.item.id);
+      }
     });
   };
 
+
   // fetch data for autocomplete
-  $.get("<%= Htwk2ical::Application.routes.url_helpers.subjects_path %>", null, function (data, textStatus, jqXHR) {
+  $.get("<%= Htwk2ical::Application.routes.url_helpers.subjects_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
     subjectData = data;
     $(".subject-title-bg").find('input').setUpAutocomplete();
 
-    // save only values to be able to use inArray for validation
+    // save labels only so we can use '$.inArray' for easier validation
     $.each(subjectData, function (i, val) {
-      subjectDataArr.push(val.value);
+      subjectDataArr.push(val.label);
     });
   });
 
@@ -30,59 +36,77 @@ $(function () {
   // ---------------------------------------------------------------------------
 
   // trigger submit when clicking on button
-  $('#submit-link').click(function (e) {
-    e.preventDefault();
-    $subjectForm.submit();
-  });
-
-  // attaches popover and shows it
-  $.fn.showErrorPopover = function () {
-    return this.addClass('error').popover({
-      title:     'Bitte Studiengang aus der Liste wählen!',
-      content:   'Einfach die ersten Buchstaben des Studiengangs eintippen und den richtigen aus den Ergebnisliste heraussuchen.',
-      placement: 'top',
-      trigger:   'manual'
-    }).popover('show');
-  };
-
-  // make sure user enters valid subject identifier
-  $subjectForm.submit(function(e) {
-
-    var $subjectTitles = $('.subject-titles'),
-        hasEmptyFieldsOnly = true;
+  $submitLink.click(function (e) {
+    var $subjectTitles     = $('.subject-titles'),
+        hasEmptyFieldsOnly = true
+        subjectIdArr       = [];
 
     // check if each inserted value is inside our array of possible values
     $subjectTitles.each(function (i, el) {
-      var $el = $(el),
-          val = $el.val();
+      var $el       = $(el),
+          val       = $el.val()
+          subjectID = $el.data('subject-id');
 
-      // skip placeholder fallback  and empty values
+          console.log(val, subjectID);
+          console.log("val == '':", val == '');
+
+      // skip placeholder fallback and empty values
       if ($el.hasClass('hasPlaceholder') || val == '')
         return;
 
       // if value is invalid: prevent submit and show tooltip
       if ($.inArray(val, subjectDataArr) == -1) {
 
-        // make sure error tooltips are only shown once
-        if (!e.isDefaultPrevented()) {
+        if (!e.isDefaultPrevented()) { // make sure error tooltips are only shown once
           e.preventDefault();
           $el.showErrorPopover();
         }
 
-      // we have at least one valid subject title, so let's save this
-      } else if (hasEmptyFieldsOnly) {
+      // we have at least one valid subject title, so let's save its subject-ID
+      } else if (!!subjectID) {
+        subjectIdArr.push(subjectID);
         hasEmptyFieldsOnly = false;
       }
     });
 
-    // if we have empty fields only, let's show an error popover
-    if (!e.isDefaultPrevented() && hasEmptyFieldsOnly) {
-      e.preventDefault();
-      $subjectTitles.eq(0).addClass('error').showErrorPopover();
+
+    // if we have no errors until now
+    if (!e.isDefaultPrevented()) {
+
+      // if we have empty fields only, let's show an error popover
+      if (hasEmptyFieldsOnly) {
+        e.preventDefault();
+        $subjectTitles.eq(0).addClass('error').showErrorPopover();
+      
+      // we have valid inputs, so build the target url
+      } else {
+        <%
+           # build dummy route
+           divider      = CalendarController::SUBJECT_ID_DIVIDER
+           dummy_id_str = ([0] * 3).join(divider)
+           dummy_href   = Htwk2ical::Application.routes.url_helpers.calendar_courses_path(:subject_ids => dummy_id_str)
+        %>
+
+        // replace dummy url with real subject-IDs
+        var subjectIdStr = subjectIdArr.join('<%= divider %>');
+        $submitLink.prop('href', '<%= dummy_href %>'.replace('<%= dummy_id_str %>', subjectIdStr));
+      }
     }
+  });
+
+
+  // attaches popover and shows it
+  $.fn.showErrorPopover = function () {
+    return this.addClass('error').popover({
+      title:     'Bitte Studiengang aus der Liste wählen!',
+      content:   'Einfach die ersten Buchstaben des Studiengangs eintippen und den Richtigen aus den Ergebnisliste heraussuchen.',
+      placement: 'top',
+      trigger:   'manual'
+    }).popover('show');
+  };
 
   // remove error class and tooltip when user starts correcting wrong identifier
-  }).on('focus', '.subject-titles', function () {
+  $('#subject-title-wrapper').on('focus', '.subject-titles', function () {
     $(this).removeClass('error').popover('destroy');
   });
 

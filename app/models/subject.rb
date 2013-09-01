@@ -2,7 +2,7 @@
 include ActionView::Helpers::SanitizeHelper
 
 class Subject < ActiveRecord::Base
-  attr_accessible :cached_schedule, :title
+  attr_accessible :cached_schedule, :extended_title, :title
   serialize :cached_schedule
 
   has_and_belongs_to_many :courses
@@ -22,6 +22,7 @@ class Subject < ActiveRecord::Base
   # and therefore less database space.
   def self.rebuild_cache
     all_subjects = _update_available_subjects
+    return
     all_subjects.each do |single_subject|
       #next unless ['12BI/GSW-M', '12BI/HBB-M'].include?(single_subject.title)
       #single_subject = Subject.find_by_title("12MI-M")
@@ -37,7 +38,6 @@ class Subject < ActiveRecord::Base
       Subject.find(single_subject.id).update_attributes(
           :cached_schedule => schedule_arr
       )
-
     end
 
     puts "done"
@@ -58,10 +58,15 @@ class Subject < ActiveRecord::Base
     doc = REXML::Document.new xml
 
     doc.elements.each('studium/fakultaet/studiengang/semgrp') do |element|
-      title = element.attributes['name']
-      category = element.parent.attributes['name']
-      Subject.find_or_create_by_title(title)
-      subjects_arr << _make_autocomplete_hash(title, category)
+      title          = element.attributes['name']
+      category       = element.parent.attributes['name']
+      subject        = Subject.find_or_create_by_title(title)
+      subjects_arr   << _make_autocomplete_hash(title, category, subject.id)
+      
+      if subject.extended_title.nil?
+        subject.extended_title = subjects_arr.last[:label]
+        subject.save
+      end
     end
 
     json_file = Rails.root.join('public', 'subjects.json')
@@ -181,10 +186,10 @@ class Subject < ActiveRecord::Base
 
   # Replaces unnecessary information in title and category. Returns a hash
   # formatted according to conventions of jQuery Autocomplete Plugin.
-  def self._make_autocomplete_hash(title, category)
+  def self._make_autocomplete_hash(title, category, id)
     category = category.gsub(/( \(.*\))* \((Bachelor|Master|Diplom)?.*\)/, ' (\2)')
     label = title.gsub(/ \(.*\)/, "") + " – " + category
-    {:label => label, :value => title}
+    {:label => label, :id => id}
   end
 
 
