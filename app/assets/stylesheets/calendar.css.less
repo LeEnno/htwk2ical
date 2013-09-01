@@ -1,0 +1,184 @@
+// VARIABLES
+// -----------------------------------------------------------------------------
+@ratingIconDiameter: 20px;
+@ratingIconPaddingRight: 12px;
+@ratingIndent: 36px;
+@ratingParagraphPadding: 24px;
+@possibilitySpace: 50px;
+
+// MIXINS
+// -----------------------------------------------------------------------------
+.ratingIcons(@content, @colorStart, @colorEnd, @borderColor) {
+  &:before {
+    display:block;
+    position:absolute;
+    left: @ratingParagraphPadding + @ratingIndent - @ratingIconDiameter - @ratingIconPaddingRight;
+    top: 2px;
+    width:@ratingIconDiameter;
+    height:@ratingIconDiameter;
+    #gradient > .vertical(@colorStart, @colorEnd);
+    border-radius:2px;
+    border:1px solid;
+    border-color: @borderColor;
+    text-align: center;
+    color:white;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    line-height:@ratingIconDiameter - 1px;
+    font-size:12px;
+    content: @content;
+  }
+}
+
+.pulsate-animation(@length, @count, @scale) {
+  .pulsate {
+    -webkit-animation: pulsate @length ease-out;
+    -webkit-animation-iteration-count: @count;
+    -moz-animation: pulsate @length ease-out;
+    -moz-animation-iteration-count: @count;
+    -ms-animation: pulsate @length ease-out;
+    -ms-animation-iteration-count: @count;
+    -o-animation: pulsate @length ease-out;
+    -o-animation-iteration-count: @count;
+    animation: pulsate @length ease-out;
+    animation-iteration-count: @count;
+  }
+
+  @-webkit-keyframes pulsate {
+    0% {-webkit-transform: scale(1.0, 1.0);}
+    50% {-webkit-transform: scale(@scale, @scale);}
+    100% {-webkit-transform: scale(1.0, 1.0);}
+  }
+  @-moz-keyframes pulsate {
+    0% {-moz-transform: scale(1.0, 1.0);}
+    50% {-moz-transform: scale(@scale, @scale);}
+    100% {-moz-transform: scale(1.0, 1.0);}
+  }
+  @-ms-keyframes pulsate {
+    0% {-ms-transform: scale(1.0, 1.0);}
+    50% {-ms-transform: scale(@scale, @scale);}
+    100% {-ms-transform: scale(1.0, 1.0);}
+  }
+  @-o-keyframes pulsate {
+    0% {-o-transform: scale(1.0, 1.0);}
+    50% {-o-transform: scale(@scale, @scale);}
+    100% {-o-transform: scale(1.0, 1.0);}
+  }
+  @keyframes pulsate {
+    0% {transform: scale(1.0, 1.0);}
+    50% {transform: scale(@scale, @scale);}
+    100% {transform: scale(1.0, 1.0);}
+  }
+}
+
+// SHARED
+// -----------------------------------------------------------------------------
+.instruction {
+  font-size: 36px;
+  font-weight:@alternatingFontWeight;
+}
+
+// CHOOSE COURSES
+// -----------------------------------------------------------------------------
+.choose-courses {
+  h2 {
+    margin-bottom:20px;
+    text-align: center;
+  }
+
+  input {
+    &[type="text"] {
+      width:80%;
+    }
+
+    &[type="checkbox"] {
+      margin: 0 10px 0 20px;
+    }
+
+    &[type="submit"] {
+      display: block;
+      width: 200px;
+      padding: 16px;
+      margin:0 auto;
+      font-size: 20px;
+    }
+  }
+
+  label {
+    display:inline;
+    margin-top:10px;
+    padding:10px 10px 10px 0;
+  }
+}
+
+.separate-batch-selector {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.pulsate-animation(0.5s, 1, 1.15);
+
+// GET LINK
+// -----------------------------------------------------------------------------
+.generated-link {
+  padding: 0;
+  margin: 0 auto;
+  max-width: 770px; // 800px hero-unit - 30px margin-left of fitst possibility box
+  background: none;
+  text-align: center;
+}
+
+.calendar-url {
+  display:block;
+  margin-top:30px;
+  padding: 8px;
+  background: #EEE; // TODO make less variable
+  border-radius: 6px;
+  font-weight:@alternatingFontWeight;
+  font-size:24px;
+  word-wrap: break-word;
+
+}
+
+.selection-hint {
+  font-size: 12px;
+  color: @lighterGrey;
+}
+
+.possibilities {
+  margin-top: @possibilitySpace + 20px;
+
+  .hero-unit {
+    padding:@ratingIconPaddingRight * 2 0;
+  }
+
+  h2 {
+    margin-bottom: @possibilitySpace;
+    text-align: center;
+    line-height: 110%;
+    font-weight:@alternatingFontWeight;
+  }
+
+  p {
+    position: relative;
+    min-height: 35px;
+    margin-bottom:@ratingIconPaddingRight;
+    padding: 0 @ratingParagraphPadding 0 @ratingIndent + @ratingParagraphPadding;
+    font-size:16px;
+    line-height:150%;
+  }
+
+  a {
+    display:block;
+    width:3 * @possibilitySpace;
+    margin: @possibilitySpace auto 0;
+    padding:12px;
+    font-size: 14px;
+  }
+}
+
+.advantage {
+  .ratingIcons('+', #62C462, #51A351, #51A351);
+}
+.disadvantage {
+  .ratingIcons('-', #EE5F5B, #BD362F, #BD362F);
+}

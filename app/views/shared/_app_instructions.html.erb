@@ -1,0 +1,153 @@
+<% if @faq_page.nil? %>
+  <h3 class="choose-app-header">Wähle dein Programm:</h3>
+<% end %>
+
+<section id="app-instructions" class="accordion container<%= ' faq' unless @faq_page.nil? %>">
+
+  <%# Google Kalender
+      ----------------------------------------------------------------------- %>
+
+  <%= render :layout => 'shared/accordion_group', :locals => {
+    :id    => 'google',
+    :title => 'Google Kalender'
+  } do
+  %>
+    <ol>
+      <li>Erstelle deinen Kalender und kopiere den Link.</li>
+      <li>Bei Google Kalender selbst hast du in der linken Seitenleiste eine Sektion namens <em>"Weitere Kalender"</em>. Dort klickst du das kleine Pfeil-Icon rechts neben dem Schritzug. Im daraufhin erscheinenden Menü gibt es einen Punkt <em>"Über URL hinzufügen"</em>, den du anklicken musst.</li>
+      <li>Füge den kopierten Kalenderlink ein, klicke auf <em>"Kalender hinzufügen"</em> und du bist fertig.</li>
+    </ol>
+  <% end %>
+
+
+  <%# Microsoft Outlook
+      ----------------------------------------------------------------------- %>
+
+  <%= render :layout => 'shared/accordion_group', :locals => {
+    :id    => 'outlook',
+    :title => 'Microsoft Outlook'
+  } do
+  %>
+    <p>Unter Outlook 2010:</p>
+
+    <ol>
+      <li>Erstelle deinen Kalender und kopiere den Link.</li>
+      <li>Klicke auf den Reiter <em>&#8220;Start&#8221;</em>.</li>
+      <li>Dort befindest sich in der Sektion <em>&#8220;Kalender verwalten&#8221;</em> der Button <em>&#8220;Kalender öffnen&#8221;</em>, auf den du kicken musst.</li>
+      <li>Es öffnet sich ein Kontextmenü, in dem du den Punkt <em>&#8220;Aus dem Internet&#8221;</em> anklickst.</li>
+      <li>Im daraufhin erscheinenden Fenster kannst du den Link einfügen und mit <em>&#8220;OK&#8221;</em> bestätigen. Eventuell musst du das Abonnement in einem weiteren Schritt noch bestätigen. Dann bist du fertig.</li>
+    </ol>
+
+    <p>Unter Outlook 2007:</p>
+
+    <ol>
+      <li>Erstelle deinen Kalender und kopiere den Link.</li>
+      <li>Unter <em>&#8220;Extras&#8221;</em> findest du die <em>&#8220;Kontoeinstellungen&#8221;</em>.</li>
+      <li>Dort auf den Reiter <em>&#8220;Internetkalender&#8221;</em> klicken.</li>
+      <li>Auf <em>&#8220;Neu&#8221;</em> klicken.</li>
+      <li>Im sich öffnenden Fenster musst du den Link einfügen. Allerdings musst du <em>&#8220;http://&#8221;</em> durch <em>&#8220;webcal://&#8221;</em> austauschen.</li>
+      <li>Spätestens beim nächsten Start sollte der Kalender aktualisiert werden und dir fortan zur Verfügung stehen.</li>
+    </ol>
+  <% end %>
+
+
+  <%# Kalender (OS X)
+      ----------------------------------------------------------------------- %>
+
+  <%= render :layout => 'shared/accordion_group', :locals => {
+    :id    => 'ical',
+    :title => 'Kalender (OS X)'
+  } do
+  %>
+    <ol>
+      <li>Erstelle deinen Kalender und kopiere den Link.</li>
+      <li>Unter <em>&#8220;Ablage&#8221;</em> findest du den Punkt <em>&#8220;Neues Kalenderabonnement&#8221;</em>.</li>
+      <li>Im daraufhin erscheinenden Fenster musst du den kopierten Link einfügen und <em>&#8220;abonnieren&#8221;</em> klicken.</li>
+      <li>Anschließend kannst du dem Kalender noch einen Namen geben und bestimmen, wie oft er aktualisiert werden soll. Falls du iCloud auf deinem iPhone o.ä. verwendest, empfehle ich dir bei <em>&#8220;Ort&#8221;</em> unbedingt <em>&#8220;iCloud&#8221;</em> zu wählen. So hast du deinen Stundenplan ohne weiteres zutun auch unterwegs immer parat.</li>
+    </ol>
+  <% end %>
+
+
+  <%# Mozilla Thunderbirn with Lightning
+      ----------------------------------------------------------------------- %>
+
+  <%= render :layout => 'shared/accordion_group', :locals => {
+    :id    => 'lightning',
+    :title => 'Mozilla Thunderbird (mit Lightning-Add-on)'
+  } do
+  %>
+    <ol>
+      <li>Erstelle deinen Kalender und kopiere den Link.</li>
+      <li>Im Menü <em>&#8220;Termine und Aufgaben&#8221;</em> den Punkt <em>&#8220;Kalender&#8221;</em> wählen.</li>
+      <li>Links siehst du die Kalenderübersicht. In diesem Bereich über die rechte Maustaste klicken und im darauf erscheinenden Kontextmenü <em>&#8220;Neuer Kalender&#8221;</em> anklicken.</li>
+      <li>Du hast die Wahl zwischen <em>&#8220;Auf meinem Computer&#8221;</em> und <em>&#8220;Im Netzwerk&#8221;</em>. Bitte letzteres wählen und <em>&#8220;Fortsetzen&#8221;</em> klicken.</li>
+      <li>Im folgenden Fenster lässt du das <em>&#8220;Format&#8221;</em> wie es ist (<em>&#8220;iCalender&#8221;</em>).</li>
+      <li>Unter <em>"Adresse"</em> den kopierten Kalenderlink einfügen.</li>
+      <li>Anschließend kannst du noch einen Namen vergeben und weitere Einstellungen nach Belieben vornehmen.</li>
+    </ol>
+  <% end %>
+
+
+  <%# iOS
+      ----------------------------------------------------------------------- %>
+
+  <%= render :layout => 'shared/accordion_group', :locals => {
+    :id    => 'ios',
+    :title => 'iPhone'
+  } do
+  %>
+    <p>Der einfachste Weg unter iOS ist der iCloud-Sync (siehe Anleitung für OS X Kalender). Hier ist der andere Weg:</p>
+
+    <ol>
+      <li>Erstelle deinen Kalender und kopiere den Link.</li>
+      <li>Gehe in die <em>&#8220;Systemeinstellungen&#8221;</em>.</li>
+      <li>Dort wählst du <em>&#8220;Mail, Kontakte, Kalender&#8221;</em>.</li>
+      <li><em>&#8220;Account hinzufügen&#8221;</em> auswählen.</li>
+      <li>Ganz unten tippst du auf <em>&#8220;Andere&#8221;</em>.</li>
+      <li>Der letzte Punkt ist <em>&#8220;Kalenderabo hinzufügen&#8221;</em>. Dort drauftippen.</li>
+      <li>Im daraufhin erscheinenden Textfeld fügst du den Kalenderlink ein und drückst oben auf <em>&#8220;weiter&#8221;</em>.</li>
+      <li>Du kannst noch eine <em>&#8220;Beschreibung&#8221;</em> vergeben. Den Rest solltest du lassen, wie er ist.</li>
+      <li>Nach kurzer Zeit taucht der abonnierte Kalender in der Kalender-App auf.</li>
+    </ol>
+  <% end %>
+
+
+  <%# Android
+      ----------------------------------------------------------------------- %>
+
+  <%= render :layout => 'shared/accordion_group', :locals => {
+    :id    => 'android',
+    :title => 'Android'
+  } do
+  %>
+    <p>
+      Unter Android ist die Synchronisierung mit dem Google Kalender die einfachste Variante.
+      Schaue bitte in die Google Kalender Anleitung um zu erfahren, wie du den Kalender dort abonnierst.
+    </p>
+  <% end %>
+
+
+  <%# Windows Phone
+      ----------------------------------------------------------------------- %>
+
+  <%= render :layout => 'shared/accordion_group', :locals => {
+    :id    => 'winphone',
+    :title => 'Windows Phone'
+  } do
+  %>
+    <p>Am einfachsten ist unter Windows Phone die Synchronisierung über Outlook.com:</p>
+
+    <ol>
+      <li>Erstelle deinen Kalender und kopiere den Link.</li>
+      <li>Bei Outlook.com anmelden und in den Kalender wechseln.</li>
+      <li>Auf <em>&#8220;Subscribe&#8221;</em> klicken.</li>
+      <li><em>&#8220;Subscribe to a public calendar&#8221;</em> auswählen.</li>
+      <li>Bei <em>&#8220;Calendar URL&#8221;</em> den Kalenderlink einfügen.</li>
+      <li>Sonstige Einstellungen nach Belieben vornehmen.</li>
+      <li>Auf <em>&#8220;Subscribe to calendar&#8221;</em> klicken.</li>
+      <li>Das Windows-Phone-Gerät muss mit dem gleichen Outlook.com-Benutzerkonto angemeldet sein. Fortan sollte die Synchronisierung des Kalenders automatisch erfolgen.</li>
+    </ol>
+  <% end %>
+
+
+</section><!-- /#app-instructions -->

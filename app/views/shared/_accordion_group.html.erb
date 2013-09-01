@@ -1,0 +1,18 @@
+<div class="accordion-group">
+  <div class="accordion-heading">
+
+    <%= link_to(title, '#collapse-' + id, {
+          :class => 'accordion-toggle ' + id,
+          :data => {:toggle => 'collapse', :parent => '#app-instructions'}
+        }) %>
+
+  </div>
+
+  <div id="collapse-<%= id %>"class="accordion-body collapse">
+    <div class="accordion-inner">
+
+      <%= yield %>
+
+    </div>
+  </div>
+</div>

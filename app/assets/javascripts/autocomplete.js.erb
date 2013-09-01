@@ -1,0 +1,121 @@
+$(function () {
+
+  // Autocomplete
+  // ---------------------------------------------------------------------------
+
+  var subjectData,          // complete data (title + value)
+      subjectDataArr = [],  // values only
+      $subjectForm = $('#choose-subjects');
+
+  // set up an input field for autocomplete, also used in calendar.js
+  $.fn.setUpAutocomplete = function() {
+    return $(this).autocomplete({
+      source: subjectData
+    });
+  };
+
+  // fetch data for autocomplete
+  $.get("<%= Htwk2ical::Application.routes.url_helpers.subjects_path %>", null, function (data, textStatus, jqXHR) {
+    subjectData = data;
+    $(".subject-title-bg").find('input').setUpAutocomplete();
+
+    // save only values to be able to use inArray for validation
+    $.each(subjectData, function (i, val) {
+      subjectDataArr.push(val.value);
+    });
+  });
+
+
+  // Subject validation
+  // ---------------------------------------------------------------------------
+
+  // trigger submit when clicking on button
+  $('#submit-link').click(function (e) {
+    e.preventDefault();
+    $subjectForm.submit();
+  });
+
+  // attaches popover and shows it
+  $.fn.showErrorPopover = function () {
+    return this.addClass('error').popover({
+      title:     'Bitte Studiengang aus der Liste wählen!',
+      content:   'Einfach die ersten Buchstaben des Studiengangs eintippen und den richtigen aus den Ergebnisliste heraussuchen.',
+      placement: 'top',
+      trigger:   'manual'
+    }).popover('show');
+  };
+
+  // make sure user enters valid subject identifier
+  $subjectForm.submit(function(e) {
+
+    var $subjectTitles = $('.subject-titles'),
+        hasEmptyFieldsOnly = true;
+
+    // check if each inserted value is inside our array of possible values
+    $subjectTitles.each(function (i, el) {
+      var $el = $(el),
+          val = $el.val();
+
+      // skip placeholder fallback  and empty values
+      if ($el.hasClass('hasPlaceholder') || val == '')
+        return;
+
+      // if value is invalid: prevent submit and show tooltip
+      if ($.inArray(val, subjectDataArr) == -1) {
+
+        // make sure error tooltips are only shown once
+        if (!e.isDefaultPrevented()) {
+          e.preventDefault();
+          $el.showErrorPopover();
+        }
+
+      // we have at least one valid subject title, so let's save this
+      } else if (hasEmptyFieldsOnly) {
+        hasEmptyFieldsOnly = false;
+      }
+    });
+
+    // if we have empty fields only, let's show an error popover
+    if (!e.isDefaultPrevented() && hasEmptyFieldsOnly) {
+      e.preventDefault();
+      $subjectTitles.eq(0).addClass('error').showErrorPopover();
+    }
+
+  // remove error class and tooltip when user starts correcting wrong identifier
+  }).on('focus', '.subject-titles', function () {
+    $(this).removeClass('error').popover('destroy');
+  });
+
+
+  // Placeholder fallback
+  // ---------------------------------------------------------------------------
+
+  if (!('placeholder' in document.createElement('input'))) {
+
+    // store value of placeholder attribute
+    var placeholder = $('.subject-titles:first').attr('placeholder');
+
+    // delete value when user wants to type something
+    $('.subject-titles').val(placeholder).focus(function () {
+      var $this = $(this);
+
+      if ($this.val() == placeholder)
+        $this.val('').removeClass('hasPlaceholder');
+
+    // reset value to placeholder when na value was set
+    }).blur(function () {
+        var $this = $(this),
+            val = $this.val();
+
+        if (val == '' || val == placeholder)
+          $this.val(placeholder).addClass('hasPlaceholder');
+      });
+
+    // delete all placeholders before submitting the form
+    $subjectForm.submit(function () {
+      $(this).find('.hasPlaceholder').each(function() {
+        $(this).val('');
+      });
+    });
+  }
+});

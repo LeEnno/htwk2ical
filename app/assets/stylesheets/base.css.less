@@ -1,0 +1,85 @@
+
+// GENERIC
+// -----------------------------------------------------------------------------
+
+h1 {
+  text-align:center;
+}
+
+hr {
+  height:1px;
+  margin:50px 0;
+  border:0;
+  #gradient > .fade();
+}
+
+
+// BOOTSTRAP OVERRIDES
+// -----------------------------------------------------------------------------
+
+.alert h3 {
+  margin-top:0;
+}
+
+.popover-title {font-weight:bold;}
+
+.navbar {
+  margin-bottom:40px;
+  position:static;
+
+  .nav {
+    float:right;
+
+    a.active {
+      color:white;
+      font-weight:bold;
+    }
+  }
+}
+
+
+// CLASSES
+// -----------------------------------------------------------------------------
+
+.header-addition {
+  text-align:center;
+  line-height:150%;
+  font {
+    size:18px;
+    weight:@alternatingFontWeight;
+  }
+  color:@lighterGrey;
+}
+
+.alternating-action {
+
+  h2 {
+    margin-bottom:40px !important;
+    text-align:center;
+    font-size:24px;
+    font-weight:@alternatingFontWeight;
+    line-height:120%;
+    color:@lighterGrey;
+  }
+
+  .btn-primary {
+    display:block;
+    width:180px;
+    margin:0 auto;
+    padding:10px;
+    font-size:14px;
+  }
+}
+
+.footer {text-align:center;}
+
+
+// MEDIA-QUERY ADDITIONS
+// -----------------------------------------------------------------------------
+
+@media (max-width: 979px) {
+  .navbar .nav {
+    float:none;
+    text-align:center;
+  }
+}

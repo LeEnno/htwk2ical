@@ -1,0 +1,79 @@
+<%
+  faqs = [
+    {
+      :question => 'Was genau ist jetzt dieses <em>HTWK2iCal</em>?'.html_safe,
+      :answer => 'HTWK2iCal ist ein Tool, mit dem du dir deinen HTWK-Stundenplan in dein bevorzugtes Kalender-Verwaltungs-Programm (Outlook, Google Kalender, etc.) holen kannst.'
+    },
+    {
+      :question => 'Wie genau funktioniert das alles?',
+      :answer => 'Du wählst deinen Studiengang aus und alle dazugehörigen Module, die angezeigt werden sollen. Dabei kannst du gern etwas wie "Feiertage" oder Wahlpflichtmodule, die du nicht belegt hast, deaktivieren.<br />Zusätzlich kannst du die Namen der Module selbst bestimmen und deinen Kalender dadurch übersichtlicher gestalten. So kannst du aus <em>"Mathematik 2 MT-B 2. FS (pf) (Vp)"</em> einfach <em>"Mathe"</em> machen.<br />Am Ende wird dir ein Link des für dich erstellten Internetkalenders ausgespuckt. Sobald du mithilfe dieses Links einen Kalender abonniert hast, bist du fertig.'.html_safe
+    },
+    {
+      :question => 'Ok, wie abonniere ich einen Kalender in Programm X?',
+      :answer => '###app-instructions###'
+    },
+    {
+      :question => 'Kalender abonnieren? Ich will den <em>downloaden</em>!'.html_safe,
+      :answer => 'Das kannst du gern tun. Nachdem dein persönlicher Stundenplan erstellt wurde, hast du die Möglichkeit ihn herunterzuladen. Außerdem kannst du ihn jederzeit herunterladen, wenn du den generierten Link einfach in deinem Browser aufrufst.<br />Bedenke hierbei, dass heruntergeladene Kalender bzw. Stundenpläne sich nicht aktualisieren werden. Das ist nur möglich, wenn du den Kalender abonnierst.'.html_safe
+    },
+    {
+      :question => 'Ich belege zusätzlich Module aus anderen Studiengängen und möchte diese auch in meinem Stundenplan haben.',
+      :answer => 'Sobald du ankreuzen kannst, welche Module du in deinem Stundenplan haben möchtest und welche nicht, solltest du auch einen fetten Button mit der Aufschrift "Module aus anderem Studiengang hinzufügen" sehen. Dort einfach drauf klicken.'
+    },
+    {
+      :question => 'Mein Kalender aktualisiert sich gar nicht!',
+      :answer => 'Das liegt vermutlich daran, dass du ihn heruntergeladen statt abonniert hast. Automatisch aktualisieren können sich nur Kalender, die du abonniert hast.'
+    },
+    {
+      :question => 'Ich gebe den Namen meines Studiengangs ein, aber bekomme immer die Meldung <em>"Bitte wähle einen gültigen Studiengang!"</em>.'.html_safe,
+      :answer => ('Solang du einen Studiengang aus der Liste wählst, die erscheint, sobald du ein paar Zeichen tippst, sollte alles funktionieren. Falls es das nicht tut, ' + link_to('gib mir Bescheid', contact_path) + '.').html_safe
+    },
+    {
+      :question => 'Wie lange ist mein Stundenplan bzw. der Link dorthin gültig?',
+      :answer => 'Ganz einfach: solange der Stundenplan über die HTWK-Seite zur Verfügung steht. Das bedeutet, dass dein Link mit dem Ende des Semesters ungültig wird. Entsprechend wird er danach nicht mehr funktionieren.'
+    },
+    {
+      :question => 'Was kostet mich der Spaß?',
+      :answer => 'Nichts. Hammer, oder?<br />Mein einsames Programmierer-Ego freut sich aber jederzeit über Lob und Anregungen ;)'.html_safe#<br />Wenn du magst und HTWK2iCal für dich nützlich erscheint, freue ich mich über den ein oder anderen Euronen via PayPal. Geht alles zu 100% in die Server-Infrastruktur.'.html_safe
+    },
+    {
+      :question => 'Kostenlos und <em>nicht</em> Open Source? Was bist du für ein Programmierer?'.html_safe,
+      :answer => 'Kommt noch, ich bitte um ein wenig Geduld. Der Code möchte sich noch ein wenig herausputzen, bevor er sich in der Öffentlichkeit zeigt.'
+    }
+  ]
+%>
+<p class="header-addition">Frequently Asked Questions, besser bekannt als</p>
+<h1>FAQ</h1>
+<hr />
+
+<section class="row faq-overview">
+  <div class="span6">
+    <h2>Übersicht</h2>
+    <ol>
+      <% faqs.each_with_index do |faq, i| %>
+        <li><%= link_to faq[:question], "#faq-#{i}" %></li>
+      <% end %>
+    </ol>
+  </div>
+  <div class="span6 alternating-action">
+    <h2>Nicht gefunden, wonach du suchst?</h2>
+    <%= link_to 'Kontakt aufnehmen', contact_path, :class => 'btn btn-primary' %>
+  </div>
+</section>
+
+
+<hr />
+
+<dl class='container faq-list'>
+  <% app_instructions_offset = 0 %>
+  <% faqs.each_with_index do |faq, i| %>
+
+    <dt id="faq-<%= i %>"><%= faq[:question] %></dt>
+    <% if faq[:answer] == '###app-instructions###' %>
+      <dd class="app-instruction-wrapper"><%= render('shared/app_instructions') %></dd>
+    <% else %>
+      <dd><%= faq[:answer] %></dd>
+    <% end %>
+
+  <% end %>
+</dl>

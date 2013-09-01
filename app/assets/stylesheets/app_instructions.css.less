@@ -1,0 +1,57 @@
+// VARIABLES
+// -----------------------------------------------------------------------------
+@appInstuctionsContainerWidth: 800px;
+@appHeaderWidth: 60px;
+@appInstructionPadding: 8px;
+@appInstructionFontSize: 14px;
+
+// STYLES
+// -----------------------------------------------------------------------------
+.choose-app-header {
+  display:none;
+  height:@appHeaderWidth;
+  text-align:center;
+}
+
+#app-instructions {
+  display:none;
+  position:relative;
+  max-width: @appInstuctionsContainerWidth;
+  margin-bottom:50px;
+
+  &.faq {
+    display:block;
+    margin-bottom:0;
+  }
+}
+
+.accordion-inner {
+
+  ol {
+    margin:0 0 0 20px;
+    padding:@appInstructionPadding 0;
+  }
+
+  li {
+    margin: 0 0 @appInstructionFontSize / 2 @appInstructionPadding;
+    font-size: @appInstructionFontSize;
+    line-height: 150%;
+  }
+
+  p {margin-left:5px;}
+}
+
+.accordion-heading .accordion-toggle {padding-left:64px;}
+
+.accordion-toggle {
+  background-position:22px center;
+  background-repeat:no-repeat;
+
+  &.google    {background-image:image-url("icons/google.png")}
+  &.outlook   {background-image:image-url("icons/outlook.png");}
+  &.lightning {background-image:image-url("icons/lightning.png");}
+  &.ical      {background-image:image-url("icons/ical.png");}
+  &.ios       {background-image:image-url("icons/ios.png");}
+  &.android   {background-image:image-url("icons/android.png")}
+  &.winphone  {background-image:image-url("icons/windows.png")}
+}

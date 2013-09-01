@@ -1,0 +1,75 @@
+<%= render :partial => 'flash_messages' %>
+
+<h1 class="instruction">Wähle Module aus, die in <br/>deinem Stundenplan angezeigt werden sollen</h1>
+
+<%
+   # +1 because of "add more subjects?" column
+   rows_max = ((@subjects.size.to_f + 1) / 2).ceil
+   cols_per_row = 2
+   do_break = false
+%>
+
+<%= form_tag(calendar_link_path, :class => 'choose-courses') do -%>
+  <% 0.upto(rows_max - 1) do |i|  %>
+    <hr />
+    <div class="row">
+
+      <% 0.upto(cols_per_row - 1) do |j| %>
+        <%
+          break if do_break
+          index = i * 2 + j # i rows + current column
+          subject = @subjects[index]
+          class_to_add = subject.nil? ? ' alternating-action' : ''
+        %>
+
+        <div class="span6<%= class_to_add %>">
+          <%
+            if subject.nil?
+             do_break = true
+            %>
+              <h2>
+                Du hast Module aus einem<br />
+                anderen Studiengang belegt?
+              </h2>
+
+            <%= link_to 'Module aus anderem Studiengang hinzufügen',
+                        @choose_subjects_link,
+                        :class => 'btn btn-primary' %>
+
+            <%
+            else
+              id = subject[:id]
+              title = subject[:title]
+              courses = subject[:courses]
+            %>
+              <h2><%= title %></h2>
+
+              <% courses.each do |course| %>
+                <%= check_box_tag 'course_ids[]',
+                                  course.id,
+                                  :checked %>
+                <%= text_field_tag "course_aliases[#{course.id}]",
+                                   course.title %>
+                <br />
+              <% end -%>
+              <%= hidden_field_tag 'subject_ids[]', id %>
+
+              <hr class="separate-batch-selector" />
+              <%= check_box_tag "uncheck_#{id}",
+                                nil,
+                                :checked,
+                                :class => 'batch-selector' %>
+              <%= label_tag "uncheck_#{id}", 'alle Module' %>
+
+            <% end # subject.nil? %>
+
+        </div><!-- /.span6-->
+      <% end -%>
+
+    </div><!-- /.row -->
+  <% end %>
+
+  <hr />
+
+  <%= submit_tag 'Kalender erstellen', :class => 'btn btn-success' %><br />
+<% end %><!-- /form -->
