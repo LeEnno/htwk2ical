@@ -1,7 +1,11 @@
 $(function () {
-  // choose courses action
-  // ---------------------------------------------------------------------------
+  /* CHOOSE COURSES ACTION
+   * ---------------------------------------------------------------------------
+   */
 
+  // batch selector
+  // -----------------------------------------------------------------------------
+  
   // clicking batch-selector selects all corresponding checkboxes
   $('.batch-selector').change(function () {
     var doCheck = $(this).is(':checked');
@@ -52,24 +56,66 @@ $(function () {
           $('.tooltip').addClass('pulsate');
         });
 
+
   // hide tooltip when user focuses an input element
   $chooseCourses.one('focus', 'input[type="text"]', function () {
     $tooltipInput.tooltip('hide');
   });
 
 
-  // choose subjects action
+
+  // save changes in cookie when leaving courses page to add another subject
   // ---------------------------------------------------------------------------
 
+  $('#choose-more-subjects-cta').on('click', function(e) {
+
+    // give feedback
+    $(this).addClass('disabled');
+
+    // read aliases
+    var aliases = [];
+    $('.choose-courses').find('input').filter('[name="course_ids[]"]').each(function(i, el) {
+      var id = el.value;
+      aliases.push({
+        id:      id,
+        alias:   $('#course_aliases_' + el.value).val(),
+        checked: $(el).is(':checked')
+      });
+    });
+
+    // save aliases in cookie
+    $.cookie('aliases', JSON.stringify({aliases: aliases}));
+  });
+
+  // apply aliases if we have any
+  if ($('.choose-courses').length > 0) {
+    var aliases = $.cookie('aliases');
+    if (!!aliases) {
+      aliases = JSON.parse(aliases).aliases;
+
+      for (var i = 0; i < aliases.length; i++) {
+        $('#course_aliases_' + aliases[i].id).val(aliases[i].alias);
+        $('#course_ids_' + aliases[i].id).prop('checked', aliases[i].checked);
+      }
+    }
+  }
+
+
+  /* CHOOSE SUBJECTS ACTION
+   * ---------------------------------------------------------------------------
+   */
+
   // create new input field for another subject
+  // ---------------------------------------------------------------------------
+
   $('#add-subject-title').click(function (e) {
     e.preventDefault();
 
     var subjectCount = $('.subject-title-bg').length,
-        subjectMax   = 3;
+        subjectMax   = 3,
 
-    // make new inputs' ID and clone present one
-    var newInputID = 'subject-title-' + (++subjectCount),
+        // make new inputs' ID and clone present one
+        newInputID = 'subject-title-' + (++subjectCount),
         $newEl     = $('.subject-title-bg.active')
           .removeClass('active')
           .clone();
@@ -101,6 +147,7 @@ $(function () {
       $this.fadeOut(400, function () {
         $this.remove();
       });
+    
     // otherwise move it down
     else
       $this.css('top', '+=82');

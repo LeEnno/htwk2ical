@@ -1,4 +1,3 @@
-// TODO why erb?
 $(function () {
 
   // Create calendar

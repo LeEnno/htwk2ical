@@ -22,7 +22,7 @@
           class_to_add = subject.nil? ? ' alternating-action' : ''
         %>
 
-        <div class="span6<%= class_to_add %>">
+        <div class="span6 <%= class_to_add %>">
           <%
             if subject.nil?
              do_break = true
@@ -34,7 +34,8 @@
 
             <%= link_to 'Module aus anderem Studiengang hinzufügen',
                         @choose_subjects_link,
-                        :class => 'btn btn-primary' %>
+                        :class => 'btn btn-primary',
+                        :id    => 'choose-more-subjects-cta' %>
 
             <%
             else
@@ -47,7 +48,8 @@
               <% courses.each do |course| %>
                 <%= check_box_tag 'course_ids[]',
                                   course.id,
-                                  :checked %>
+                                  :checked,
+                                  :id => "course_ids_#{course.id}" %>
                 <%= text_field_tag "course_aliases[#{course.id}]",
                                    course.title %>
                 <br />

@@ -22,4 +22,6 @@
 //
 //= require twitter/bootstrap
 //
+//= require jquery.cookie
+//
 //= require_tree .
