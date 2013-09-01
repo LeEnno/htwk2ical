@@ -15,4 +15,3 @@
 .idea
 
 /config/database.yml
-/config/production.rb
