@@ -11,13 +11,15 @@ DTSTAMP:<%= @now %>
 DTSTART;TZID=Europe/Berlin:<%= event[:start] %>
 DTEND;TZID=Europe/Berlin:<%= event[:end] %>
 SUMMARY:<%= event[:summary].html_safe %>
+<% if event[:location].present? %>
 LOCATION:<%= event[:location] %>
+<% end %>
 SEQUENCE:0
 DESCRIPTION: <%= event[:description] %>
 UID:<%= event[:uid] %>
 END:VEVENT
-<% end
--%>BEGIN:VTIMEZONE
+<% end %>
+BEGIN:VTIMEZONE
 TZID:Europe/Berlin
 BEGIN:STANDARD
 DTSTART:19701025T030000

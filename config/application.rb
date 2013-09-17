@@ -65,5 +65,16 @@ module Htwk2ical
 
     config.action_controller.default_url_options = {:host => 'localhost:3000'}
 
+
+    # start custom config
+    # ------------------------------------------------------------------------------
+
+    # calendars created before this date will be told to update
+    config.latest_valid_date = Time.new(2013, 10, 3)
+
+    # date and week when semester started
+    config.start_date = Time.new(2013, 3, 11)
+    config.start_week = 11
+
   end
 end

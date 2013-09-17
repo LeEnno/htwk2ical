@@ -47,14 +47,31 @@ class Calendar < ActiveRecord::Base
   def events
     secret = self.secret
     time_format = "%Y%m%dT%H%M%S"
+
+    # don't fetch events for outdated calendars
+    if created_at < Htwk2ical::Application.config.latest_valid_date
+      now         = Time.new
+      event_start = now.strftime(time_format)
+      event_end   = (now + 2.hours).strftime(time_format)
+      
+      return [{
+        :summary     => 'Kalender aktualisieren',
+        :description => 'Dein Kalender ist nicht mehr gültig. Bitte besuche http://www.htwk-stundenplan.de, um einen neuen zu erstellen.',
+        :start       => event_start,
+        :end         => event_end,
+        :uid         => "#{secret}_#{event_start}-#{event_end}_deprecated"
+      }]
+    end
+
+    # date when semester started
+    time_ref = Htwk2ical::Application.config.start_date
+    week_ref = Htwk2ical::Application.config.start_week
+
     courses_cache = _get_course_titles_hash
-    events = []
+    events        = []
 
     self.subjects.pluck(:cached_schedule).each do |cached_schedule|
       day_counter = -1 # for starting at 0
-      # date when semester started
-      time_ref = Time.new(2013, 3, 11)
-      week_ref = 11
 
       cached_schedule.each do |day_courses|
         day_counter += 1
@@ -63,15 +80,15 @@ class Calendar < ActiveRecord::Base
           next if course_title.nil?
 
           course[:weeks].each do |week|
-            day_start = time_ref + (week - week_ref).weeks + day_counter.days
-            event = {}
+            day_start           = time_ref + (week - week_ref).weeks + day_counter.days
+            event               = {}
             event[:location]    = course[:location]
             event[:summary]     = course_title + " (#{course[:type]})"
             event[:description] = course[:lecturer]
-            event[:description]+= ", #{course[:notes]}" unless course[:notes].empty?
-            event[:start] = (day_start + course[:start]).strftime(time_format)
-            event[:end]   = (day_start + course[:end]).strftime(time_format)
-            event[:uid]   = "#{secret}_#{event[:start]}-#{event[:end]}_#{course_title.parameterize}"
+            event[:description] += ", #{course[:notes]}" unless course[:notes].empty?
+            event[:start]       = (day_start + course[:start]).strftime(time_format)
+            event[:end]         = (day_start + course[:end]).strftime(time_format)
+            event[:uid]         = "#{secret}_#{event[:start]}-#{event[:end]}_#{course_title.parameterize}"
             events << event
           end
         end
