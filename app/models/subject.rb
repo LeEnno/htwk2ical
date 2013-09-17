@@ -22,7 +22,6 @@ class Subject < ActiveRecord::Base
   # and therefore less database space.
   def self.rebuild_cache
     all_subjects = _update_available_subjects
-    return
     all_subjects.each do |single_subject|
       #next unless ['12BI/GSW-M', '12BI/HBB-M'].include?(single_subject.title)
       #single_subject = Subject.find_by_title("12MI-M")
@@ -36,7 +35,7 @@ class Subject < ActiveRecord::Base
 
       # cache extracted
       Subject.find(single_subject.id).update_attributes(
-          :cached_schedule => schedule_arr
+        :cached_schedule => schedule_arr
       )
     end
 
@@ -53,7 +52,7 @@ class Subject < ActiveRecord::Base
     subjects_arr = []
 
     require "rexml/document"
-    url = "http://stundenplan.htwk-leipzig.de:8080/stundenplan/semgrp/semgrp_ss.xml"
+    url = Htwk2ical::Application.config.all_subjects_xml_url
     xml = _fetch_contents_from_url(url)
     doc = REXML::Document.new xml
 
@@ -82,11 +81,8 @@ class Subject < ActiveRecord::Base
   # i.e. 09FL-B.
   def self._fetch_schedule(subject_title)
     require 'uri'
-    subject_title = URI.encode(subject_title)
-    current_semester_weeks = '9-35'
-    url = "http://stundenplan.htwk-leipzig.de:8080/ss/Berichte/Text-Listen;"
-    url+= "Studenten-Sets;name;#{subject_title}?template=UNEinzelGru"
-    url+= "&weeks=#{current_semester_weeks}"
+    url = Htwk2ical::Application.config.single_subjects_html_url \
+            .gsub(/###SUBJECT_TITLE###/, URI.encode(subject_title))
 
     _fetch_contents_from_url(url).force_encoding("ISO-8859-1").encode("UTF-8")
   end
@@ -142,9 +138,8 @@ class Subject < ActiveRecord::Base
   # ]
   def self._make_course_hashes(courses_splitted_by_days, subject_id)
     converted_courses = []
-    subject = Subject.find(subject_id)
-    #logger.info([courses_splitted_by_days])
-    #puts courses_splitted_by_days.inspect
+    subject           = Subject.find(subject_id)
+
     courses_splitted_by_days.each do |day_courses_str|
       next if day_courses_str.empty?
       if day_courses_str.match(/^\r\n(So)?$/) # TODO "(So)?" necessary?
@@ -159,16 +154,18 @@ class Subject < ActiveRecord::Base
         next if course_str.empty?
 
         course_arr = course_str.split("\r\n")
-        course = Course.find_or_create_by_title(course_arr[4])
+        next if course_arr[4] == 'LEER'
+        
+        course = Course.find_or_create_by_title(course_arr[4].strip)
         course_hash = {
-          :weeks => _make_week_array(course_arr[0]),
-          :start => _make_time(course_arr[1]),
-          :end => _make_time(course_arr[2]),
+          :weeks    => _make_week_array(course_arr[0]),
+          :start    => _make_time(course_arr[1]),
+          :end      => _make_time(course_arr[2]),
           :location => _get_value_or_empty_string(course_arr[3]),
-          :id => course.id,
-          :type => course_arr[5],
+          :id       => course.id,
+          :type     => course_arr[5],
           :lecturer => _get_value_or_empty_string(course_arr[6]),
-          :notes => _get_value_or_empty_string(course_arr[7])}
+          :notes    => _get_value_or_empty_string(course_arr[7])}
 
         # connect course and subject, if not done already
         subject.courses << course unless subject.courses.include?(course)
@@ -188,7 +185,8 @@ class Subject < ActiveRecord::Base
   # formatted according to conventions of jQuery Autocomplete Plugin.
   def self._make_autocomplete_hash(title, category, id)
     category = category.gsub(/( \(.*\))* \((Bachelor|Master|Diplom)?.*\)/, ' (\2)')
-    label = title.gsub(/ \(.*\)/, "") + " – " + category
+    label    = title.gsub(/ \(.*\)/, "") + " – " + category
+    
     {:label => label, :id => id}
   end
 

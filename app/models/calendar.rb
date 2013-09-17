@@ -84,8 +84,9 @@ class Calendar < ActiveRecord::Base
             event               = {}
             event[:location]    = course[:location]
             event[:summary]     = course_title + " (#{course[:type]})"
-            event[:description] = course[:lecturer]
-            event[:description] += ", #{course[:notes]}" unless course[:notes].empty?
+            event[:description] = [course[:lecturer]]
+            event[:description] << course[:notes] if course[:notes].present?
+            event[:description] = event[:description].join(', ')
             event[:start]       = (day_start + course[:start]).strftime(time_format)
             event[:end]         = (day_start + course[:end]).strftime(time_format)
             event[:uid]         = "#{secret}_#{event[:start]}-#{event[:end]}_#{course_title.parameterize}"
