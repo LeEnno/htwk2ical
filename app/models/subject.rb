@@ -33,18 +33,10 @@ class Subject < ActiveRecord::Base
     puts "done"
     puts "updating cached_schedules..."
     
-    # TODO delete
-    i = 0
-
-    Subject.select([:id, :title, :slug, :extended_title]).each do |s|
-      # TODO delete
-      next if s.slug.nil? && s.title != '12MI-M'
-      i += 1
-      # break if i > 3
-      # next if i != 3
+    Subject.select([:id, :title, :slug, :extended_title]).each_with_index do |s, i|
 
       #s = Subject.find_by_title("12MI-M")
-      puts i.to_s + ' ' + s.title
+      puts (i+1).to_s + ' ' + s.title
 
       schedule_html = _fetch_schedule(s.slug || s.title, s.studium_generale?)
       if schedule_html.match(/503 Service Temporarily Unavailable/)
