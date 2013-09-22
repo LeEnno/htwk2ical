@@ -9,6 +9,12 @@ class Subject < ActiveRecord::Base
   has_and_belongs_to_many :calendars
 
 
+  # whether current subject is studium generale or regular subject
+  def studium_generale?
+    extended_title.nil?
+  end
+
+
   # Updates the cached subjects and courses.
   #
   # Updates available subjects in database. For each of them we fetch the HTML
@@ -21,57 +27,105 @@ class Subject < ActiveRecord::Base
   # switch all course names with course IDs. This way we ensure less redundancy
   # and therefore less database space.
   def self.rebuild_cache
-    all_subjects = _update_available_subjects
-    all_subjects.each do |single_subject|
-      #next unless ['12BI/GSW-M', '12BI/HBB-M'].include?(single_subject.title)
-      #single_subject = Subject.find_by_title("12MI-M")
-      puts single_subject.title
-      schedule_html = _fetch_schedule(single_subject.title)
+    puts "updating subjects..."
+    @sg_courses = {}
+    _update_available_subjects
+    puts "done"
+    puts "updating cached_schedules..."
+    
+    # TODO delete
+    i = 0
+
+    Subject.select([:id, :title, :slug, :extended_title]).each do |s|
+      # TODO delete
+      next if s.slug.nil? && s.title != '12MI-M'
+      i += 1
+      # break if i > 3
+      # next if i != 3
+
+      #s = Subject.find_by_title("12MI-M")
+      puts i.to_s + ' ' + s.title
+
+      schedule_html = _fetch_schedule(s.slug || s.title, s.studium_generale?)
       if schedule_html.match(/503 Service Temporarily Unavailable/)
         puts "aborted because of 503 error"
         return
       end
-      schedule_arr = _make_array(schedule_html, single_subject.id) # TODO into courses?
+
+      schedule_arr = _make_array(schedule_html, s.id) # TODO into courses?
 
       # cache extracted
-      Subject.find(single_subject.id).update_attributes(
+      Subject.find(s.id).update_attributes(
         :cached_schedule => schedule_arr
       )
     end
+    puts "done"
+
+    puts "saving json file for SG..."
+    # TODO DRY
+    json_file = Rails.root.join('public', 'studium_generales.json')
+    File.open(json_file, 'w') { |f| f.write(@sg_courses.values.to_json) }
 
     puts "done"
   end
 
-  private
 
+  #private
+
+  # TODO update comments
+  #
   # Fetch all subjects and write the new ones into the database. Besides we will
   # write all subjects into the JSON-view for autocompleting the input field on
   # our index page for entering the subject. Returns an array containing IDs and
   # titles for each subject.
   def self._update_available_subjects
-    subjects_arr = []
-
     require "rexml/document"
-    url = Htwk2ical::Application.config.all_subjects_xml_url
-    xml = _fetch_contents_from_url(url)
-    doc = REXML::Document.new xml
 
-    doc.elements.each('studium/fakultaet/studiengang/semgrp') do |element|
-      title          = element.attributes['name']
-      category       = element.parent.attributes['name']
-      subject        = Subject.find_or_create_by_title(title)
-      subjects_arr   << _make_autocomplete_hash(title, category, subject.id)
-      
-      if subject.extended_title.nil?
-        subject.extended_title = subjects_arr.last[:label]
-        subject.save
+    [
+      {
+        :is_sg_mode => false,
+        :url        => Htwk2ical::Application.config.all_subjects_xml_url,
+        :xpath      => 'studium/fakultaet/studiengang/semgrp'
+      }, {
+        :is_sg_mode => true,
+        :url        => Htwk2ical::Application.config.all_courses_xml_url,
+        :xpath      => 'studium/fakultaet[@id="' +
+                       Htwk2ical::Application.config.studium_generale_fakultaet_id +
+                       '"]/modul[starts-with(@name, "Stud. gen.")]'
+      }
+    ].each do |mode_hash|
+      # TODO delete
+      next if !mode_hash[:is_sg_mode]
+
+      subjects_arr = []
+      xml          = _fetch_contents_from_url(mode_hash[:url])
+      doc          = REXML::Document.new xml
+
+      doc.elements.each(mode_hash[:xpath]) do |element|
+        title = element.attributes['name']
+        title.gsub!(/Stud. gen. +/, '') if mode_hash[:is_sg_mode]
+        
+        category = mode_hash[:is_sg_mode] ? nil : element.parent.attributes['name']
+        subject  = Subject.find_or_create_by_title(title)
+        subjects_arr << _make_autocomplete_hash(title, category, subject.id)
+
+        if mode_hash[:is_sg_mode] && subject.slug.nil?
+          subject.slug = element.attributes['id'].gsub(/%23/, '#')
+          subject.save        
+        elsif !mode_hash[:is_sg_mode] && subject.extended_title.nil?
+          subject.extended_title = subjects_arr.last[:label]
+          subject.save
+        end
+
+        @sg_courses[subject.id] = {} if mode_hash[:is_sg_mode]
+      end
+
+      # TODO DRY
+      if !mode_hash[:is_sg_mode]
+        json_file = Rails.root.join('public', 'subjects.json')
+        File.open(json_file, 'w') {|f| f.write(subjects_arr.to_json) }
       end
     end
-
-    json_file = Rails.root.join('public', 'subjects.json')
-    File.open(json_file, 'w') {|f| f.write(subjects_arr.to_json) }
-
-    Subject.select([:id, :title])
   end
 
 
@@ -79,10 +133,13 @@ class Subject < ActiveRecord::Base
   #
   # The 'subject_title' parameter must be a title as stored in courses table,
   # i.e. 09FL-B.
-  def self._fetch_schedule(subject_title)
+  def self._fetch_schedule(slug, isStudiumGenerale = false)
     require 'uri'
-    url = Htwk2ical::Application.config.single_subjects_html_url \
-            .gsub(/###SUBJECT_TITLE###/, URI.encode(subject_title))
+    url = isStudiumGenerale \
+      ? Htwk2ical::Application.config.studium_generales_html_url \
+      : Htwk2ical::Application.config.single_subjects_html_url
+    
+    url = url.gsub(/###SLUG###/, URI.encode(slug))
 
     _fetch_contents_from_url(url).force_encoding("ISO-8859-1").encode("UTF-8")
   end
@@ -95,13 +152,13 @@ class Subject < ActiveRecord::Base
     html = html
       .gsub(/<!DOCTYPE.*<p><span >Mo/m, "<p><span >Mo")        # delete pre-table
       .gsub(/<table   border.*<\/html>/m, "")                  # delete post-table
-
+  
     html = strip_tags(html).strip                              # strip tags
       .gsub(/&nbsp;/, "LEER")                                  # convert spaces
-      .gsub(/So$/, "So\r\n\r\n\r\n\r\n")                      # handle "special" sundays
+      .gsub(/So$/, "So\r\n\r\n\r\n\r\n")                       # handle "special" sundays
       .gsub(/(Mo|Di|Mi|Do|Fr|Sa|So)(\r\n){4}/, "###TRENN###")  # mark day separations
-      .gsub(/(\r\n){4}/, "")                                  # delete 4x EOL
-      .gsub(/Planungswochen[^0-9]+am:/m, "")                  # delete table head
+      .gsub(/(\r\n){4}/, "")                                   # delete 4x EOL
+      .gsub(/Planungswochen[^0-9]+am:/m, "")                   # delete table head
 
     courses_splitted_by_days = html.split("###TRENN###")
     _make_course_hashes(courses_splitted_by_days, subject_id)
@@ -139,36 +196,54 @@ class Subject < ActiveRecord::Base
   def self._make_course_hashes(courses_splitted_by_days, subject_id)
     converted_courses = []
     subject           = Subject.find(subject_id)
+    is_sg             = subject.studium_generale?
 
-    courses_splitted_by_days.each do |day_courses_str|
+    if is_sg
+      matches     = subject.title.match(/([^\/]+)\/(.+)/)
+      sg_title    = matches[1]
+      sg_lecturer = matches[2]
+      sg_course   = Course.find_or_create_by_title(sg_title.strip)
+      subject.courses << sg_course
+      if @sg_courses.has_key?(subject.id) && @sg_courses[subject.id].empty?
+        # TODO DRY
+        @sg_courses[subject.id] = {:label => sg_title, :id => sg_course.id}
+      end
+    end
+
+    courses_splitted_by_days.each_with_index do |day_courses_str|
       next if day_courses_str.empty?
       if day_courses_str.match(/^\r\n(So)?$/) # TODO "(So)?" necessary?
         converted_courses << []
         next
       end
 
-      day_courses_arr_with_strings = day_courses_str.split("\r\n\r\n\r\n")
       day_courses_arr_with_hashes = []
+      day_courses_arr_with_strings = day_courses_str.split("\r\n\r\n\r\n")
 
       day_courses_arr_with_strings.each do |course_str|
         next if course_str.empty?
 
-        course_arr = course_str.split("\r\n")
-        next if course_arr[4] == 'LEER'
+        course_arr   = course_str.split("\r\n")
+        course_title = course_arr[4]
+        next if course_title == 'LEER'
         
-        course = Course.find_or_create_by_title(course_arr[4].strip)
+        course = sg_course || Course.find_or_create_by_title(course_title.strip)
         course_hash = {
           :weeks    => _make_week_array(course_arr[0]),
           :start    => _make_time(course_arr[1]),
           :end      => _make_time(course_arr[2]),
           :location => _get_value_or_empty_string(course_arr[3]),
           :id       => course.id,
-          :type     => course_arr[5],
-          :lecturer => _get_value_or_empty_string(course_arr[6]),
+          :type     => course_arr[is_sg ? 4 : 5],
+          :lecturer => _get_value_or_empty_string(course_arr[is_sg ? 5 : 6]),
           :notes    => _get_value_or_empty_string(course_arr[7])}
+        
+        if is_sg
+          course_hash[:lecturer] = sg_lecturer if course_hash[:lecturer].empty?
+        end
 
         # connect course and subject, if not done already
-        subject.courses << course unless subject.courses.include?(course)
+        subject.courses << course unless is_sg || subject.courses.include?(course)
 
         day_courses_arr_with_hashes << course_hash
       end # day_courses_arr.each
@@ -184,17 +259,21 @@ class Subject < ActiveRecord::Base
   # Replaces unnecessary information in title and category. Returns a hash
   # formatted according to conventions of jQuery Autocomplete Plugin.
   def self._make_autocomplete_hash(title, category, id)
-    category = category.gsub(/( \(.*\))* \((Bachelor|Master|Diplom)?.*\)/, ' (\2)')
-    label    = title.gsub(/ \(.*\)/, "") + " – " + category
-    
+    if category.present?
+      category.gsub!(/( \(.*\))* \((Bachelor|Master|Diplom)?.*\)/, ' (\2)')
+    end
+
+    label    = title.gsub(/ \(.*\)/, "")
+    label   += " – #{category}" if category.present?
+
+    # TODO DRY
     {:label => label, :id => id}
   end
 
 
   # Replaces empty columns with empty string.
   def self._get_value_or_empty_string(val)
-    return '' if val == "LEER"
-    val
+    val == "LEER" ? '' : val
   end
 
   # Converts "12, 14, 17-20" into array of week integers

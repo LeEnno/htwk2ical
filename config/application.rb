@@ -76,10 +76,15 @@ module Htwk2ical
     config.start_date = Time.new(2013, 3, 11)
     config.start_week = 11
 
-    # path to subject XML
+    # path to XML files for subjects and courses
     config.all_subjects_xml_url = 'http://stundenplan.htwk-leipzig.de:8080/stundenplan/semgrp/semgrp_ws.xml'
+    config.all_courses_xml_url  = 'http://stundenplan.htwk-leipzig.de:8080/stundenplan/modul/modul_ws.xml'
+    
+    # ID of XML node in 'all_courses_xml_url' that contains all studium generale modules
+    config.studium_generale_fakultaet_id  = '%23SPLUS0AC5B0'
 
-    # base path for single schedule per subject
-    config.single_subjects_html_url = 'http://stundenplan.htwk-leipzig.de:8080/ws/Berichte/Text-Listen;Studenten-Sets;name;###SUBJECT_TITLE###?template=UNEinzelGru&weeks=35-64'
+    # base path for single schedule per subject and studium generale
+    config.single_subjects_html_url   = 'http://stundenplan.htwk-leipzig.de:8080/ws/Berichte/Text-Listen;Studenten-Sets;name;###SLUG###?template=UNEinzelGru&weeks=35-64'
+    config.studium_generales_html_url = 'http://stundenplan.htwk-leipzig.de:8080/ws/Berichte/Text-Listen;Module;id;###SLUG###?template=UNEinzelLV&weeks=35-64'
   end
 end
