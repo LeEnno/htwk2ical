@@ -13,20 +13,21 @@ class Calendar < ActiveRecord::Base
   # TODO comment
   def initialize(subject_ids, course_ids, course_aliases_arr)
     super()
-    # TODO enable courses from multiple subjects (subject_ids.each)
+
+    # validate subjects, add courses and create alias relationships
     subject_ids.each do |subject_id|
       subject = Subject.find(subject_id)
       raise ArgumentError, "invalid subject-ID" if subject.nil?
 
       subjects << subject
-      self.courses = Course.new_calendar_courses(course_ids) # TODO how to omit self?
-      save_and_add_aliases(course_aliases_arr, course_ids)
+      self.courses = Course.new_calendar_courses(course_ids)
+      add_aliases(course_aliases_arr, course_ids)
     end
   end
 
   # Saves changes and adds transmitted aliases for selected courses. Throws
   # error if transmitted course-ID is invalid.
-  def save_and_add_aliases(course_aliases_arr, course_ids)
+  def add_aliases(course_aliases_arr, course_ids)
     save
 
     # clean unused aliases

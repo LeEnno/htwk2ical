@@ -5,22 +5,24 @@ $(function () {
 
   var subjectData,          // complete data (label + id)
       subjectDataArr = [],  // labels only
-      $submitLink    = $('#submit-link');
+      $submitLink    = $('#submit-link'),
+      sgData; // studium generale data
 
   // set up an input field for autocomplete, also used in calendar.js
-  $.fn.setUpAutocomplete = function() {
+  $.fn.setUpAutocomplete = function(useSgData, sgCallback) {
     return $(this).autocomplete({
-      source: subjectData,
+      source: !!useSgData ? sgData : subjectData,
 
       // save subject-ID as data-attribute of input
-      select: function(event, ui) {
+      select: !!useSgData ? sgCallback : function(event, ui) {
         $(this).data('subject-id', ui.item.id);
       }
     });
   };
 
 
-  // fetch data for autocomplete
+  // TODO only on landingpage and choose_subjects
+  // fetch subject data for autocomplete
   $.get("<%= Htwk2ical::Application.routes.url_helpers.subjects_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
     subjectData = data;
     $(".subject-title-bg").find('input').setUpAutocomplete();
@@ -30,6 +32,13 @@ $(function () {
       subjectDataArr.push(val.label);
     });
   });
+
+  // fetch subject data for autocomplete
+  if ($('.choose-courses').length > 0) {
+    $.get("<%= Htwk2ical::Application.routes.url_helpers.studium_generales_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
+      sgData = data;
+    });
+  }
 
 
   // Subject validation

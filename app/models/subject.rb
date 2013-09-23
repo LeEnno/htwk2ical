@@ -28,9 +28,12 @@ class Subject < ActiveRecord::Base
   # and therefore less database space.
   def self.rebuild_cache
     puts "updating subjects..."
+
     @sg_courses = {}
     _update_available_subjects
+
     puts "done"
+    
     puts "updating cached_schedules..."
     
     Subject.select([:id, :title, :slug, :extended_title]).each_with_index do |s, i|
@@ -51,9 +54,11 @@ class Subject < ActiveRecord::Base
         :cached_schedule => schedule_arr
       )
     end
+
     puts "done"
 
     puts "saving json file for SG..."
+    
     # TODO DRY
     json_file = Rails.root.join('public', 'studium_generales.json')
     File.open(json_file, 'w') { |f| f.write(@sg_courses.values.to_json) }
@@ -198,7 +203,11 @@ class Subject < ActiveRecord::Base
       subject.courses << sg_course
       if @sg_courses.has_key?(subject.id) && @sg_courses[subject.id].empty?
         # TODO DRY
-        @sg_courses[subject.id] = {:label => sg_title, :id => sg_course.id}
+        @sg_courses[subject.id] = {
+          :label      => sg_title,
+          :id         => sg_course.id,
+          :subject_id => subject.id
+        }
       end
     end
 

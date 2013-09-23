@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
   private
 
   def set_locale
-    # don't set locale for calender getters (Controller#get and Controller#download)
+    # don't set locale for calender getters and autocomplete source actions
     unless params[:controller] == 'calendar' \
-      && %w(get download get_subjects).include?(params[:action])
+      && %w(get download get_subjects get_studium_generales).include?(params[:action])
 
       # if no locale is set, extract from HTTP header and redirect
       unless params[:locale]

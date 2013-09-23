@@ -51,6 +51,9 @@ class CalendarController < ApplicationController
     return _redirect_to_calendar_path if @subjects.empty?
 
     @choose_subjects_link = calendar_path(:subject_ids => subject_ids_param_arr * SUBJECT_ID_DIVIDER)
+
+    # TODO delete
+    @studium_generale = Subject.find(795)
   end
 
 
@@ -84,6 +87,10 @@ class CalendarController < ApplicationController
 
   def get_subjects
     render :json => File.read(Rails.root.join('public', 'subjects.json'))
+  end
+
+  def get_studium_generales
+    render :json => File.read(Rails.root.join('public', 'studium_generales.json'))
   end
 
 

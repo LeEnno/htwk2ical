@@ -3,6 +3,54 @@ $(function () {
    * ---------------------------------------------------------------------------
    */
 
+  // studium generale link
+  // -----------------------------------------------------------------------------
+  $('#studium_generale_link').on('click', function(e) {
+    e.preventDefault();
+
+    // hide link and add input for autocomplete
+    $(this).hide().before(
+      $('<input>').attr({
+        id:    'studium_generale_autocomplete',
+        class: 'studium-generale-autocomplete',
+        type:  'text'
+
+      // set up autocomplete and give callback
+      }).setUpAutocomplete(true, function(event, ui) {
+        var sgCourseID    = ui.item.id,
+            sgCourseTitle = ui.item.label,
+            sgSubjectID   = ui.item.subject_id;
+        
+        // add inputs before (and give class for easy removing)
+        $(this).before(
+          $('<input>').attr({
+            checked: 'checked',
+            id:      'course_ids_' + sgCourseID,
+            name:    'course_ids[]',
+            type:    'checkbox',
+            value:   sgCourseID,
+            class:   'input-studium-generale'
+          }),
+          '&nbsp;',
+          $('<input>').attr({
+            id:    'course_aliases_' + sgCourseID,
+            name:  'course_aliases[' + sgCourseID + ']',
+            type:  'text',
+            value: sgCourseTitle,
+            class: 'input-studium-generale'
+          }),
+          $('<input>').attr({
+            name:  'subject_ids[]',
+            type:  'hidden',
+            value: sgSubjectID,
+            class: 'input-studium-generale'
+          })
+        ).remove();
+      })
+    );
+  });
+   
+
   // batch selector
   // -----------------------------------------------------------------------------
   
