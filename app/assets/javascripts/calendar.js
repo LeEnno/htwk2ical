@@ -8,15 +8,18 @@ $(function () {
   $('#studium_generale_link').on('click', function(e) {
     e.preventDefault();
 
+    var sgAutocompleteInputID = 'studium_generale_autocomplete';
+
     // hide link and add input for autocomplete
     $(this).hide().before(
       $('<input>').attr({
-        id:    'studium_generale_autocomplete',
+        id:    sgAutocompleteInputID,
         class: 'studium-generale-autocomplete',
         type:  'text'
 
       // set up autocomplete and give callback
       }).setUpAutocomplete(true, function(event, ui) {
+        // TODO DRY
         var sgCourseID    = ui.item.id,
             sgCourseTitle = ui.item.label,
             sgSubjectID   = ui.item.subject_id;
@@ -46,8 +49,20 @@ $(function () {
             class: 'input-studium-generale'
           })
         ).remove();
+
+      // init popup for entering name
+      }).tooltip({
+        title:     'Gib den Namen des Studium Generale an.',
+        trigger:   'manual',
+        placement: 'bottom'
+
+      // hide popup when user starts typing
+      }).on('keypress', function() {
+        $(this).tooltip('destroy');
       })
     );
+    
+    $('#' + sgAutocompleteInputID).focus().tooltip('show');
   });
    
 
@@ -73,10 +88,10 @@ $(function () {
                 .not('.batch-selector')
                 .not(':checked').length;
           $parent.find('.batch-selector').prop('checked', numUnchecked < 1);
-        })
+
 
         // show tooltip on first hover
-        .one('mouseenter', 'input[type="checkbox"]:not(.batch-selector), input[type="text"]', function (e) {
+        }).one('mouseenter', 'input[type="checkbox"]:not(.batch-selector), input[type="text"]:not(#studium_generale_autocomplete)', function (e) {
           var $this = $(this);
 
           // save text-input to apply the tooltip on
@@ -97,18 +112,20 @@ $(function () {
             placement: 'right',
             html:      true
           }).tooltip('show');
-        })
 
         // pulsate tooltip as soon as it's there
-        .on('shown', function (e) {
+        }).on('shown', function (e) {
           $('.tooltip').addClass('pulsate');
+
+        // hide tooltip when user focuses an input element
+        }).on('focus', 'input[type="text"]', function (e) {
+          if (!!$tooltipInput) {
+            $tooltipInput.tooltip('hide');
+
+            // tooltip is only shown once, so only hide it once
+            $(this).unbind(e);
+          }
         });
-
-
-  // hide tooltip when user focuses an input element
-  $chooseCourses.one('focus', 'input[type="text"]', function () {
-    $tooltipInput.tooltip('hide');
-  });
 
 
 
@@ -131,16 +148,79 @@ $(function () {
       });
     });
 
+    // read studium generales
+    $sgInputs = $('.input-studium-generale');
+    var sgAliasData = {};
+    if ($sgInputs.length > 0) {
+      $sgInputs.each(function(i, el) {
+        var $el = $(el),
+            val = $el.val();
+        
+        switch ($el.prop('type')) {
+          case "hidden":
+            sgAliasData.subjectID = val;
+            break;
+          case "text":
+            sgAliasData.alias = val;
+            break;
+          case "checkbox":
+            sgAliasData.courseID = val;
+            break;
+          default:
+            console.log("ouch");
+            break;
+        }
+      });
+    }
+
     // save aliases in cookie
-    $.cookie('aliases', JSON.stringify({aliases: aliases}));
+    $.cookie('aliases', JSON.stringify({
+      aliases:     aliases,
+      sgAliasData: sgAliasData
+    }), {path: '/'});
   });
 
-  // apply aliases if we have any
+  // check for cookie contents
   if ($('.choose-courses').length > 0) {
     var aliases = $.cookie('aliases');
     if (!!aliases) {
-      aliases = JSON.parse(aliases).aliases;
+      var json_data   = JSON.parse(aliases),
+          sgAliasData = json_data.sgAliasData;
 
+      // set up studium generale if we have any
+      if(!$.isEmptyObject(sgAliasData)) {
+        // TODO DRY
+        var sgCourseID    = sgAliasData.courseID,
+            sgCourseTitle = sgAliasData.alias,
+            sgSubjectID   = sgAliasData.subjectID;
+
+        $('#studium_generale_link').hide().before(
+          $('<input>').attr({
+            id:      'course_ids_' + sgCourseID,
+            name:    'course_ids[]',
+            type:    'checkbox',
+            value:   sgCourseID,
+            class:   'input-studium-generale'
+          }),
+          '&nbsp;',
+          $('<input>').attr({
+            id:    'course_aliases_' + sgCourseID,
+            name:  'course_aliases[' + sgCourseID + ']',
+            type:  'text',
+            value: sgCourseTitle,
+            class: 'input-studium-generale'
+          }),
+          $('<input>').attr({
+            name:  'subject_ids[]',
+            type:  'hidden',
+            value: sgSubjectID,
+            class: 'input-studium-generale'
+          })
+        );
+      }
+
+      // apply aliases if we have any
+      aliases = json_data.aliases;
       for (var i = 0; i < aliases.length; i++) {
         $('#course_aliases_' + aliases[i].id).val(aliases[i].alias);
         $('#course_ids_' + aliases[i].id).prop('checked', aliases[i].checked);
