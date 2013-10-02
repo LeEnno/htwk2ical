@@ -70,11 +70,11 @@ module Htwk2ical
     # ------------------------------------------------------------------------------
 
     # calendars created before this date will be told to update
-    config.latest_valid_date = Time.new(2013, 9, 16)
+    config.latest_valid_date = Time.new(2013, 3, 10, 1, 30)
 
     # date and week when semester started
-    config.start_date = Time.new(2013, 3, 11)
-    config.start_week = 11
+    config.start_date = Time.new(2013, 8, 26)
+    config.start_week = 35
 
     # path to XML files for subjects and courses
     config.all_subjects_xml_url = 'http://stundenplan.htwk-leipzig.de:8080/stundenplan/semgrp/semgrp_ws.xml'
