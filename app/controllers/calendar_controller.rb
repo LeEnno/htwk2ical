@@ -51,9 +51,6 @@ class CalendarController < ApplicationController
     return _redirect_to_calendar_path if @subjects.empty?
 
     @choose_subjects_link = calendar_path(:subject_ids => subject_ids_param_arr * SUBJECT_ID_DIVIDER)
-
-    # TODO delete
-    @studium_generale = Subject.find(795)
   end
 
 

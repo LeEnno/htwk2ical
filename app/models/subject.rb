@@ -91,9 +91,6 @@ class Subject < ActiveRecord::Base
                        '"]/modul[starts-with(@name, "Stud. gen.")]'
       }
     ].each do |mode_hash|
-      # TODO delete
-      next if !mode_hash[:is_sg_mode]
-
       subjects_arr = []
       xml          = _fetch_contents_from_url(mode_hash[:url])
       doc          = REXML::Document.new xml
