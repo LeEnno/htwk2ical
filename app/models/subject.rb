@@ -60,8 +60,8 @@ class Subject < ActiveRecord::Base
     puts "saving json file for SG..."
     
     # TODO DRY
-    json_file = Rails.root.join('public', 'studium_generales.json')
-    File.open(json_file, 'w') { |f| f.write(@sg_courses.values.to_json) }
+    # TODO constantify
+    SubjectCache.find_or_create_by_key('studium_generales').update_attributes(:value => @sg_courses.values.to_json)
 
     puts "done"
   end
@@ -115,9 +115,9 @@ class Subject < ActiveRecord::Base
       end
 
       # TODO DRY
+      # TODO constantify
       if !mode_hash[:is_sg_mode]
-        json_file = Rails.root.join('public', 'subjects.json')
-        File.open(json_file, 'w') {|f| f.write(subjects_arr.to_json) }
+        SubjectCache.find_or_create_by_key('subjects').update_attributes(:value => subjects_arr.to_json)
       end
     end
   end
@@ -199,7 +199,7 @@ class Subject < ActiveRecord::Base
       sg_course   = Course.find_or_create_by_title(sg_title.strip)
       subject.courses << sg_course
       if @sg_courses.has_key?(subject.id) && @sg_courses[subject.id].empty?
-        # TODO DRY
+        # TODO DRY (_make_autocomplete_hash)
         @sg_courses[subject.id] = {
           :label      => sg_title,
           :id         => sg_course.id,

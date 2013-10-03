@@ -83,11 +83,13 @@ class CalendarController < ApplicationController
 
 
   def get_subjects
-    render :json => File.read(Rails.root.join('public', 'subjects.json'))
+    # render :json => File.read(Rails.root.join('public', 'subjects.json'))
+    render :json => SubjectCache.find_by_key('subjects').value
   end
 
   def get_studium_generales
-    render :json => File.read(Rails.root.join('public', 'studium_generales.json'))
+    # render :json => File.read(Rails.root.join('public', 'studium_generales.json'))
+    render :json => SubjectCache.find_by_key('studium_generales').value
   end
 
 
