@@ -36,9 +36,10 @@ Htwk2ical::Application.configure do
   config.assets.debug = true
 
   # to prevent fetching precompiled assets in dev mode
-  # config.serve_static_assets = false
+  config.serve_static_assets = false
 
   # Automatically inject JavaScript needed for LiveReload
-  config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
+  # Uncomment the line below and make sure to comment 'config.serve_static_assets = false' instead
+  # config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
   # config.middleware.insert_after(Rack::Lock, Rack::LiveReload)
 end
