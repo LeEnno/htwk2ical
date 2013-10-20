@@ -34,46 +34,40 @@
     },
     {
       :question => 'Was kostet mich der Spaß?',
-      :answer => 'Nichts. Hammer, oder?<br />Mein einsames Programmierer-Ego freut sich aber jederzeit über Lob und Anregungen ;)'.html_safe#<br />Wenn du magst und HTWK2iCal für dich nützlich erscheint, freue ich mich über den ein oder anderen Euronen via PayPal. Geht alles zu 100% in die Server-Infrastruktur.'.html_safe
-    },
-    {
-      :question => 'Kostenlos und <em>nicht</em> Open Source? Was bist du für ein Programmierer?'.html_safe,
-      :answer => 'Kommt noch, ich bitte um ein wenig Geduld. Der Code möchte sich noch ein wenig herausputzen, bevor er sich in der Öffentlichkeit zeigt.'
+      :answer => 'Nichts. Hammer, oder?<br />Mein einsames Programmierer-Ego freut sich aber jederzeit über Lob und Anregungen ;)'.html_safe
     }
   ]
 %>
-<p class="header-addition">Frequently Asked Questions, besser bekannt als</p>
-<h1>FAQ</h1>
-<hr />
 
-<section class="row faq-overview">
-  <div class="span6">
-    <h2>Übersicht</h2>
-    <ol>
+<div class="content-wrapper">
+
+  <div class="width-wrapper-sm">
+    <h1 class="instruction">FAQ</h1>
+
+    <dl>
+      <% app_instructions_offset = 0 %>
       <% faqs.each_with_index do |faq, i| %>
-        <li><%= link_to faq[:question], "#faq-#{i}" %></li>
+
+        <div class="row">
+          <dt id="faq-<%= i %>" class="col-sm-5">
+            <%= faq[:question] %>
+          </dt>
+          <% if faq[:answer] == '###app-instructions###' %>
+            <dd class="app-instruction-wrapper col-sm-7"><%= render('shared/app_instructions') %></dd>
+          <% else %>
+            <dd class="col-sm-7"><%= faq[:answer] %></dd>
+          <% end %>          
+        </div>
+
       <% end %>
-    </ol>
-  </div>
-  <div class="span6 alternating-action">
-    <h2>Nicht gefunden, wonach du suchst?</h2>
-    <%= link_to 'Kontakt aufnehmen', contact_path, :class => 'btn btn-primary' %>
-  </div>
-</section>
+    </dl>
 
+    <hr />
 
-<hr />
+    <p class="faq-cta-wrapper">
+      Nicht gefunden, wonach du suchst?<br />
+      <%= link_to 'Kontakt aufnehmen', contact_path, :class => 'btn btn-success btn-lg' %>
+    </p>
 
-<dl class='container faq-list'>
-  <% app_instructions_offset = 0 %>
-  <% faqs.each_with_index do |faq, i| %>
-
-    <dt id="faq-<%= i %>"><%= faq[:question] %></dt>
-    <% if faq[:answer] == '###app-instructions###' %>
-      <dd class="app-instruction-wrapper"><%= render('shared/app_instructions') %></dd>
-    <% else %>
-      <dd><%= faq[:answer] %></dd>
-    <% end %>
-
-  <% end %>
-</dl>
+  </div> <%# /.width-wrapper-sm %>
+</div> <%# /.content-wrapper %>

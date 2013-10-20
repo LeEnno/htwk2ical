@@ -1,15 +1,15 @@
-<div class="accordion-group">
-  <div class="accordion-heading">
+<div class="panel panel-default">
+  <div class="panel-heading">
 
     <%= link_to(title, '#collapse-' + id, {
-          :class => 'accordion-toggle ' + id,
+          :class => 'accordion-toggle panel-title ' + id,
           :data => {:toggle => 'collapse', :parent => '#app-instructions'}
         }) %>
 
   </div>
 
-  <div id="collapse-<%= id %>"class="accordion-body collapse">
-    <div class="accordion-inner">
+  <div id="collapse-<%= id %>"class="panel-collapse collapse">
+    <div class="panel-body">
 
       <%= yield %>
 

@@ -3,7 +3,8 @@
 @appInstuctionsContainerWidth: 800px;
 @appHeaderWidth: 60px;
 @appInstructionPadding: 8px;
-@appInstructionFontSize: 14px;
+@appInstructionFontSize: 1.1em;
+@faqAppInstructionFontSize: @appInstructionFontSize - 0.2em;
 
 // STYLES
 // -----------------------------------------------------------------------------
@@ -25,7 +26,10 @@
   }
 }
 
-.accordion-inner {
+.panel-default > .panel-heading {background-color:transparent; font-weight:@alternatingFontWeight;}
+
+.panel-body {
+  font-weight:normal;
 
   ol {
     margin:0 0 0 20px;
@@ -38,14 +42,17 @@
     line-height: 150%;
   }
 
-  p {margin-left:5px;}
+  p {margin-left:5px; font-size:@appInstructionFontSize;}
+}
+.faq .panel-body {
+  li, p {font-size:@faqAppInstructionFontSize;}
+  li {margin-bottom:@faqAppInstructionFontSize / 2;}
 }
 
-.accordion-heading .accordion-toggle {padding-left:64px;}
+.panel-heading {padding:0;}
 
 .accordion-toggle {
-  background-position:22px center;
-  background-repeat:no-repeat;
+  display:block; padding:10px 64px; background-position:22px center; background-repeat:no-repeat;
 
   &.google    {background-image:image-url("icons/google.png")}
   &.outlook   {background-image:image-url("icons/outlook.png");}

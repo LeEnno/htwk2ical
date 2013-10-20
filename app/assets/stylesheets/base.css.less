@@ -29,7 +29,11 @@ hr {
 
     &:hover {color:#fff;}
   }
-  .navbar-nav>li>a {color:@navColor;}
+  .navbar-nav>li>a {
+    color:@navColor;
+
+    &.active {color:#fff;}
+  }
 }
 
 
@@ -45,9 +49,11 @@ hr {
 // CLASSES
 // -----------------------------------------------------------------------------
 
+.content-wrapper {width:100%; padding:100px 0; background:#fff;}
+
 .width-wrapper-lg {max-width:1000px; margin:0 auto;}
 .width-wrapper-sm {max-width:845px; margin:0 auto;}
-
+ 
 .header-addition {
   text-align:center;
   line-height:140%;
