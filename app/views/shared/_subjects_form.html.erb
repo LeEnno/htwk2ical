@@ -10,7 +10,8 @@
     <%
       id_counter = 1
       unless @subjects.nil?
-        @subjects.each do |subject|
+        @subjects.each_with_index do |subject, i|
+          break if i > 2
           %>
           <span class="subject-title-bg">
             <%=
@@ -20,7 +21,7 @@
                              subject.extended_title, # value
                              :placeholder       => 'Name des Studiengangs eintippen...',
                              :id                => "subject-title-#{id_counter}",
-                             :class             => 'subject-titles',
+                             :class             => 'subject-titles form-control input-lg',
                              :'data-subject-id' => subject.id
             %>
           </span>
@@ -30,23 +31,25 @@
       end
     %>
 
-    <% next_btn = link_to 'Weiter', calendar_courses_path, :id => 'submit-link', :class => 'btn btn-success' %>
+    <% next_btn = link_to 'Weiter', calendar_courses_path, :id => 'submit-link', :class => 'btn btn-success btn-lg' %>
 
-    <span class="subject-title-bg active">
-      <%= next_btn unless @landing_page.nil? %>
-      <%=
-        # TODO DRY
-        # we have to overwrite ID because of "[]"
-        text_field_tag 'subject-titles[]', #name
-                       nil, # value
-                       :placeholder => 'Name des Studiengangs eintippen...',
-                       :id          => "subject-title-#{id_counter}",
-                       :class       => 'subject-titles'
-      %>
-      <% id_counter += 1 %>
+    <% if @subjects.nil? || @subjects.count < 3 %>
+      <span class="subject-title-bg active">
+        <%= next_btn unless @landing_page.nil? %>
+        <%=
+          # TODO DRY
+          # we have to overwrite ID because of "[]"
+          text_field_tag 'subject-titles[]', #name
+                         nil, # value
+                         :placeholder => 'Name des Studiengangs eintippen...',
+                         :id          => "subject-title-#{id_counter}",
+                         :class       => 'subject-titles form-control input-lg'
+        %>
+        <% id_counter += 1 %>
 
-      <%= link_to '+', '#', :id => 'add-subject-title', :class => 'btn btn-primary' if @landing_page.nil? %>
-    </span>
+        <%= link_to '+', '#', :id => 'add-subject-title', :class => 'btn btn-primary' if @landing_page.nil? && (@subjects.nil? || @subjects.count < 2) %>
+      </span>
+    <% end %>
     <%= next_btn if @landing_page.nil? %>
   </div>
 </div>

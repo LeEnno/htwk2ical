@@ -26,6 +26,7 @@ $(function () {
         
         // add inputs before (and give class for easy removing)
         $(this).before(
+          // TODO DRY
           '<div class="input-group">' +
             '<span class="input-group-addon">' +
               '<input type="checkbox" class="input-studium-generale"' +
@@ -177,7 +178,7 @@ $(function () {
     }), {path: '/'});
   });
 
-  // check for cookie contents
+  // check for cookie aliases
   if ($('.choose-courses').length > 0) {
     var aliases = $.cookie('aliases');
     if (!!aliases) {
@@ -192,28 +193,23 @@ $(function () {
             sgSubjectID   = sgAliasData.subjectID;
 
         $('#studium_generale_link').hide().before(
-          $('<input>').attr({
-            id:      'course_ids_' + sgCourseID,
-            name:    'course_ids[]',
-            type:    'checkbox',
-            value:   sgCourseID,
-            class:   'input-studium-generale'
-          }),
-          '&nbsp;',
-          $('<input>').attr({
-            id:    'course_aliases_' + sgCourseID,
-            name:  'course_aliases[' + sgCourseID + ']',
-            type:  'text',
-            value: sgCourseTitle,
-            class: 'input-studium-generale'
-          }),
-          $('<input>').attr({
-            name:  'subject_ids[]',
-            type:  'hidden',
-            value: sgSubjectID,
-            class: 'input-studium-generale'
-          })
-        );
+          // TODO DRY
+          '<div class="input-group">' +
+            '<span class="input-group-addon">' +
+              '<input type="checkbox" class="input-studium-generale"' +
+                     'id="course_ids_' + sgCourseID + '" name="course_ids[]"' +
+                     'value="' + sgCourseID + '" checked />' +
+            '</span>' +
+            '<input type="text" class="input-studium-generale form-control"' +
+                   'id="course_aliases_' + sgCourseID + '"' +
+                   'name="course_aliases[' + sgCourseID + ']"' +
+                   'value="' + sgCourseTitle + '" />' +
+            '<input type="hidden" class="input-studium-generale"' +
+                   'name="subject_ids[]"' +
+                   'value="' + sgSubjectID + '">' +
+          '</div>'
+        ).parent().removeClass('studium-generale-ellipses')
+        .end().remove();
       }
 
       // apply aliases if we have any
@@ -275,6 +271,6 @@ $(function () {
     
     // otherwise move it down
     else
-      $this.css('top', '+=82');
+      $this.css('top', '+=65');
   });
 });
