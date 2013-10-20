@@ -1,6 +1,5 @@
 // VARIABLES
 // -----------------------------------------------------------------------------
-@appInstuctionsContainerWidth: 800px;
 @appHeaderWidth: 60px;
 @appInstructionPadding: 8px;
 @appInstructionFontSize: 1.1em;
@@ -15,15 +14,9 @@
 }
 
 #app-instructions {
-  display:none;
-  position:relative;
-  max-width: @appInstuctionsContainerWidth;
-  margin-bottom:50px;
+  display:none; position:relative; max-width:500px; margin:0 auto;
 
-  &.faq {
-    display:block;
-    margin-bottom:0;
-  }
+  &.faq {display:block; margin-bottom:0;}
 }
 
 .panel-default > .panel-heading {background-color:transparent; font-weight:@alternatingFontWeight;}

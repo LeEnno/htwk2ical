@@ -2,34 +2,12 @@
 // -----------------------------------------------------------------------------
 @ratingIconDiameter: 20px;
 @ratingIconPaddingRight: 12px;
-@ratingIndent: 36px;
+@ratingIndent: 26px;
 @ratingParagraphPadding: 24px;
 @possibilitySpace: 50px;
 
 // MIXINS
 // -----------------------------------------------------------------------------
-.ratingIcons(@content, @colorStart, @colorEnd, @borderColor) {
-  &:before {
-    display:block;
-    position:absolute;
-    left: @ratingParagraphPadding + @ratingIndent - @ratingIconDiameter - @ratingIconPaddingRight;
-    top: 2px;
-    width:@ratingIconDiameter;
-    height:@ratingIconDiameter;
-    // TODO fix
-    // #gradient > .vertical(@colorStart, @colorEnd);
-    border-radius:2px;
-    border:1px solid;
-    border-color: @borderColor;
-    text-align: center;
-    color:white;
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-    line-height:@ratingIconDiameter - 1px;
-    font-size:12px;
-    content: @content;
-  }
-}
-
 .pulsate-animation(@length, @count, @scale) {
   .pulsate {
     -webkit-animation: pulsate @length ease-out;
@@ -98,66 +76,28 @@
 
 // GET LINK
 // -----------------------------------------------------------------------------
-.generated-link {
-  padding: 0;
-  margin: 0 auto;
-  max-width: 770px; // 800px hero-unit - 30px margin-left of fitst possibility box
-  background: none;
-  text-align: center;
-}
-
-.calendar-url {
-  display:block;
-  margin-top:30px;
-  padding: 8px;
-  background: #EEE; // TODO make less variable
-  border-radius: 6px;
-  font-weight:@alternatingFontWeight;
-  font-size:24px;
-  word-wrap: break-word;
-
-}
-
-.selection-hint {
-  font-size: 12px;
-  color: @lighterGrey;
-}
+.generated-link {font-size:1.8em; text-align:center;}
+.calendar-url {display:block; margin-top:20px; font-size:1.3em; color:@mainGreen; word-wrap:break-word;}
 
 .possibilities {
-  margin-top: @possibilitySpace + 20px;
+  margin-top: @possibilitySpace + 60px;
 
-  .hero-unit {
-    padding:@ratingIconPaddingRight * 2 0;
-  }
-
-  h2 {
-    margin-bottom: @possibilitySpace;
-    text-align: center;
-    line-height: 110%;
-    font-weight:@alternatingFontWeight;
-  }
-
-  p {
-    position: relative;
-    min-height: 35px;
-    margin-bottom:@ratingIconPaddingRight;
-    padding: 0 @ratingParagraphPadding 0 @ratingIndent + @ratingParagraphPadding;
-    font-size:16px;
-    line-height:150%;
-  }
-
+  h2 {margin-bottom: @possibilitySpace; text-align: center; line-height: 110%; font-weight:@alternatingFontWeight;}
+  .disadvantage,
+  .advantage {position:relative; min-height:35px; margin-bottom:@ratingIconPaddingRight; padding:0 @ratingParagraphPadding 0 @ratingIndent + @ratingParagraphPadding; font-size:1.2em; line-height:140%;}
+  .glyphicon {position:absolute; top:-2px; left:12px; color:@mainGreen; font-size:1.4em;}
+  .btn-default {padding-left:36px;}
+  .glyphicon-download-alt {top:11px; font-size:inherit; color:inherit;}
   a {
-    display:block;
-    width:3 * @possibilitySpace;
-    margin: @possibilitySpace auto 0;
-    padding:12px;
-    font-size: 14px;
+    position:relative; top:32px;
+
+    &:before, &:after {content:""; position:absolute; width:5px; height:24px; background-color:#fff;}
+    &:before {left:-6px;}
+    &:after {right:-6px;}
   }
 }
 
-.advantage {
-  .ratingIcons('+', #62C462, #51A351, #51A351);
-}
-.disadvantage {
-  .ratingIcons('-', #EE5F5B, #BD362F, #BD362F);
-}
+.possibility-subscribe,
+.possibility-download {margin:0 100%/24 80px; border:1px solid @mainGreen; border-radius:16px;}
+.possibility-download {border-color:#ccc;}
+.disadvantage .glyphicon {color:#d4544b;}

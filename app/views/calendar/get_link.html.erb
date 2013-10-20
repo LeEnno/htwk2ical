@@ -1,62 +1,58 @@
-<% if @canceled %>
-  <div class="alert alert-error alert-block">
-    <h3>Mist</h3>
-    Das ist wohl etwas schief gelaufen. Gehe zurück und überprüfe bitte deine Eingaben!
+<div class="content-wrapper">
+
+  <% if @canceled %>
+    <div class="alert alert-error alert-block">
+      <h3>Mist</h3>
+      Das ist wohl etwas schief gelaufen. Gehe zurück und überprüfe bitte deine Eingaben!
+    </div>
+  <% else %>
+
+  <p class="generated-link">
+    Dein persönlicher <strong>Kalender-Link</strong><br />
+    <span class="calendar-url">http://<%= request.host %><strong>/<%= @secret %>/</strong></span>
+  </p>
+
+
+  <div class="row possibilities width-wrapper-sm">
+    <div class="col-sm-5 possibility-subscribe">
+      <h2>
+        Kalender<br />
+        <strong>abonnieren</strong>
+      </h2>
+      <p class="advantage">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+        <strong>automatische</strong> Aktualisierung bei Änderungen
+      </p>
+      <p class="disadvantage">
+        <span class="glyphicon glyphicon-minus-sign"></span>
+        Falls du nicht weißt, wie man einen Kalender abonniert, musst du eine <strong>kurze Anleitung</strong> lesen ;)
+      </p>
+      <p class="text-center">
+        <%= link_to '» zu den Anleitungen', '#', :id => 'show-instructions', :class => 'btn btn-success btn-lg' %>
+      </p>
+    </div>
+
+    <div class="col-sm-5 possibility-download">
+      <h2>
+        Kalender<br />
+        <strong>herunterladen</strong>
+      </h2>
+      <p class="advantage">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+        <strong>einfach</strong> herunterladen und im Programm der Wahl importieren
+      </p>
+      <p class="disadvantage">
+        <span class="glyphicon glyphicon-minus-sign"></span>
+        <strong>keine</strong> automatische Aktualisierung bei Änderungen
+      </p>
+      <p class="text-center">
+        <%= link_to '<span class="glyphicon glyphicon-download-alt"></span> Download'.html_safe, calender_get_path(:calendar_secret => @secret, :locale => nil), :class => 'btn btn-default btn-lg' %>
+      </p>
+    </div>
   </div>
-<% else %>
 
-<p class="header-addition" xmlns="http://www.w3.org/1999/html">
-  Das war's schon. Du rockst!
-</p>
-<h1 class="instruction">Dein Stundenplan ist bereit für dich!</h1>
+  
+  <%= render('shared/app_instructions') %>
 
-<hr />
-
-<section class="hero-unit generated-link">
-    <p>
-      ... und hier ist der Link:<br />
-      <span class="calendar-url">http://<%= request.host %><strong>/<%= @secret %>/</strong></span>
-      <span class="selection-hint">(<strong>Dreifachklick</strong> zum Markieren, danach <strong>Strg+C</strong> bzw. <strong>⌘+C</strong> zum Kopieren)</span>
-    </p>
-</section>
-
-
-<section class="row possibilities">
-  <div class="span2">&nbsp;</div>
-
-  <div class="span4 hero-unit">
-    <h2>
-      Kalender<br />
-      <strong>abonnieren</strong>
-    </h2>
-    <p class="advantage">
-      <strong>automatische</strong> Aktualisierung bei Änderungen
-    </p>
-    <p class="disadvantage">
-      Falls du nicht weißt, wie man einen Kalender abonniert, musst du eine <strong>kurze Anleitung</strong> lesen ;)
-    </p>
-    <%= link_to '» zu den Anleitungen', '#', :id => 'show-instructions', :class => 'btn btn-primary' %>
-  </div>
-
-  <div class="span4 hero-unit">
-    <h2>
-      Kalender<br />
-      <strong>herunterladen</strong>
-    </h2>
-    <p class="advantage">
-      <strong>einfach</strong> herunterladen und im Programm der Wahl importieren
-    </p>
-    <p class="disadvantage">
-      <strong>keine</strong> automatische Aktualisierung bei Änderungen
-    </p>
-    <%= link_to 'Download', calender_get_path(:calendar_secret => @secret, :locale => nil), :class => 'btn btn-success' %>
-  </div>
-
-  <div class="span2">&nbsp;</div>
-</section>
-
-<hr />
-
-<%= render('shared/app_instructions') %>
-
-<% end %>
+  <% end %>
+</div>
