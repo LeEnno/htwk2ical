@@ -1,19 +1,17 @@
 .contact-details {
-  text-align: center;
+  margin-top:100px; font-size:1.7em; color:@mainGreen; text-align:center;
 
-  .span4 {margin-bottom: 96px;}
+  a {
+    display:block; margin-bottom:60px;
 
-  h2 {
-    height:91px;
-    margin-bottom: 24px;
-    font-weight: @alternatingFontWeight;
-    // TODO fix
-    // .hide-text();
+    &:hover {
+      text-decoration:none;
+      
+      span {color:@mainGreen;}
+    }
   }
 
-  p {font-size:16px;}
+  span {display:block; height:140px; font-size:5em;}
 }
-
-.contact-twitter h2 {background: image-url('icons/twitter.png') center top no-repeat;}
-
-.contact-mail h2 {background: image-url('icons/mail.png') center top no-repeat;}
+.contact-twitter {background: image-url('icons/twitter.png') center 8px no-repeat;}
+.contact-adn {background: image-url('icons/adn.png') center 16px no-repeat;}

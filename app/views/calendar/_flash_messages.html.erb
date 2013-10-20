@@ -1,5 +1,5 @@
 <% if flash[:error] || flash[:notice] -%>
-  <div class="alert alert-error alert-block">
+  <div class="alert alert-danger">
     <h3>Ups?! Da ist wohl etwas schiefgelaufen.</h3>
     <%=h flash[:error] || flash[:notice] %>
   </div>

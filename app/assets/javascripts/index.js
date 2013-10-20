@@ -18,7 +18,8 @@ $(function () {
   $contact.click(function (e) {
 
     // weird concatenation stuff for marking spam bots' lives a little harder
-    var address = '@' + 'googlemail.com',
+    console.log("huhu");
+    var address = '@' + 'gmail.com',
         subject = 'HTWK2iCal';
     address = 'mailto:enricoschlag' + address;
     $contact.attr('href', address + '?subject=' + subject);
