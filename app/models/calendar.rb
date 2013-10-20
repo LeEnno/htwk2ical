@@ -121,8 +121,7 @@ class Calendar < ActiveRecord::Base
 
     courses.each do |course|
       title = course.custom_name || course.title
-      id_str = course.id.to_s
-      courses_cache[id_str] = title
+      courses_cache[course.id.to_s] = title
     end
 
     courses_cache
