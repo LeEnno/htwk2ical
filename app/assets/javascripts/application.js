@@ -20,7 +20,7 @@
 //= require jquery.ui.position
 //= require jquery.ui.autocomplete
 //
-//= require twitter/bootstrap
+//= require bootstrap/js/bootstrap.min
 //
 //= require jquery.cookie
 //

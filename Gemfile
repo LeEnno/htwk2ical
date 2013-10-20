@@ -4,17 +4,23 @@ ruby '1.9.3'
 
 gem 'rails', '>= 3.2.6'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development, :test do
   gem 'sqlite3'
   gem 'mysql2'
+
+  # LiveReload 
+  gem 'guard-livereload', :require => false
+  gem 'rack-livereload'
+  gem 'rb-fsevent',       :require => false
 end
+
+
 group :production do
   gem 'pg'
   gem 'thin'
 end
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -26,16 +32,11 @@ group :assets do
 
   gem 'therubyracer'
   gem 'less-rails'
-  gem 'twitter-bootstrap-rails'
+  # gem 'twitter-bootstrap-rails'
 end
+
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 gem 'exception_notification'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
