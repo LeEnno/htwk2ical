@@ -14,7 +14,7 @@ $(function () {
     $(this).hide().before(
       $('<input>').attr({
         id:    sgAutocompleteInputID,
-        class: 'studium-generale-autocomplete',
+        class: 'studium-generale-autocomplete form-control',
         type:  'text'
 
       // set up autocomplete and give callback
@@ -26,28 +26,20 @@ $(function () {
         
         // add inputs before (and give class for easy removing)
         $(this).before(
-          $('<input>').attr({
-            checked: 'checked',
-            id:      'course_ids_' + sgCourseID,
-            name:    'course_ids[]',
-            type:    'checkbox',
-            value:   sgCourseID,
-            class:   'input-studium-generale'
-          }),
-          '&nbsp;',
-          $('<input>').attr({
-            id:    'course_aliases_' + sgCourseID,
-            name:  'course_aliases[' + sgCourseID + ']',
-            type:  'text',
-            value: sgCourseTitle,
-            class: 'input-studium-generale'
-          }),
-          $('<input>').attr({
-            name:  'subject_ids[]',
-            type:  'hidden',
-            value: sgSubjectID,
-            class: 'input-studium-generale'
-          })
+          '<div class="input-group">' +
+            '<span class="input-group-addon">' +
+              '<input type="checkbox" class="input-studium-generale"' +
+                     'id="course_ids_' + sgCourseID + '" name="course_ids[]"' +
+                     'value="' + sgCourseID + '" checked />' +
+            '</span>' +
+            '<input type="text" class="input-studium-generale form-control"' +
+                   'id="course_aliases_' + sgCourseID + '"' +
+                   'name="course_aliases[' + sgCourseID + ']"' +
+                   'value="' + sgCourseTitle + '" />' +
+            '<input type="hidden" class="input-studium-generale"' +
+                   'name="subject_ids[]"' +
+                   'value="' + sgSubjectID + '">' +
+          '</div>'
         ).remove();
 
       // init popup for entering name
@@ -60,7 +52,9 @@ $(function () {
       }).on('keypress', function() {
         $(this).tooltip('destroy');
       })
-    );
+    
+    // hide class for correct line-height
+    ).parent().removeClass('studium-generale-ellipses');
     
     $('#' + sgAutocompleteInputID).focus().tooltip('show');
   });
@@ -71,10 +65,13 @@ $(function () {
   
   // clicking batch-selector selects all corresponding checkboxes
   $('.batch-selector').change(function () {
-    var doCheck = $(this).is(':checked');
-    $(this).parent().find('input[type="checkbox"]').each(function () {
+    var $this = $(this),
+        doCheck = $this.is(':checked');
+      console.log("doCheck:", doCheck);
+    $('#' + $this.data('target')).find('input[type="checkbox"]').each(function () {
       $(this).prop('checked', doCheck);
     });
+    return true;
   });
 
 
@@ -82,12 +79,12 @@ $(function () {
   var $tooltipInput,
       $chooseCourses = $('.choose-courses')
         .on('change', 'input[type="checkbox"]', function () {
-          var $parent      = $(this).parent(),
+          var $parent      = $(this).closest('.subject-courses-wrapper'),
               numUnchecked = $parent
                 .find('input[type="checkbox"]')
                 .not('.batch-selector')
                 .not(':checked').length;
-          $parent.find('.batch-selector').prop('checked', numUnchecked < 1);
+          $parent.next().find('.batch-selector').prop('checked', numUnchecked < 1);
 
 
         // show tooltip on first hover
@@ -109,8 +106,8 @@ $(function () {
           $tooltipInput.tooltip({
             title:     'Klicke in das Textfeld und bestimme den Namen des Moduls selbst.',
             trigger:   'manual',
-            placement: 'right',
-            html:      true
+            html:      true,
+            container: 'body'
           }).tooltip('show');
 
         // pulsate tooltip as soon as it's there

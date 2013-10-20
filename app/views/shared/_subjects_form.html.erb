@@ -14,6 +14,7 @@
           %>
           <span class="subject-title-bg">
             <%=
+              # TODO DRY
               # we have to overwrite ID because of "[]"-characters
               text_field_tag 'subject-titles[]', #name
                              subject.extended_title, # value
@@ -34,6 +35,7 @@
     <span class="subject-title-bg active">
       <%= next_btn unless @landing_page.nil? %>
       <%=
+        # TODO DRY
         # we have to overwrite ID because of "[]"
         text_field_tag 'subject-titles[]', #name
                        nil, # value

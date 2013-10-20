@@ -7,69 +7,65 @@
     <title><%= content_for?(:title) ? yield(:title) : 'HTWK2iCal' %></title>
     <%= csrf_meta_tags %>
 
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
-    <![endif]-->
-
     <%= stylesheet_link_tag 'application', :media => 'all' %>
 
-    <!-- For third-generation iPad with high-resolution Retina display: -->
-    <!-- Size should be 144 x 144 pixels -->
+    <%# For third-generation iPad with high-resolution Retina display: %>
+    <%# Size should be 144 x 144 pixels %>
     <%#= favicon_link_tag 'images/apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
 
-    <!-- For iPhone with high-resolution Retina display: -->
-    <!-- Size should be 114 x 114 pixels -->
+    <%# For iPhone with high-resolution Retina display: %>
+    <%# Size should be 114 x 114 pixels %>
     <%#= favicon_link_tag 'images/apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
 
-    <!-- For first- and second-generation iPad: -->
-    <!-- Size should be 72 x 72 pixels -->
+    <%# For first- and second-generation iPad: %>
+    <%# Size should be 72 x 72 pixels %>
     <%#= favicon_link_tag 'images/apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
 
-    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-    <!-- Size should be 57 x 57 pixels -->
+    <%# For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: %>
+    <%# Size should be 57 x 57 pixels %>
     <%#= favicon_link_tag 'images/apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
 
-    <!-- For all other devices -->
-    <!-- Size should be 32 x 32 pixels -->
+    <%# For all other devices %>
+    <%# Size should be 32 x 32 pixels %>
     <%#= favicon_link_tag 'images/favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body class="<%= @landing_page.nil? ? 'not-landing-page' : 'landing-page' %>">
-
-    <div class="navbar navbar-fixed-top navbar-inverse">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
+    
+    <div class="width-wrapper-lg">
+      <nav class="navbar navbar-default navbar-main" role="navigation">
+        <%# for mobile %>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Navigation anzeigen/ausblenden</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
-          </a>
-          <%= link_to 'HTWK2iCal', root_path, :class => 'brand' %>
-          <div class="container nav-collapse">
-            <ul class="nav">
-              <li><%= link_to 'Kalender erstellen', calendar_path, :class => @add_calendar_page.nil? ? '' : 'active' %></li>
-              <li><%= link_to 'FAQ', faq_path, :class => @faq_page.nil? ? '' : 'active'  %></li>
-              <li><%= link_to 'Kontakt', contact_path, :class => @contact_page.nil? ? '' : 'active'  %></li>
-              <li><%= link_to 'Impressum', imprint_path, :class => @imprint_page.nil? ? '' : 'active'  %></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+          </button>
+          <%= link_to 'HTWK2iCal', root_path, :class => 'navbar-brand' %>
         </div>
-      </div>
+
+        <div class="collapse navbar-collapse navbar-ex1-collapse navbar-inverse pull-right">
+          <ul class="nav navbar-nav">
+            <li><%= link_to 'Kalender erstellen', calendar_path, :class => @add_calendar_page.nil? ? '' : 'active' %></li>
+            <li><%= link_to 'FAQ', faq_path, :class => @faq_page.nil? ? '' : 'active'  %></li>
+            <li><%= link_to 'Kontakt', contact_path, :class => @contact_page.nil? ? '' : 'active'  %></li>
+            <li><%= link_to 'Impressum', imprint_path, :class => @imprint_page.nil? ? '' : 'active'  %></li>
+          </ul>
+        </div><%# /.navbar-collapse %>
+      </nav>
     </div>
 
-    <div class="container">
-      <%= yield %>
 
-      <hr />
+    <%= yield %>
 
-      <p class="footer muted">
-        HTWK2iCal wird unterstützt durch <%= link_to 'Pictrs.com, das Shopsystem für Fotografen', 'http://www.pictrs.com' %>.
-      </p>
-    </div> <!-- /container -->
 
-    <!-- Javascripts
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    <p class="footer muted">
+      HTWK2iCal wird unterstützt durch <%= link_to 'Pictrs.com, das Shopsystem für Fotografen', 'http://www.pictrs.com' %>.
+    </p>
+
+
+    <%# Javascripts
+    ----------------------------------------------------------------------------- %>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
     <%= javascript_include_tag 'application' %>

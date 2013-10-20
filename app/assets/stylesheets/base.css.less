@@ -1,6 +1,7 @@
-
 // GENERIC
 // -----------------------------------------------------------------------------
+
+body {background:image-url('layout/pattern3.png') repeat top left; background-attachment:fixed; font-weight:300;}
 
 h1 {
   text-align:center;
@@ -13,41 +14,45 @@ hr {
   #gradient > .fade();
 }
 
+.navbar-main {
+  margin:12px 0;
+  background:transparent;
+  border:none;
+  font-size:1.2em;
+
+  .navbar-inverse {background:transparent;}
+
+  @navColor: #ccc;
+  .navbar-brand {
+    font-size:1.5em;
+    color:@navColor;
+
+    &:hover {color:#fff;}
+  }
+  .navbar-nav>li>a {color:@navColor;}
+}
+
 
 // BOOTSTRAP OVERRIDES
 // -----------------------------------------------------------------------------
 
-.alert h3 {
-  margin-top:0;
-}
-
+.alert h3 {margin-top:0;}
 .popover-title {font-weight:bold;}
-
-.navbar {
-  margin-bottom:40px;
-  position:static;
-
-  .nav {
-    float:right;
-
-    a.active {
-      color:white;
-      font-weight:bold;
-    }
-  }
-}
+.tooltip-inner {max-width:220px; padding:8px;}
+.row {margin:0;}
 
 
 // CLASSES
 // -----------------------------------------------------------------------------
 
+.width-wrapper-lg {max-width:1000px; margin:0 auto;}
+.width-wrapper-sm {max-width:845px; margin:0 auto;}
+
 .header-addition {
   text-align:center;
-  line-height:150%;
-  font {
-    size:18px;
-    weight:@alternatingFontWeight;
-  }
+  line-height:140%;
+  font-size:1.3em;
+  weight:@alternatingFontWeight;
   color:@lighterGrey;
 }
 
@@ -71,7 +76,11 @@ hr {
   }
 }
 
-.footer {text-align:center;}
+.footer {
+  margin:40px 0; text-align:center; color:#ccc; font-size:1.2em;
+
+  a {color:#fff;}
+}
 
 
 // MEDIA-QUERY ADDITIONS

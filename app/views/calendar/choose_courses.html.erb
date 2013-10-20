@@ -1,86 +1,98 @@
 <%= render :partial => 'flash_messages' %>
 
-<h1 class="instruction">Wähle Module aus, die in <br/>deinem Stundenplan angezeigt werden sollen</h1>
+<div class="choose-courses-wrapper">
+  <h1 class="instruction">
+    Wähle Module aus, die in<br/>
+    deinem Stundenplan angezeigt werden sollen
+  </h1>
 
-<%
-   # +1 because of "add more subjects?" column
-   rows_max     = ((@subjects.size.to_f + 1) / 2).ceil
-   cols_per_row = 2
-   do_break     = false
-%>
+  <%= form_tag(calendar_link_path, :class => 'choose-courses width-wrapper-lg') do -%>
+    <% @subjects.each_with_index do |subject, i|  %>
+      
+      <%
+        id          = subject[:id]
+        title       = subject[:title]
+        courses     = subject[:courses]
+        row_is_open = false
+      %>
+      <h2><%= title %></h2>
 
-<%= form_tag(calendar_link_path, :class => 'choose-courses') do -%>
-  <% 0.upto(rows_max - 1) do |i|  %>
-    <hr />
-    <div class="row">
+      <div id="subject-courses-wrapper-<%= id %>" class="subject-courses-wrapper">
 
-      <% 0.upto(cols_per_row - 1) do |j| %>
-        <%
-          break if do_break
-          index        = i * 2 + j # i rows + current column
-          subject      = @subjects[index]
-          class_to_add = subject.nil? ? ' alternating-action' : ''
-        %>
+        <% courses.each_with_index do |course, j| %>
 
-        <div class="span6 <%= class_to_add %>">
-          <%
-            if subject.nil?
-              do_break = true
-            %>
-              <h2>
-                Du hast Module aus einem<br />
-                anderen Studiengang belegt?
-              </h2>
+          <% if j % 3 == 0 %>
+            <div class="row">
+            <% row_is_open = true %>
+          <% end %>
 
-            <%= link_to 'Module aus anderem Studiengang hinzufügen',
-                        @choose_subjects_link,
-                        :class => 'btn btn-primary',
-                        :id    => 'choose-more-subjects-cta' %>
-
-            <%
-            else
-              id      = subject[:id]
-              title   = subject[:title]
-              courses = subject[:courses]
-            %>
-              <h2><%= title %></h2>
-
-              <% courses.each do |course| %>
+          <div class="col-sm-4">
+            <div class="input-group">
+              <span class="input-group-addon">
                 <%= check_box_tag 'course_ids[]',
                                   course.id,
                                   :checked,
                                   :id => "course_ids_#{course.id}" %>
-                <%= text_field_tag "course_aliases[#{course.id}]",
-                                   course.title %>
-                <br />
-              <% end -%>
-              <%= hidden_field_tag 'subject_ids[]', id %>
+              </span>
+              <%= text_field_tag "course_aliases[#{course.id}]",
+                                 course.title,
+                                 :class => 'form-control' %>
+            </div> <%# /.input-group %>
+          </div> <%# /.col-sm-4 %>
+         
+          <% if j % 3 == 2 %>
+            </div> <%# /.row %>
+            <% row_is_open = false %>
+          <% end %>
+        
+        <% end %> <%# end courses.each_with_index %>
 
-              <%# studium generale #%>
-              <% if index == 0 %>
-                <%= link_to 'Studium Generale hinzufügen?', '#',
-                            :id    => "studium_generale_link",
-                            :class => 'studium-generale-link' %>
-              <% end %>
+        <%= hidden_field_tag 'subject_ids[]', id %>
 
 
-              <%# batch selector #%>
-              <hr class="separate-batch-selector" />
-              <%= check_box_tag "uncheck_#{id}",
-                                nil,
-                                :checked,
-                                :class => 'batch-selector' %>
-              <%= label_tag "uncheck_#{id}", 'alle Module' %>
+        <%# studium generale %>
+        <% if i == 0 %>
+          <%# TODO adjust for Studium Generale %>
+          <% if !row_is_open %>
+            <div class="row">
+            <% row_is_open = true %>
+          <% end %>
+          <div class="col-sm-4 studium-generale-ellipses">
+          
+            <%= link_to 'Studium Generale hinzufügen?', '#',
+                        :id    => "studium_generale_link",
+                        :class => 'studium-generale-link' %>
+          </div>
+        <% end %> <%# end i == 0 %>
 
-            <% end # subject.nil? %>
+        <%= '</div>'.html_safe if row_is_open %> <%# /.row %>
 
-        </div><!-- /.span6-->
-      <% end -%>
+      </div> <%# /#subject-courses-wrapper-#{id}  %>
 
-    </div><!-- /.row -->
-  <% end %>
 
-  <hr />
+      <%# batch selector %>
+      <p class="row text-center">
+        <%= check_box_tag "uncheck_#{id}",
+                          nil,
+                          :checked,
+                          :class => 'batch-selector',
+                          :'data-target' => "subject-courses-wrapper-#{id}" %>
+        <%= label_tag "uncheck_#{id}", 'alle Module' %>                
+      </p>
 
-  <%= submit_tag 'Kalender erstellen', :class => 'btn btn-success' %><br />
-<% end %><!-- /form -->
+      <hr />
+    <% end %> <%# end @subjects.each_with_index %>
+
+
+    <p class="text-center choose-more-subjects-wrapper">
+      Du hast Module aus einem anderen Studiengang belegt?<br />
+      <%= link_to 'Module aus anderem Studiengang hinzufügen',
+                  @choose_subjects_link,
+                  :class => 'btn-link btn-success',
+                  :id    => 'choose-more-subjects-cta' %>
+    </p>
+
+
+    <%= submit_tag 'Kalender erstellen', :class => 'btn btn-success btn-lg btn-create-calendar' %><br />
+  <% end %> <%# /form %>
+</div> <%# /.choose-courses-wrapper %>

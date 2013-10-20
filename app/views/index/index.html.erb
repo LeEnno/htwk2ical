@@ -7,61 +7,99 @@
   <%= render('shared/subjects_form') %>
 </header>
 
-<hr />
 
-<p class="header-addition">
-  Im Digiboard einloggen nur um zu checken, wann du heute los musst? Das ist Vergangenheit!
-</p>
-<h1 class="features-header">Dein Stundenplan. So, wie du ihn immer wolltest.</h1>
+<div class="features-wrapper">
+  <div class="width-wrapper-lg">
 
-<div class="features-details">
-  <div class="row">
-    <div class="span4">
-      <h2>Am Computer, am Smartphone.</h2>
-      <p>
-        Einmal erstellt kannst du von all deinen Geräten aus auf deinen Stundenplan zugreifen. Desktop-Rechner, Smartphone oder Tablet. Dein Stundenplan ist genau da, <strong>wo du ihn benötigst</strong>.
-      </p>
-    </div>
-    <div class="span4">
-      <h2>Nur Module, die du benötigst.</h2>
-      <p>
-        Musst du wissen, wann Wahlpflichfächer stattfinden, die du nicht belegst? Natürlich nicht. Ab sofort tauchen sie <strong>nicht mehr in deinem Stundenplan</strong> auf.
-      </p>
-    </div>
-    <div class="span4">
-      <h2>Eigene Modulnamen.</h2>
-      <p>
-        Immer diese langen, kryptischen Modulbezeichnungen. Schluss damit! Du kannst für jedes Modul <strong>eigene Namen</strong> vergeben. Deiner Fantasie sind dabei selbstverständlich keine Grenzen gesetzt.
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="span4">
-      <h2>Immer aktuell.</h2>
-      <p>
-        Du wartest noch auf den Prof, weil du nicht gecheckt hast, ob die Vorlesung wirklich stattfindet? Nie wieder! Dein Stundenplan <strong>aktualisiert sich selbstständig</strong>, damit du nichts verpasst.
-      </p>
-    </div>
-    <div class="span4">
-      <h2>Ein Kalender. Alle Fächer.</h2>
-      <p>
-        Wenn du Module aus anderen Studiengängen belegst, ist HTWK2iCal genau das, worauf du gewartet hast. Du kannst alle deine Module auch studiengangsübergeifend in <strong>einem Stundenplan</strong> zusammenfassen.
-      </p>
-    </div>
-    <div class="span4">
-      <h2>Alles kann, nichts muss.</h2>
-      <p>
-        Alles, was HTWK2iCal ermöglicht, <i>kannst</i> du verwenden, <em>musst</em> du aber natürlich nicht. Es ist ja schließlich <strong>dein Stundenplan</strong>.
-      </p>
-    </div>
-  </div>
-</div>
+    <h1 class="features-header">
+      Dein Stundenplan.<br />
+      Genau so, wie du ihn immer wolltest.
+    </h1>
+
+    <div class="features-details row">
+      <div class="col-sm-4">
+        <span class="glyphicon glyphicon-user"></span>
+        <h2>individuell</h2>
+        <p>
+          Nur Module, die du wirklich belegst. Mit Namen, die du bestimmst. Auch aus mehreren Studiengängen. Es ist <strong>dein persönlicher Stundenplan</strong>.
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <span class="glyphicon glyphicon-cloud"></span>
+        <h2>überall</h2>
+        <p>
+          <strong>Desktop-Rechner, Smartphone oder Tablet</strong>. Dein Stundenplan ist genau da, wo du ihn benötigst.
+        </p>
+      </div>
+      <div class="col-sm-4">
+        <span class="glyphicon glyphicon-refresh"></span>
+        <h2>tagesaktuell</h2>
+        <p>
+          Dein Stundenplan <strong>aktualisiert sich selbstständig</strong>, damit du nichts verpasst.
+        </p>
+      </div>
+    </div><%# /.features-details %>
+
+    <p class="features-cta-wrapper text-center">
+      <a href="<%= calendar_path %>" class="btn btn-success btn-lg text-center">Meinen Kalender jetzt erstellen</a><br />
+      <small class="text-muted">(du willst es doch auch)</small>
+    </p>
+
+  </div><%# /.width-wrapper-lg %>
+</div><%# /.features-wrapper %>
 
 
+<div class="whatsnew-wrapper">
+  <div class="width-wrapper-sm">
+    <p class="header-addition">Was ist neu?</p>
+    <h1 class="whatsnew-header">HTWK2iCal <strong>2.0</strong> – mit noch mehr Awesomeness</h1>
 
-<!--<h1>-->
-  <!--<%#= t :language %>: <%= t I18n.locale %>-->
-<!--</h1>-->
-<!--<p>-->
-  <!--<%#= render('intro') %>-->
-<!--</p>-->
+    <div class="whatsnew-details">
+      <div class="row">
+        <div class="col-sm-5">
+          <img class="screenshot" src="<%= image_path 'landing-key-visual.jpg' %>" alt="Screenshot Landingpage" />
+        </div>
+        <div class="col-sm-7">
+          <h2>Frisches Design</h2>
+          <p>
+            Das neue HTWK2iCal ist moderner, einen Zacken reduzierter und kommt mit grünen Highlights.
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-7">
+          <h2>Studium Generale</h2>
+          <p>
+            Auf vielfachen Wunsch hin ist es ab diesem Semester kein Problem mehr, ein Studium Generale hinzufügen.
+          </p>
+        </div>
+        <div class="col-sm-5">
+          <img class="screenshot" src="<%= image_path 'landing-studium-generale.jpg' %>" alt="Screenshot Landingpage" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-5">
+          <img src="<%= image_path 'landing-octocat.gif' %>" alt="Screenshot Landingpage" />
+        </div>
+        <div class="col-sm-7">
+          <h2>Open Source</h2>
+          <p>
+            Wenn du dich dazu berufen fühlst, darfst du HTWK2iCal bei <a href="https://github.com/LeEnno/htwk2ical">Github</a> Forken, Pulls Requesten und alles, was die coolen Kids heutzutage so machen.
+          </p>
+          <small>Noch mehr abgefahrene Octocats gibt's im <a href="http://octodex.github.com/">Octodex</a>.</small>
+        </div>
+      </div>
+    </div><%# /.whatsnew-details %>
+
+  </div><%# /.width-wrapper-sm %>
+</div><%# /.whatsnew-wrapper %>
+
+<%# i18n-Test %>
+<%#<h1>%>
+  <%#= t :language %><%#: <%= t I18n.locale %>
+<%#</h1>%#>
+<%#<p>%>
+  <%#= render('intro') %>
+<%#</p>%>

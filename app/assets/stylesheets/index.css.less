@@ -1,49 +1,46 @@
-// GENERAL
-// -----------------------------------------------------------------------------
-.landing-page { background:image-url('layout/pattern3.png') repeat top left; }
-
 // KEY VISUAL
 // -----------------------------------------------------------------------------
 .jumbo {
-  padding:36px 5% 0;
+  padding:36px 5% 120px;
 
-  h1 {
-    font-size:72px;
-    line-height:130%;
-    word-wrap:break-word;
-  }
-
-  p { font-weight:@alternatingFontWeight; }
-
-  #create-calendar-cta {
-    display:block;
-    margin:0 auto 5px;
-    padding:16px;
-    font-size:20px;
-    width:200px;
-  }
+  h1 {font-size:72px; line-height:130%; word-wrap:break-word; color:#fff;}
+  p {font-weight:@alternatingFontWeight; color:#ddd;}
+  #create-calendar-cta {display:block; margin:0 auto 5px; padding:16px; font-size:20px; width:200px;}
 }
 
-.jumbo-sub {
-  margin-bottom:30px;
-  font-size:30px;
-  text-align:center;
-  line-height:130%;
-}
+.jumbo-sub {margin-bottom:65px; font-size:30px; text-align:center; line-height:130%;}
 
 // FEATURES
 // -----------------------------------------------------------------------------
-.features-header { margin-bottom:70px; font-weight:@alternatingFontWeight; }
+.features-wrapper {width:100%; background-color:#fff; border-bottom:4px solid @mainGreen;}
+.features-header {margin:0; padding:80px 20px; font-weight:@alternatingFontWeight;}
 
 .features-details {
-  .row { margin-bottom:20px; }
+  padding-bottom:85px;
+  
+  p {margin:0 20px 10px 0; font-size:1.3em; text-align:center;}
+  .glyphicon {display:block; margin-bottom:15px; font-size:96px; text-align:center; color:@mainGreen;}
+  .glyphicon-cloud {position:relative; top:24px;}
+  h2 {margin:32px 0 52px; font-size:28px; font-weight:bold; line-height:110%; text-align:center;}
+}
 
-  h2 {
-    margin-bottom:12px;
-    font-size:28px;
-    font-weight:@alternatingFontWeight;
-    line-height:110%;
-  }
+.features-cta-wrapper {
+  padding-bottom:80px;
 
-  p { margin:0 20px 10px 0; }
+  .btn-success {margin-bottom:5px;}
+  small {font-weight:normal; font-size:0.85em;}
+}
+
+// WHATS NEW
+// -----------------------------------------------------------------------------
+.whatsnew-wrapper {width:100%; padding:70px 90px; background:#eee; border-bottom:4px solid @mainGreen;}
+.whatsnew-header {font-weight:@alternatingFontWeight;}
+
+.whatsnew-details {
+  .row {margin-top:110px;}
+  img {max-width:90%}
+  .screenshot {border-radius:4px; border:3px solid #cdcdcd;}
+  h2 {color:@mainGreen;}
+  p {margin-top:30px; font-size:1.3em;}
+  small {display:block; margin-top:30px;}
 }
