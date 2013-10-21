@@ -53,7 +53,7 @@
             <%= faq[:question] %>
           </dt>
           <% if faq[:answer] == '###app-instructions###' %>
-            <dd class="app-instruction-wrapper col-sm-7"><%= render('shared/app_instructions') %></dd>
+            <dd id="app-instructions-wrapper" class="app-instruction-wrapper col-sm-7"><%= render('shared/app_instructions') %></dd>
           <% else %>
             <dd class="col-sm-7"><%= faq[:answer] %></dd>
           <% end %>          

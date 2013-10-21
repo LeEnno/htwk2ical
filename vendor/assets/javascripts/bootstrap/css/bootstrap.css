@@ -208,12 +208,12 @@ textarea {
   background-image: none;
 }
 a {
-  color: #66b94e;
+  color: #5cb85c;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #478635;
+  color: #3d8b3d;
   text-decoration: underline;
 }
 a:focus {
@@ -1998,8 +1998,8 @@ fieldset[disabled] .btn-danger.active {
 }
 .btn-success {
   color: #ffffff;
-  background-color: #66b94e;
-  border-color: #5aaa43;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
 }
 .btn-success:hover,
 .btn-success:focus,
@@ -2007,8 +2007,8 @@ fieldset[disabled] .btn-danger.active {
 .btn-success.active,
 .open .dropdown-toggle.btn-success {
   color: #ffffff;
-  background-color: #559f3f;
-  border-color: #437e32;
+  background-color: #47a447;
+  border-color: #398439;
 }
 .btn-success:active,
 .btn-success.active,
@@ -2030,8 +2030,8 @@ fieldset[disabled] .btn-success:active,
 .btn-success.disabled.active,
 .btn-success[disabled].active,
 fieldset[disabled] .btn-success.active {
-  background-color: #66b94e;
-  border-color: #5aaa43;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
 }
 .btn-info {
   color: #ffffff;
@@ -2071,7 +2071,7 @@ fieldset[disabled] .btn-info.active {
   border-color: #46b8da;
 }
 .btn-link {
-  color: #66b94e;
+  color: #5cb85c;
   font-weight: normal;
   cursor: pointer;
   border-radius: 0;
@@ -2092,7 +2092,7 @@ fieldset[disabled] .btn-link {
 }
 .btn-link:hover,
 .btn-link:focus {
-  color: #478635;
+  color: #3d8b3d;
   text-decoration: underline;
   background-color: transparent;
 }
@@ -2132,11 +2132,6 @@ input[type="submit"].btn-block,
 input[type="reset"].btn-block,
 input[type="button"].btn-block {
   width: 100%;
-}
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('../fonts/glyphicons-halflings-regular.eot');
-  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -3175,7 +3170,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav .open > a:hover,
 .nav .open > a:focus {
   background-color: #eeeeee;
-  border-color: #66b94e;
+  border-color: #5cb85c;
 }
 .nav .nav-divider {
   height: 1px;
@@ -3314,12 +3309,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
   display: block;
 }
 .nav .caret {
-  border-top-color: #66b94e;
-  border-bottom-color: #66b94e;
+  border-top-color: #5cb85c;
+  border-bottom-color: #5cb85c;
 }
 .nav a:hover .caret {
-  border-top-color: #478635;
-  border-bottom-color: #478635;
+  border-top-color: #3d8b3d;
+  border-bottom-color: #3d8b3d;
 }
 .nav-tabs .dropdown-menu {
   margin-top: -1px;
@@ -4065,11 +4060,11 @@ textarea.input-group-sm > .input-group-btn > .btn {
   background-color: #3071a9;
 }
 .label-success {
-  background-color: #66b94e;
+  background-color: #5cb85c;
 }
 .label-success[href]:hover,
 .label-success[href]:focus {
-  background-color: #51983c;
+  background-color: #449d44;
 }
 .label-info {
   background-color: #5bc0de;
@@ -4121,7 +4116,7 @@ a.badge:focus {
 }
 a.list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
-  color: #66b94e;
+  color: #5cb85c;
   background-color: #ffffff;
 }
 .nav-pills > li > a > .badge {
@@ -4179,7 +4174,7 @@ a.list-group-item.active > .badge,
 }
 a.thumbnail:hover,
 a.thumbnail:focus {
-  border-color: #66b94e;
+  border-color: #5cb85c;
 }
 .thumbnail > img {
   margin-left: auto;
@@ -4331,7 +4326,7 @@ a.thumbnail:focus {
   animation: progress-bar-stripes 2s linear infinite;
 }
 .progress-bar-success {
-  background-color: #66b94e;
+  background-color: #5cb85c;
 }
 .progress-striped .progress-bar-success {
   background-image: -webkit-gradient(linear, 0 100%, 100% 0, color-stop(0.25, rgba(255, 255, 255, 0.15)), color-stop(0.25, transparent), color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.15)), color-stop(0.75, rgba(255, 255, 255, 0.15)), color-stop(0.75, transparent), to(transparent));
