@@ -6,13 +6,17 @@ gem 'rails', '>= 3.2.6'
 
 
 group :development, :test do
-  gem 'sqlite3'
   gem 'mysql2'
 
   # LiveReload 
   gem 'guard-livereload', :require => false
   gem 'rack-livereload'
   gem 'rb-fsevent',       :require => false
+end
+
+
+group :test do
+  gem 'sqlite3'
 end
 
 
@@ -30,7 +34,7 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
 
-  gem 'therubyracer'
+  gem 'therubyracer', '>= 0.12.0'
   gem 'less-rails'
   # gem 'twitter-bootstrap-rails'
 end
