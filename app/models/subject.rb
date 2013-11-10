@@ -37,8 +37,6 @@ class Subject < ActiveRecord::Base
     puts "updating cached_schedules..."
     
     Subject.select([:id, :title, :slug, :extended_title]).each_with_index do |s, i|
-
-      #s = Subject.find_by_title("12MI-M")
       puts (i+1).to_s + ' ' + s.title
 
       schedule_html = _fetch_schedule(s.slug || s.title, s.studium_generale?)
@@ -66,8 +64,6 @@ class Subject < ActiveRecord::Base
     puts "done"
   end
 
-
-  #private
 
   # TODO update comments
   #
@@ -126,7 +122,7 @@ class Subject < ActiveRecord::Base
   # Get the HTML-schedule for a certain subject.
   #
   # The 'subject_title' parameter must be a title as stored in courses table,
-  # i.e. 09FL-B.
+  # i.e. '09FL-B'.
   def self._fetch_schedule(slug, isStudiumGenerale = false)
     require 'uri'
     url = isStudiumGenerale \
@@ -193,7 +189,13 @@ class Subject < ActiveRecord::Base
     is_sg             = subject.studium_generale?
 
     if is_sg
-      matches     = subject.title.match(/([^\/]+)\/(.+)/)
+
+      # studium generale modules follow this pattern: name/lecturer[/lecturer]
+      matches = subject.title.match(/([^\/]+)\/(.+)/)
+      
+      # ugly fix for 'Mediendramaturgie und Videoproduktion 2 (Jürgen Kästner)'
+      matches = subject.title.match(/([^(]+)\((.+)\)/) if matches.nil?
+      
       sg_title    = matches[1]
       sg_lecturer = matches[2]
       sg_course   = Course.find_or_create_by_title(sg_title.strip)
