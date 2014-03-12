@@ -27,7 +27,7 @@ class Subject < ActiveRecord::Base
   # switch all course names with course IDs. This way we ensure less redundancy
   # and therefore less database space.
   def self.rebuild_cache
-    puts "updating subjects..."
+    print "updating subjects..."
 
     @sg_courses = {}
     _update_available_subjects
@@ -38,6 +38,12 @@ class Subject < ActiveRecord::Base
     
     Subject.select([:id, :title, :slug, :extended_title]).each_with_index do |s, i|
       puts (i+1).to_s + ' ' + s.title
+      
+      # ugly fix: skip deprecated subject '12CW-M (nicht besetzt)'
+      if s.title == '12CW-M (nicht besetzt)'
+        puts 'skipped'
+        next
+      end
 
       schedule_html = _fetch_schedule(s.slug || s.title, s.studium_generale?)
       if schedule_html.match(/503 Service Temporarily Unavailable/)
@@ -53,9 +59,9 @@ class Subject < ActiveRecord::Base
       )
     end
 
-    puts "done"
+    puts "updating cached_schedules done"
 
-    puts "saving json file for SG..."
+    print "saving json file for SG..."
     
     # TODO DRY
     # TODO constantify
