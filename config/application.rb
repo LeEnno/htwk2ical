@@ -70,7 +70,7 @@ module Htwk2ical
     # ------------------------------------------------------------------------------
 
     # calendars created before this date will be told to update
-    config.latest_valid_date = Time.new(2014, 3, 15, 15, 45)
+    config.latest_valid_date = Time.new(2014, 3, 15, 14, 45)
 
     # date and week when semester started
     config.start_date = Time.new(2014, 3, 17)
