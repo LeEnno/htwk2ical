@@ -201,7 +201,10 @@ class Subject < ActiveRecord::Base
       
       # ugly fix for 'Mediendramaturgie und Videoproduktion 2 (Jürgen Kästner)'
       matches = subject.title.match(/([^(]+)\((.+)\)/) if matches.nil?
-      
+
+      # ugly fix for 'Meeting'
+      matches = [nil, subject.title, ''] if matches.nil?
+
       sg_title    = matches[1]
       sg_lecturer = matches[2]
       sg_course   = Course.find_or_create_by_title(sg_title.strip)
