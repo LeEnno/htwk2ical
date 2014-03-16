@@ -46,10 +46,26 @@
 
         <div class="collapse navbar-collapse navbar-ex1-collapse navbar-inverse">
           <ul class="nav navbar-nav">
-            <li><%= link_to 'Kalender erstellen', calendar_path, :class => @add_calendar_page.nil? ? '' : 'active' %></li>
-            <li><%= link_to 'FAQ', faq_path, :class => @faq_page.nil? ? '' : 'active'  %></li>
-            <li><%= link_to 'Kontakt', contact_path, :class => @contact_page.nil? ? '' : 'active'  %></li>
-            <li><%= link_to 'Impressum', imprint_path, :class => @imprint_page.nil? ? '' : 'active'  %></li>
+            <li>
+              <%= link_to '<span class="glyphicon glyphicon-plus"></span> Kalender erstellen'.html_safe,
+                          calendar_path,
+                          :class => ('active' if @add_calendar_page) %>
+            </li>
+            <li>
+              <%= link_to '<span class="glyphicon glyphicon-question-sign"></span> FAQ'.html_safe,
+                          faq_path,
+                          :class => ('active' if @faq_page) %>
+            </li>
+            <li>
+              <%= link_to '<span class="glyphicon glyphicon-envelope"></span> Kontakt'.html_safe,
+                          contact_path,
+                          :class => ('active' if @contact_page) %>
+            </li>
+            <li>
+              <%= link_to '<span class="glyphicon glyphicon-info-sign"></span> Impressum'.html_safe,
+                          imprint_path,
+                          :class => ('active' if @imprint_page) %>
+            </li>
           </ul>
         </div><%# /.navbar-collapse %>
       </nav>

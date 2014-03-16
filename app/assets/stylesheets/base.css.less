@@ -7,10 +7,6 @@ hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
 
 // navigation
 .navbar-main {margin:12px 0; background:transparent; border:none; font-size:1.2em;
-  .navbar-collapse {float:right; background:transparent;}
-  .navbar-toggle {
-    &:hover, &:focus {background-color:#666;}
-  }
 
   @navColor: #ccc;
   .navbar-brand {font-size:1.5em; color:@navColor;
@@ -19,10 +15,20 @@ hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
   .navbar-nav>li>a {color:@navColor;
     &.active {color:#fff;}
   }
-}
 
-@media (max-width: 979px) {
-  .navbar-main .navbar-collapse {float:none; margin-top:10px; text-align:center;}
+  .navbar-toggle {
+    &:hover, &:focus {background-color:#666;}
+  }
+
+  .navbar-collapse {float:right; background:transparent;
+    @media (max-width: 979px) {float:none; margin-top:10px; text-align:center;}
+    a {padding-right:20px;}
+    li:last-of-type a {padding-right:15px;}
+  }
+  .glyphicon {position:relative; top:1px; left:-2px; opacity:0.7; font-size:90%;}
+  a:hover, a.active {
+    .glyphicon {opacity:1; color:@mainGreen;}
+  }
 }
 
 
