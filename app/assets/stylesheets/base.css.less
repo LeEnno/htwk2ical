@@ -2,12 +2,15 @@
 // -----------------------------------------------------------------------------
 
 body {background:image-url('layout/pattern3.png') repeat top left; background-attachment:fixed; font-weight:300;}
-
 h1 {text-align:center;}
 hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
 
+// navigation
 .navbar-main {margin:12px 0; background:transparent; border:none; font-size:1.2em;
-  .navbar-inverse {background:transparent;}
+  .navbar-collapse {float:right; background:transparent;}
+  .navbar-toggle {
+    &:hover, &:focus {background-color:#666;}
+  }
 
   @navColor: #ccc;
   .navbar-brand {font-size:1.5em; color:@navColor;
@@ -16,6 +19,10 @@ hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
   .navbar-nav>li>a {color:@navColor;
     &.active {color:#fff;}
   }
+}
+
+@media (max-width: 979px) {
+  .navbar-main .navbar-collapse {float:none; margin-top:10px; text-align:center;}
 }
 
 
@@ -56,12 +63,4 @@ hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
 
 .footer {margin:40px 0; text-align:center; color:#ccc; font-size:1.2em;
   a {color:#fff;}
-}
-
-
-// MEDIA-QUERY ADDITIONS
-// -----------------------------------------------------------------------------
-
-@media (max-width: 979px) {
-  .navbar .nav {float:none; text-align:center;}
 }
