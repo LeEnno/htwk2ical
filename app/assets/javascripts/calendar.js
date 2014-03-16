@@ -232,24 +232,24 @@ $(function () {
     var subjectCount = $('.subject-title-bg').length,
         subjectMax   = 3,
 
+        $oldInputGroup = $('.subject-title-bg.active'),
+        
         // make new inputs' ID and clone present one
         newInputID = 'subject-title-' + (++subjectCount),
-        $newEl     = $('.subject-title-bg.active')
+        $newEl     = $oldInputGroup
           .removeClass('active')
           .clone();
 
-
-    // remove +-icon (we only need it once) and aria-helper, change inputs' id,
-    // remove present value and initialize autocomplete
-    $newEl
-      .find('a, .ui-helper-hidden-accessible')
-      .css('background', 'red')
-      .remove()
-      .end()
-      .find('input') // dunno why chaining isn't working
-      .attr('id', newInputID)
-      .val('')
-      .setUpAutocomplete();
+      // remove +-icon (we only need it once) and aria-helper, change inputs'
+      // id, remove present value and initialize autocomplete
+      $newEl
+        .find('a, .ui-helper-hidden-accessible')
+        .remove()
+        .end()
+        .find('input')
+        .attr('id', newInputID)
+        .val('')
+        .setUpAutocomplete();
 
 
     // insert our new input and make it the active one if we haven't reached
@@ -260,14 +260,18 @@ $(function () {
 
 
     // remove +-icon if we have reached maximum of 3 subjects
-    var $this = $(this);
+    var $addButton = $(this);
     if (subjectCount >= subjectMax)
-      $this.fadeOut(400, function () {
-        $this.remove();
-      });
-    
+      $newEl.removeClass('input-group');
+      
     // otherwise move it down
     else
-      $this.css('top', '+=65');
+      $addButton.appendTo($newEl.find('.input-group-btn'));
+
+    // make old input group a single input wrapper
+    $oldInputGroup
+      .removeClass('input-group')
+      .find('.input-group-btn')
+      .remove();
   });
 });

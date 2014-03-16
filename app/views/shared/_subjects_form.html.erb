@@ -7,13 +7,14 @@
   <% end %>
 
   <div id="subject-title-wrapper">
+
     <%
       id_counter = 1
       unless @subjects.nil?
         @subjects.each_with_index do |subject, i|
           break if i > 2
           %>
-          <span class="subject-title-bg">
+          <div class="subject-title-bg">
             <%=
               # TODO DRY
               # we have to overwrite ID because of "[]"-characters
@@ -24,7 +25,7 @@
                              :class             => 'subject-titles form-control input-lg',
                              :'data-subject-id' => subject.id
             %>
-          </span>
+          </div>
           <%
           id_counter += 1
         end
@@ -34,8 +35,7 @@
     <% next_btn = link_to 'Weiter', calendar_courses_path, :id => 'submit-link', :class => 'btn btn-success btn-lg' %>
 
     <% if @subjects.nil? || @subjects.count < 3 %>
-      <span class="subject-title-bg active">
-        <%= next_btn unless @landing_page.nil? %>
+      <div class="input-group subject-title-bg active">
         <%=
           # TODO DRY
           # we have to overwrite ID because of "[]"
@@ -47,8 +47,12 @@
         %>
         <% id_counter += 1 %>
 
-        <%= link_to '+', '#', :id => 'add-subject-title', :class => 'btn btn-primary' if @landing_page.nil? && (@subjects.nil? || @subjects.count < 2) %>
-      </span>
+        <div class="input-group-btn">
+          <%= next_btn if @landing_page %>
+          <%= link_to '+', '#', :id => 'add-subject-title', :class => 'btn btn-primary btn-lg' if @landing_page.nil? && (@subjects.nil? || @subjects.count < 2) %>
+        </div>
+        
+      </div>
     <% end %>
     <%= next_btn if @landing_page.nil? %>
   </div>
