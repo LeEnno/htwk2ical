@@ -3,35 +3,17 @@
 
 body {background:image-url('layout/pattern3.png') repeat top left; background-attachment:fixed; font-weight:300;}
 
-h1 {
-  text-align:center;
-}
+h1 {text-align:center;}
+hr {height:1px; margin:50px 0; border:0; #gradient > .fade();}
 
-hr {
-  height:1px;
-  margin:50px 0;
-  border:0;
-  #gradient > .fade();
-}
-
-.navbar-main {
-  margin:12px 0;
-  background:transparent;
-  border:none;
-  font-size:1.2em;
-
+.navbar-main {margin:12px 0; background:transparent; border:none; font-size:1.2em;
   .navbar-inverse {background:transparent;}
 
   @navColor: #ccc;
-  .navbar-brand {
-    font-size:1.5em;
-    color:@navColor;
-
+  .navbar-brand {font-size:1.5em; color:@navColor;
     &:hover {color:#fff;}
   }
-  .navbar-nav>li>a {
-    color:@navColor;
-
+  .navbar-nav>li>a {color:@navColor;
     &.active {color:#fff;}
   }
 }
@@ -49,9 +31,7 @@ hr {
       asset-url('bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format("svg")
 }
 
-.alert {
-  margin-bottom:0; text-align:center; border-radius:0; font-weight:normal;
-
+.alert {margin-bottom:0; text-align:center; border-radius:0; font-weight:normal;
   h3 {margin-top:0; font-size:1.4em;}
 }
 .popover-title {font-weight:bold;}
@@ -67,37 +47,14 @@ hr {
 .width-wrapper-lg {max-width:1000px; margin:0 auto;}
 .width-wrapper-sm {max-width:845px; margin:0 auto;}
  
-.header-addition {
-  text-align:center;
-  line-height:140%;
-  font-size:1.3em;
-  weight:@alternatingFontWeight;
-  color:@lighterGrey;
-}
+.header-addition {text-align:center; line-height:140%; font-size:1.3em; weight:@alternatingFontWeight; color:@lighterGrey;}
 
 .alternating-action {
-
-  h2 {
-    margin-bottom:40px !important;
-    text-align:center;
-    font-size:24px;
-    font-weight:@alternatingFontWeight;
-    line-height:120%;
-    color:@lighterGrey;
-  }
-
-  .btn-primary {
-    display:block;
-    width:180px;
-    margin:0 auto;
-    padding:10px;
-    font-size:14px;
-  }
+  h2 {margin-bottom:40px !important; text-align:center; font-size:24px; font-weight:@alternatingFontWeight; line-height:120%; color:@lighterGrey;}
+  .btn-primary {display:block; width:180px; margin:0 auto; padding:10px; font-size:14px;}
 }
 
-.footer {
-  margin:40px 0; text-align:center; color:#ccc; font-size:1.2em;
-
+.footer {margin:40px 0; text-align:center; color:#ccc; font-size:1.2em;
   a {color:#fff;}
 }
 
@@ -106,8 +63,5 @@ hr {
 // -----------------------------------------------------------------------------
 
 @media (max-width: 979px) {
-  .navbar .nav {
-    float:none;
-    text-align:center;
-  }
+  .navbar .nav {float:none; text-align:center;}
 }

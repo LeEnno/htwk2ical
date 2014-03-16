@@ -7,34 +7,17 @@
 
 // STYLES
 // -----------------------------------------------------------------------------
-.choose-app-header {
-  display:none;
-  height:@appHeaderWidth;
-  text-align:center;
-}
+.choose-app-header {display:none; height:@appHeaderWidth; text-align:center;}
 
-#app-instructions {
-  display:none; position:relative; max-width:500px; margin:0 auto;
-
+#app-instructions {display:none; position:relative; max-width:500px; margin:0 auto;
   &.faq {display:block; margin-bottom:0;}
 }
 
 .panel-default > .panel-heading {background-color:transparent; font-weight:@alternatingFontWeight;}
 
-.panel-body {
-  font-weight:normal;
-
-  ol {
-    margin:0 0 0 20px;
-    padding:@appInstructionPadding 0;
-  }
-
-  li {
-    margin: 0 0 @appInstructionFontSize / 2 @appInstructionPadding;
-    font-size: @appInstructionFontSize;
-    line-height: 150%;
-  }
-
+.panel-body {font-weight:normal;
+  ol {margin:0 0 0 20px; padding:@appInstructionPadding 0;}
+  li {margin: 0 0 @appInstructionFontSize / 2 @appInstructionPadding; font-size: @appInstructionFontSize; line-height: 150%;}
   p {margin-left:5px; font-size:@appInstructionFontSize;}
 }
 .faq .panel-body {
@@ -44,9 +27,7 @@
 
 .panel-heading {padding:0;}
 
-.accordion-toggle {
-  display:block; padding:10px 64px; background-position:22px center; background-repeat:no-repeat;
-
+.accordion-toggle {display:block; padding:10px 64px; background-position:22px center; background-repeat:no-repeat;
   &.google    {background-image:image-url("icons/google.png")}
   &.outlook   {background-image:image-url("icons/outlook.png");}
   &.lightning {background-image:image-url("icons/lightning.png");}

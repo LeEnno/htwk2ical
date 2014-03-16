@@ -1,19 +1,7 @@
 // GENERAL
 // -----------------------------------------------------------------------------
-.choose-subjects-wrapper {
-  height:100px; // for static animation scope without elements jumping up/down
-  margin:0;
-}
-
-.subject-title-bg {
-  position:relative;
-  display:block;
-  margin:8px auto 0;
-//  width:100%;
-  max-width:500px;
-  height:36px;
-  padding:8px;
-  border-radius: 4px 6px 6px 4px;
+.choose-subjects-wrapper {height:100px; margin:0;} // height for static animation scope without elements jumping up/down
+.subject-title-bg {position:relative; display:block; margin:8px auto 0; /*width:100%;*/ max-width:500px; height:36px; padding:8px; border-radius: 4px 6px 6px 4px;
   // TODO fix
   // .transition(background 0.2s ease-in-out);
 
@@ -23,63 +11,29 @@
 }
 
 // TODO why being so specific?
-input.subject-titles {
-  // display:block;
-  // width:95.5%;
-  // margin:0 auto;
-  // padding:8px;
-  // font-size:18px;
-
+input.subject-titles {// display:block; width:95.5%; margin:0 auto; padding:8px; font-size:18px;
   // TODO fix
   // &.error {border-color:@errorText;}
 }
 
-#submit-link, #add-subject-title {
-  display: block;
-  position:absolute;
-  top:6px;
-  right:6px;
-  // width:50px;
-  padding:10px 20px;
-  font-size:1.4em;
-  font-weight:bold;
-}
-
+#submit-link, #add-subject-title {display: block; position:absolute; top:6px; right:6px; /*width:50px;*/ padding:10px 20px; font-size:1.4em; font-weight:bold;}
 .submit-btn {display:none;}
-
-.ui-autocomplete {
-  max-height:300px;
-  overflow:auto;
-}
+.ui-autocomplete {max-height:300px; overflow:auto;}
 
 // LANDING-PAGE
 // -----------------------------------------------------------------------------
-#create-calendar-wrapper {
-  color:@lighterGrey;
-  text-align: center;
-  margin-bottom:0; // for animation smoothness
-}
-
-.landing-page #subject-title-wrapper {
-  display:none; // will be shown when #create-calendar-cta is clicked
-}
+#create-calendar-wrapper {color:@lighterGrey; text-align: center; margin-bottom:0;} // margin-bottom for animation smoothness
+.landing-page #subject-title-wrapper {display:none;} // will be shown when #create-calendar-cta is clicked
 
 
 // CHOOSE COURSES
 // -----------------------------------------------------------------------------
-#add-subject-title {
-  z-index:1;
+#add-subject-title {z-index:1;
   // TODO fix
   // .transition(top 0.2s ease-in-out);
 }
-
-.not-landing-page .choose-subjects-wrapper {height:auto;}
-
-.not-landing-page .subject-title-bg {margin-top:30px;}
-
-.not-landing-page #submit-link {
-  position:static;
-  width:100px;
-  margin:80px auto 0;
-  font-weight:@alternatingFontWeight;
+.not-landing-page  {
+  .choose-subjects-wrapper {height:auto;}
+  .subject-title-bg {margin-top:30px;}
+  #submit-link {position:static; width:100px; margin:80px auto 0; font-weight:@alternatingFontWeight;}
 }

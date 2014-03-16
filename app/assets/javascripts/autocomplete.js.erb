@@ -56,9 +56,6 @@ $(function () {
           val       = $el.val()
           subjectID = $el.data('subject-id');
 
-          console.log(val, subjectID);
-          console.log("val == '':", val == '');
-
       // skip placeholder fallback and empty values
       if ($el.hasClass('hasPlaceholder') || val == '')
         return;

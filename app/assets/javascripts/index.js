@@ -14,11 +14,8 @@ $(function () {
   // Contact link
   // ---------------------------------------------------------------------------
   var $contact = $('#contact-mail');
-
   $contact.click(function (e) {
-
-    // weird concatenation stuff for marking spam bots' lives a little harder
-    console.log("huhu");
+    // weird concatenation stuff for making spam bots' lives a little harder
     var address = '@' + 'gmail.com',
         subject = 'HTWK2iCal';
     address = 'mailto:enricoschlag' + address;

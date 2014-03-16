@@ -93,15 +93,12 @@ $(function () {
           var $this = $(this);
 
           // save text-input to apply the tooltip on
-          if ($this.is('[type="text"]')) {
+          if ($this.is('[type="text"]'))
             $tooltipInput = $this;
-
-          } else if ($this.is('[type="checkbox"]')) {
+          else if ($this.is('[type="checkbox"]'))
             $tooltipInput = $this.next('[type="text"]');
-
-          } else {
+          else
             console.log("no fitting input type found for hover");
-          }
 
           // apply tooltip and show it
           $tooltipInput.tooltip({
