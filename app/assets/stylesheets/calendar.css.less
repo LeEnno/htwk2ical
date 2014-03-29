@@ -10,42 +10,42 @@
 // -----------------------------------------------------------------------------
 .pulsate-animation(@length, @count, @scale) {
   .pulsate {
-    -webkit-animation: pulsate @length ease-out;
-    -webkit-animation-iteration-count: @count;
-    -moz-animation: pulsate @length ease-out;
-    -moz-animation-iteration-count: @count;
-    -ms-animation: pulsate @length ease-out;
-    -ms-animation-iteration-count: @count;
-    -o-animation: pulsate @length ease-out;
-    -o-animation-iteration-count: @count;
-    animation: pulsate @length ease-out;
-    animation-iteration-count: @count;
+    -webkit-animation:pulsate @length ease-out;
+    -webkit-animation-iteration-count:@count;
+    -moz-animation:pulsate @length ease-out;
+    -moz-animation-iteration-count:@count;
+    -ms-animation:pulsate @length ease-out;
+    -ms-animation-iteration-count:@count;
+    -o-animation:pulsate @length ease-out;
+    -o-animation-iteration-count:@count;
+    animation:pulsate @length ease-out;
+    animation-iteration-count:@count;
   }
 
   @-webkit-keyframes pulsate {
-    0% {-webkit-transform: scale(1.0, 1.0);}
-    50% {-webkit-transform: scale(@scale, @scale);}
-    100% {-webkit-transform: scale(1.0, 1.0);}
+    0% {-webkit-transform:scale(1.0, 1.0);}
+    50% {-webkit-transform:scale(@scale, @scale);}
+    100% {-webkit-transform:scale(1.0, 1.0);}
   }
   @-moz-keyframes pulsate {
-    0% {-moz-transform: scale(1.0, 1.0);}
-    50% {-moz-transform: scale(@scale, @scale);}
-    100% {-moz-transform: scale(1.0, 1.0);}
+    0% {-moz-transform:scale(1.0, 1.0);}
+    50% {-moz-transform:scale(@scale, @scale);}
+    100% {-moz-transform:scale(1.0, 1.0);}
   }
   @-ms-keyframes pulsate {
-    0% {-ms-transform: scale(1.0, 1.0);}
-    50% {-ms-transform: scale(@scale, @scale);}
-    100% {-ms-transform: scale(1.0, 1.0);}
+    0% {-ms-transform:scale(1.0, 1.0);}
+    50% {-ms-transform:scale(@scale, @scale);}
+    100% {-ms-transform:scale(1.0, 1.0);}
   }
   @-o-keyframes pulsate {
-    0% {-o-transform: scale(1.0, 1.0);}
-    50% {-o-transform: scale(@scale, @scale);}
-    100% {-o-transform: scale(1.0, 1.0);}
+    0% {-o-transform:scale(1.0, 1.0);}
+    50% {-o-transform:scale(@scale, @scale);}
+    100% {-o-transform:scale(1.0, 1.0);}
   }
   @keyframes pulsate {
-    0% {transform: scale(1.0, 1.0);}
-    50% {transform: scale(@scale, @scale);}
-    100% {transform: scale(1.0, 1.0);}
+    0% {transform:scale(1.0, 1.0);}
+    50% {transform:scale(@scale, @scale);}
+    100% {transform:scale(1.0, 1.0);}
   }
 }
 
@@ -64,7 +64,7 @@
 
 .studium-generale-ellipses {line-height:34px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
 .studium-generale-link {margin-left:52px;}
-.separate-batch-selector {margin-top: 10px; margin-bottom: 10px;}
+.separate-batch-selector {margin-top:10px; margin-bottom:10px;}
 
 .choose-more-subjects-wrapper {padding:15px 10px 0; line-height:1.4; font-size:1.2em;}
 .btn-create-calendar {display:block; margin:80px auto 0;}
@@ -76,7 +76,7 @@
 .generated-link {font-size:1.8em; text-align:center;}
 .calendar-url {display:block; margin-top:20px; font-size:1.3em; color:@mainGreen; word-wrap:break-word;}
 
-.possibilities {margin-top: @possibilitySpace + 60px;
+.possibilities {margin-top:@possibilitySpace + 60px;
   h2 {margin:24px 10px @possibilitySpace; text-align:center; line-height:110%; font-weight:@alternatingFontWeight;}
   .disadvantage,
   .advantage {position:relative; min-height:35px; margin-bottom:@ratingIconPaddingRight; padding:0 @ratingParagraphPadding 0 @ratingIndent + @ratingParagraphPadding; font-size:1.2em; line-height:140%;}
