@@ -1,4 +1,4 @@
-HTWK2ical
+HTWK2iCal
 =========
 
 A Better Schedule for HTWK Students
