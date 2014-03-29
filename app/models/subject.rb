@@ -27,28 +27,36 @@ class Subject < ActiveRecord::Base
   # switch all course names with course IDs. This way we ensure less redundancy
   # and therefore less database space.
   def self.rebuild_cache
-    print "updating subjects..."
+    print 'updating subjects...'
 
     @sg_courses = {}
     _update_available_subjects
 
-    puts "done"
+    puts 'done', 'updating cached_schedules...'
     
-    puts "updating cached_schedules..."
-    
+    skipped   = []
+    not_found = []
+
     Subject.select([:id, :title, :slug, :extended_title]).each_with_index do |s, i|
-      puts (i+1).to_s + ' ' + s.title
+      puts ordered_title = (i+1).to_s + ' ' + s.title
       
       # ugly fix: skip deprecated subject '12CW-M (nicht besetzt)'
       if s.title == '12CW-M (nicht besetzt)'
+        skipped << ordered_title
         puts 'skipped'
         next
       end
 
       schedule_html = _fetch_schedule(s.slug || s.title, s.studium_generale?)
+
+      # catch 503 and 400 errors
       if schedule_html.match(/503 Service Temporarily Unavailable/)
-        puts "aborted because of 503 error"
+        puts 'aborted because of 503 error'
         return
+      elsif schedule_html.match(/400  Falsche Anfrage/)
+        not_found << ordered_title + " (#{s.id})"
+        puts 'not found'
+        next
       end
 
       schedule_arr = _make_array(schedule_html, s.id) # TODO into courses?
@@ -59,15 +67,18 @@ class Subject < ActiveRecord::Base
       )
     end
 
-    puts "updating cached_schedules done"
-
-    print "saving json file for SG..."
+    puts 'updating cached_schedules done'
+    print 'saving json file for SG...'
     
     # TODO DRY
     # TODO constantify
-    SubjectCache.find_or_create_by_key('studium_generales').update_attributes(:value => @sg_courses.values.to_json)
+    SubjectCache
+      .find_or_create_by_key('studium_generales')
+      .update_attributes(:value => @sg_courses.values.to_json)
 
-    puts "done"
+    puts 'done'
+    puts 'skipped subjects:', skipped if skipped.count > 0
+    puts 'subjects not found:', not_found if not_found.count > 0
   end
 
 
@@ -78,7 +89,7 @@ class Subject < ActiveRecord::Base
   # our index page for entering the subject. Returns an array containing IDs and
   # titles for each subject.
   def self._update_available_subjects
-    require "rexml/document"
+    require 'rexml/document'
 
     [
       {
@@ -146,17 +157,17 @@ class Subject < ActiveRecord::Base
   # See 'make_course_hashes' for more information.
   def self._make_array(html, subject_id)
     html = html
-      .gsub(/<!DOCTYPE.*<p><span >Mo/m, "<p><span >Mo")        # delete pre-table
+      .gsub(/<!DOCTYPE.*<p><span >Mo/m, '<p><span >Mo')        # delete pre-table
       .gsub(/<table   border.*<\/html>/m, "")                  # delete post-table
   
     html = strip_tags(html).strip                              # strip tags
-      .gsub(/&nbsp;/, "LEER")                                  # convert spaces
+      .gsub(/&nbsp;/, 'LEER')                                  # convert spaces
       .gsub(/So$/, "So\r\n\r\n\r\n\r\n")                       # handle "special" sundays
-      .gsub(/(Mo|Di|Mi|Do|Fr|Sa|So)(\r\n){4}/, "###TRENN###")  # mark day separations
-      .gsub(/(\r\n){4}/, "")                                   # delete 4x EOL
-      .gsub(/Planungswochen[^0-9]+am:/m, "")                   # delete table head
+      .gsub(/(Mo|Di|Mi|Do|Fr|Sa|So)(\r\n){4}/, '###TRENN###')  # mark day separations
+      .gsub(/(\r\n){4}/, '')                                   # delete 4x EOL
+      .gsub(/Planungswochen[^0-9]+am:/m, '')                   # delete table head
 
-    courses_splitted_by_days = html.split("###TRENN###")
+    courses_splitted_by_days = html.split('###TRENN###')
     _make_course_hashes(courses_splitted_by_days, subject_id)
   end
 
@@ -227,9 +238,8 @@ class Subject < ActiveRecord::Base
       end
 
       day_courses_arr_with_hashes = []
-      day_courses_arr_with_strings = day_courses_str.split("\r\n\r\n\r\n")
 
-      day_courses_arr_with_strings.each do |course_str|
+      day_courses_str.split("\r\n\r\n\r\n").each do |course_str|
         next if course_str.empty?
 
         course_arr   = course_str.split("\r\n")
@@ -272,7 +282,7 @@ class Subject < ActiveRecord::Base
       category.gsub!(/( \(.*\))* \((Bachelor|Master|Diplom)?.*\)/, ' (\2)')
     end
 
-    label    = title.gsub(/ \(.*\)/, "")
+    label    = title.gsub(/ \(.*\)/, '')
     label   += " – #{category}" if category.present?
 
     # TODO DRY
@@ -282,7 +292,7 @@ class Subject < ActiveRecord::Base
 
   # Replaces empty columns with empty string.
   def self._get_value_or_empty_string(val)
-    val == "LEER" ? '' : val
+    val == 'LEER' ? '' : val
   end
 
   # Converts "12, 14, 17-20" into array of week integers
