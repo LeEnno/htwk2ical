@@ -46,7 +46,7 @@ class Calendar < ActiveRecord::Base
 
   # TODO comment
   def events
-    secret = self.secret
+    secret      = self.secret
     time_format = "%Y%m%dT%H%M%S"
 
     # don't fetch events for outdated calendars
@@ -72,27 +72,27 @@ class Calendar < ActiveRecord::Base
     events        = []
 
     self.subjects.pluck(:cached_schedule).each do |cached_schedule|
-      day_counter = -1 # for starting at 0
-
-      cached_schedule.each do |day_courses|
-        day_counter += 1
+      cached_schedule.each_with_index do |day_courses, day_counter|
         day_courses.each do |course|
           course_title = courses_cache[course[:id].to_s]
           next if course_title.nil?
 
           course[:weeks].each do |week|
-            day_start           = time_ref + (week - week_ref).weeks + day_counter.days
-            event               = {}
-            event[:location]    = course[:location]
-            event[:summary]     = course_title + " (#{course[:type]})"
-            event[:description] = []
-            event[:description] << course[:lecturer] if course[:lecturer].present?
-            event[:description] << course[:notes]    if course[:notes].present?
-            event[:description] = event[:description].join(', ')
-            event[:start]       = (day_start + course[:start]).strftime(time_format)
-            event[:end]         = (day_start + course[:end]).strftime(time_format)
-            event[:uid]         = "#{secret}_#{event[:start]}-#{event[:end]}_#{course_title.parameterize}"
-            events << event
+            day_start   = time_ref + (week - week_ref).weeks + day_counter.days
+            description = []
+            description << course[:lecturer] if course[:lecturer].present?
+            description << course[:notes]    if course[:notes].present?
+            event_start = (day_start + course[:start]).strftime(time_format)
+            event_end   = (day_start + course[:end]).strftime(time_format)
+
+            events << {
+              :location    => course[:location],
+              :summary     => course_title + " (#{course[:type]})",
+              :description => description.join(', '),
+              :start       => event_start,
+              :end         => event_end,
+              :uid         => "#{secret}_#{event_start}-#{event_end}_#{course_title.parameterize}"
+            }
           end
         end
       end

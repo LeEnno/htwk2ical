@@ -68,27 +68,19 @@ class CalendarController < ApplicationController
     end
 
     @add_calendar_page = true
-    #begin
-      @secret = Calendar.new(
-        params[:subject_ids],
-        params[:course_ids],
-        params[:course_aliases]
-      ).secret
-    #rescue Exception => e
-    #  logger.info(e.message)
-    #  logger.info(e.backtrace)
-    #  @canceled = true
-    #end
+    @secret = Calendar.new(
+      params[:subject_ids],
+      params[:course_ids],
+      params[:course_aliases]
+    ).secret
   end
 
 
   def get_subjects
-    # render :json => File.read(Rails.root.join('public', 'subjects.json'))
     render :json => SubjectCache.find_by_key('subjects').value
   end
 
   def get_studium_generales
-    # render :json => File.read(Rails.root.join('public', 'studium_generales.json'))
     render :json => SubjectCache.find_by_key('studium_generales').value
   end
 
