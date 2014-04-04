@@ -21,23 +21,24 @@ $(function () {
   };
 
 
-  // TODO only on landingpage and choose_subjects
   // fetch subject data for autocomplete
-  $.get("<%= Htwk2ical::Application.routes.url_helpers.subjects_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
-    subjectData = data;
-    $(".subject-title-bg").find('input').setUpAutocomplete();
+  if ($(".subject-title-bg").length > 0) {
+    $.get("<%= Htwk2ical::Application.routes.url_helpers.subjects_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
+      subjectData = data;
+      $(".subject-title-bg").find('input').setUpAutocomplete();
 
-    // save labels only so we can use '$.inArray' for easier validation
-    $.each(subjectData, function (i, val) {
-      subjectDataArr.push(val.label);
+      // save labels only so we can use '$.inArray' for easier validation
+      $.each(subjectData, function (i, val) {
+        subjectDataArr.push(val.label);
+      });
     });
-  });
 
-  // fetch subject data for autocomplete
-  if ($('.choose-courses').length > 0) {
-    $.get("<%= Htwk2ical::Application.routes.url_helpers.studium_generales_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
-      sgData = data;
-    });
+    // fetch subject data for autocomplete
+    if ($('.choose-courses').length > 0) {
+      $.get("<%= Htwk2ical::Application.routes.url_helpers.studium_generales_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
+        sgData = data;
+      });
+    }
   }
 
 
