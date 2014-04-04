@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <title>HTWK2iCal – Impressum</title>
+    <%= csrf_meta_tags %>
+
+    <style>
+      body {background:url(<%= image_path 'imprint/body-bg.jpg' %>) #000; font-family:"Comic Sans", "Comic Sans MS"; text-align:center; color:#aaa;}
+      #home {display:block; width:400px; margin:20px auto; padding:20px; background-color:yellow; border: 4px outset #c8c800;}
+      h2 {padding:20px; border:4px dotted yellow; color:yellow; text-decoration:underline;}
+      ul {padding:0;}
+      ul:before, ul:after {content:url(<%= image_path 'imprint/banana.gif' %>);}
+      li {display:inline-block; padding:7px;}
+      marquee h1 {white-space:nowrap;}
+      .email {width:60px;}
+      table {background-image:url(<%= image_path 'imprint/table-bg.jpg' %>); color:#000;}
+    </style>
+  </head>
+  <body>
+
+    <h1><%= link_to 'HTWK2iCal', root_path, :id => 'home' %></h1>
+
+    <ul>
+      <li>
+        <%= link_to '<span class="glyphicon glyphicon-plus"></span> Kalender erstellen'.html_safe, calendar_path %>
+      </li>
+      <li>
+        <%= link_to '<span class="glyphicon glyphicon-question-sign"></span> FAQ'.html_safe, faq_path %>
+      </li>
+      <li>
+        <%= link_to '<span class="glyphicon glyphicon-envelope"></span> Kontakt'.html_safe, contact_path %>
+      </li>
+    </ul>
+
+
+    <%= yield %>
+
+    <hr />
+
+    <%= image_tag 'imprint/ie4.gif' %>
+
+    <script type="text/javascript">
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-39181133-1']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script>
+
+  </body>
+</html>

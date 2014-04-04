@@ -16,6 +16,6 @@ class IndexController < ApplicationController
 
 
   def imprint
-    @imprint_page = true
+    render :layout => 'imprint'
   end
 end
