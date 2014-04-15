@@ -22,7 +22,7 @@ class Subject < ActiveRecord::Base
   # Finally this array will be stored in the database for building the
   # calendars.
   #
-  #  In between we have to make sure all courses are stored in the database as
+  # In between we have to make sure all courses are stored in the database as
   # well. So once we get the hashified array of courses per day in a week, we
   # switch all course names with course IDs. This way we ensure less redundancy
   # and therefore less database space.
