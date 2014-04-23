@@ -68,7 +68,6 @@ $(function () {
   $('.batch-selector').change(function () {
     var $this = $(this),
         doCheck = $this.is(':checked');
-      console.log("doCheck:", doCheck);
     $('#' + $this.data('target')).find('input[type="checkbox"]').each(function () {
       $(this).prop('checked', doCheck);
     });
@@ -121,7 +120,6 @@ $(function () {
             $(this).unbind(e);
           }
         });
-
 
 
   // save changes in cookie when leaving courses page to add another subject
@@ -217,6 +215,25 @@ $(function () {
       }
     }
   }
+
+
+  // disable non selected-aliases before submit 
+  // ---------------------------------------------------------------------------
+  //
+  // This is just a temporary fix for preventing alias overwriting. This may
+  // occur when a user selects two or more subjects that contain the same
+  // course. The last value will overwrite former ones, no matter if the
+  // corresponsing checkbox is checked or not. That's why we don't transmit
+  // aliases of unchecked courses by disabling them before submitting the form.
+
+  $('#choose-courses').submit(function(e) {
+    $('input[name="course_ids[]"]')
+      .not(':checked')
+      .closest('.input-group')
+      .find('.form-control')
+      .prop('disabled', true);
+  });
+  
 
 
   /* CHOOSE SUBJECTS ACTION

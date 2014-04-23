@@ -7,7 +7,7 @@
     deinem Stundenplan angezeigt werden sollen
   </h1>
 
-  <%= form_tag(calendar_link_path, :class => 'choose-courses width-wrapper-lg') do -%>
+  <%= form_tag(calendar_link_path, :id => 'choose-courses', :class => 'choose-courses width-wrapper-lg') do -%>
     <% @subjects.each_with_index do |subject, i|  %>
       
       <%
