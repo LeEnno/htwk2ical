@@ -32,13 +32,13 @@ $(function () {
         subjectDataArr.push(val.label);
       });
     });
+  }
 
-    // fetch subject data for autocomplete
-    if ($('.choose-courses').length > 0) {
-      $.get("<%= Htwk2ical::Application.routes.url_helpers.studium_generales_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
-        sgData = data;
-      });
-    }
+  // fetch subject data for autocomplete
+  if ($('.choose-courses').length > 0) {
+    $.get("<%= Htwk2ical::Application.routes.url_helpers.studium_generales_path(:locale => nil) %>", null, function (data, textStatus, jqXHR) {
+      sgData = data;
+    });
   }
 
 
