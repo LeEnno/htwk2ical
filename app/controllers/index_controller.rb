@@ -1,6 +1,6 @@
 class IndexController < ApplicationController
   def index
-    # render('maintenance', :layout => 'maintenance') && return
+    render('maintenance', :layout => 'maintenance') && return
     @landing_page = true
   end
 
