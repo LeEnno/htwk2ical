@@ -66,8 +66,11 @@ module Htwk2ical
     config.action_controller.default_url_options = {:host => 'localhost:3000'}
 
 
-    # start custom config
-    # ------------------------------------------------------------------------------
+    # custom config
+    # --------------------------------------------------------------------------
+
+    # maintenanace mode
+    config.is_maintenance = false
 
     # calendars created before this date will be told to update
     config.latest_valid_date = Time.new(2014, 10, 4, 11, 0)

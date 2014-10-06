@@ -1,6 +1,8 @@
 class IndexController < ApplicationController
   def index
-    render('maintenance', :layout => 'maintenance') && return
+    if Htwk2ical::Application.config.is_maintenance
+      render('maintenance', :layout => 'maintenance') && return
+    end
     @landing_page = true
   end
 
