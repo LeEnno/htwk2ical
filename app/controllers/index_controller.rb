@@ -7,6 +7,11 @@ class IndexController < ApplicationController
   end
 
 
+  def donate
+    @donate_page = true
+  end
+
+
   def faq
     @faq_page = true
   end

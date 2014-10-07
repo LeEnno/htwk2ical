@@ -2,6 +2,8 @@ Htwk2ical::Application.routes.draw do
 
   scope "(:locale)", :locale => /en|de/ do
     root :to                                => 'index#index'
+    match "donate"                          => "index#donate", :as => 'donate'
+    match "donate/thx"                      => "index#donate_thx", :as => 'donate_thx'
     match "faq"                             => "index#faq", :as => 'faq'
     match "contact"                         => "index#contact", :as => 'contact'
     match "imprint"                         => "index#imprint", :as => 'imprint'

@@ -34,6 +34,11 @@
                           :class => ('active' if @add_calendar_page) %>
             </li>
             <li>
+              <%= link_to '<span class="glyphicon glyphicon-heart-empty"></span> Unterstützen'.html_safe,
+                          donate_path,
+                          :class => ('active' if @donate_page) %>
+            </li>
+            <li>
               <%= link_to '<span class="glyphicon glyphicon-question-sign"></span> FAQ'.html_safe,
                           faq_path,
                           :class => ('active' if @faq_page) %>

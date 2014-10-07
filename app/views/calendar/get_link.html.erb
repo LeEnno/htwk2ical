@@ -5,54 +5,60 @@
       <h3>Mist</h3>
       Das ist wohl etwas schief gelaufen. Gehe zurück und überprüfe bitte deine Eingaben!
     </div>
+
   <% else %>
+    <p class="generated-link">
+      Dein persönlicher <strong>Kalender-Link</strong><br />
+      <span class="calendar-url">http://<%= request.host %><strong>/<%= @secret %>/</strong></span>
+    </p>
 
-  <p class="generated-link">
-    Dein persönlicher <strong>Kalender-Link</strong><br />
-    <span class="calendar-url">http://<%= request.host %><strong>/<%= @secret %>/</strong></span>
-  </p>
 
+    <div class="row possibilities width-wrapper-sm">
+      <div class="col-sm-5 possibility-subscribe">
+        <h2>
+          Kalender<br />
+          <strong>abonnieren</strong>
+        </h2>
+        <p class="advantage">
+          <span class="glyphicon glyphicon-plus-sign"></span>
+          <strong>automatische</strong> Aktualisierung bei Änderungen
+        </p>
+        <p class="disadvantage">
+          <span class="glyphicon glyphicon-minus-sign"></span>
+          Falls du nicht weißt, wie man einen Kalender abonniert, musst du eine <strong>kurze Anleitung</strong> lesen ;)
+        </p>
+        <p class="text-center">
+          <%= link_to '» zu den Anleitungen', faq_path(:anchor => 'app-instructions-wrapper'), :id => 'show-instructions', :class => 'btn btn-success btn-lg' %>
+        </p>
+      </div>
 
-  <div class="row possibilities width-wrapper-sm">
-    <div class="col-sm-5 possibility-subscribe">
-      <h2>
-        Kalender<br />
-        <strong>abonnieren</strong>
-      </h2>
-      <p class="advantage">
-        <span class="glyphicon glyphicon-plus-sign"></span>
-        <strong>automatische</strong> Aktualisierung bei Änderungen
-      </p>
-      <p class="disadvantage">
-        <span class="glyphicon glyphicon-minus-sign"></span>
-        Falls du nicht weißt, wie man einen Kalender abonniert, musst du eine <strong>kurze Anleitung</strong> lesen ;)
-      </p>
-      <p class="text-center">
-        <%= link_to '» zu den Anleitungen', faq_path(:anchor => 'app-instructions-wrapper'), :id => 'show-instructions', :class => 'btn btn-success btn-lg' %>
-      </p>
+      <div class="col-sm-5 possibility-download">
+        <h2>
+          Kalender<br />
+          <strong>herunterladen</strong>
+        </h2>
+        <p class="advantage">
+          <span class="glyphicon glyphicon-plus-sign"></span>
+          <strong>einfach</strong> herunterladen und im Programm der Wahl importieren
+        </p>
+        <p class="disadvantage">
+          <span class="glyphicon glyphicon-minus-sign"></span>
+          <strong>keine</strong> automatische Aktualisierung bei Änderungen
+        </p>
+        <p class="text-center">
+          <%= link_to '<span class="glyphicon glyphicon-download-alt"></span> Download'.html_safe, calender_get_path(:calendar_secret => @secret, :locale => nil), :class => 'btn btn-default btn-lg' %>
+        </p>
+      </div>
     </div>
 
-    <div class="col-sm-5 possibility-download">
-      <h2>
-        Kalender<br />
-        <strong>herunterladen</strong>
-      </h2>
-      <p class="advantage">
-        <span class="glyphicon glyphicon-plus-sign"></span>
-        <strong>einfach</strong> herunterladen und im Programm der Wahl importieren
-      </p>
-      <p class="disadvantage">
-        <span class="glyphicon glyphicon-minus-sign"></span>
-        <strong>keine</strong> automatische Aktualisierung bei Änderungen
-      </p>
-      <p class="text-center">
-        <%= link_to '<span class="glyphicon glyphicon-download-alt"></span> Download'.html_safe, calender_get_path(:calendar_secret => @secret, :locale => nil), :class => 'btn btn-default btn-lg' %>
-      </p>
-    </div>
-  </div>
+    
+    <%= render('shared/app_instructions') %>
 
-  
-  <%= render('shared/app_instructions') %>
+
+    <div class="alert alert-donate">
+      <h3>Gefällt dir, was du siehst?</h3>
+      <p><%= link_to 'Unterstütze HTWK2iCal', donate_path %>, damit es so bleibt.</p>
+    </div>
 
   <% end %>
 </div>
