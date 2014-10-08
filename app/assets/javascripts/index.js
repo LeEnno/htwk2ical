@@ -11,15 +11,22 @@ $(function () {
   });
 
 
-  // Contact link
+  // Contact/Donate link
   // ---------------------------------------------------------------------------
-  var $contact = $('#contact-mail');
-  $contact.click(function (e) {
-    // weird concatenation stuff for making spam bots' lives a little harder
-    var address = '@' + 'gmail.com',
-        subject = 'HTWK2iCal';
-    address = 'mailto:enricoschlag' + address;
-    $contact.attr('href', address + '?subject=' + subject);
+  $('#contact-mail, #donate-mail').click(function (e) {
+    var isDonate = this.id == 'donate-mail',
+        address = '@' + 'gmail.com', // weird concatenation stuff for making spam bots' lives a little harder
+        subject = 'HTWK2iCal' + (isDonate ? ' unterstützen' : '');
+    address = 'mailto:enricoschlag' + address + '?subject=' +
+              encodeURIComponent(subject);
+    
+    if (isDonate) {
+      var body = 'Lieber HTWK2iCal-Entwickler bitte teile mir deine ' +
+                 'Kontodaten mit, damit ich etwas zum Bestehen von HTWK2iCal ' +
+                 'beisteuern kann. Kthxbye!';
+      address += '&body=' + encodeURIComponent(body);
+    }
+      
+    $(this).attr('href', address);
   });
-
 });
