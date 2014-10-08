@@ -9,6 +9,12 @@ class IndexController < ApplicationController
 
   def donate
     @donate_page = true
+
+    @amount_current  = SubjectCache.find_by_key('donate_amount').value.to_f
+    @amount_max      = 160
+    @amount_percent  = (100 * @amount_current / @amount_max).round(2)
+    @amount_per_term = @amount_max / 4
+    @amount_heroku   = 9
   end
 
 

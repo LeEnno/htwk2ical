@@ -5,12 +5,11 @@
 
     <div class="donate-status">
       <div class="progress">
-        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-          0%
+        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%= @amount_percent %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @amount_percent %>%;">
+          <%= @amount_percent.to_i %>%
         </div>
-        <!-- <div class="progress-bar progress-bar-muted" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="width: 10%;"></div> -->
       </div>
-      <p>Status: <strong>0€</strong> von <strong class="donate-status-goal">160€</strong> erreicht.</p>
+      <p>Status: <strong><%= format_euro @amount_current, true %></strong> von <strong class="donate-status-goal"><%= format_euro @amount_max %></strong> erreicht.</p>
     </div>
 
     <div class="row">
@@ -22,8 +21,8 @@
 
       <div class="col-sm-6">
         <h3>Und wieviel davon willst du?</h3>
-        <p><a href="https://www.heroku.com/">Heroku</a>, der Dienst, der das alles hier hostet, kriegt von mir 9$ pro Monat. Pro Semester macht das ungefähr <strong>40€</strong>. Das sollten wir hinkriegen, oder?</p>
-        <p>Da HTWK2iCal mittlerweile das vierte Semester existiert, würden <strong class="donate-status-goal">160€</strong> alle Kosten decken, die der Betrieb dieser Seite bisher verursacht hat.</p>
+        <p><a href="https://www.heroku.com/">Heroku</a>, der Dienst, der das alles hier hostet, kriegt von mir <%= format_dollar @amount_heroku %> pro Monat. Pro Semester macht das ungefähr <strong><%= format_euro @amount_per_term %></strong>. Das sollten wir hinkriegen, oder?</p>
+        <p>Da HTWK2iCal mittlerweile das vierte Semester existiert, würden <strong class="donate-status-goal"><%= format_euro @amount_max %></strong> alle Kosten decken, die der Betrieb dieser Seite bisher verursacht hat.</p>
         <p>Alles, was darüber hinaus geht, werde ich spenden.</p>
       </div>
     </div>
