@@ -21,7 +21,7 @@ $(function () {
               encodeURIComponent(subject);
     
     if (isDonate) {
-      var body = 'Lieber HTWK2iCal-Entwickler bitte teile mir deine ' +
+      var body = 'Lieber HTWK2iCal-Entwickler, bitte teile mir deine ' +
                  'Kontodaten mit, damit ich etwas zum Bestehen von HTWK2iCal ' +
                  'beisteuern kann. Kthxbye!';
       address += '&body=' + encodeURIComponent(body);
