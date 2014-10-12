@@ -247,7 +247,7 @@ $(function () {
     e.preventDefault();
 
     var subjectCount = $('.subject-title-bg').length,
-        subjectMax   = 3,
+        subjectMax   = typeof severinMax == 'undefined' ? 3 : severinMax,
 
         $oldInputGroup = $('.subject-title-bg.active'),
         

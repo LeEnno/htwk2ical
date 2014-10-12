@@ -7,6 +7,9 @@
     <title><%= content_for?(:title) ? yield(:title) : 'HTWK2iCal' %></title>
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag 'application', :media => 'all' %>
+    <% if params[:severin].present? %>
+      <script>var severinMax = 5;</script>
+    <% end -%>
   </head>
   <body class="<%= @landing_page.nil? ? 'not-landing-page' : 'landing-page' %>">
     
@@ -22,7 +25,7 @@
           </button>
           <%= link_to(root_path, :class => 'navbar-brand') do %>
             HTWK2iCal
-            <span class="label label-success">WS14/15-ready</span>
+            <span class="label label-success">WS14/15</span>
           <% end %>
         </div>
 
