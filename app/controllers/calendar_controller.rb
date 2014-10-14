@@ -17,7 +17,7 @@ class CalendarController < ApplicationController
     @now    = Time.now.strftime("%Y%m%d\T%H%M%S")
     @secret = params[:calendar_secret]
 
-    headers['Content-Disposition'] = "attachment; filename=\"HTWK2iCal\""
+    headers['Content-Disposition'] = "attachment; filename=\"HTWK2iCal.ics\""
   end
 
 
