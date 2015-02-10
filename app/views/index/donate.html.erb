@@ -1,3 +1,8 @@
+<%
+  percent_or_100 = [@amount_percent, 100].min
+  is_max_reached = percent_or_100 == 100
+%>
+
 <div class="content-wrapper content-wrapper-donate">
   <div class="width-wrapper-lg">
     
@@ -5,7 +10,7 @@
 
     <div class="donate-status">
       <div class="progress">
-        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<%= @amount_percent %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= @amount_percent %>%;">
+        <div class="progress-bar <%= is_max_reached ? 'progress-bar-success' : 'progress-bar-danger' %>" role="progressbar" aria-valuenow="<%= percent_or_100 %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= percent_or_100 %>%;">
           <%= @amount_percent.to_i %>%
         </div>
       </div>
