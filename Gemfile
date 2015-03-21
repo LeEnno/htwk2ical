@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+ruby '2.0.0'
 
-gem 'rails', '>= 3.2.6'
+gem 'rails', '~> 3.2.6'
 
 
 group :development, :test do
@@ -41,6 +41,6 @@ end
 
 
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '4.0.1'
 
 gem 'exception_notification'
