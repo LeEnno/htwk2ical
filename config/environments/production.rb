@@ -71,18 +71,20 @@ Htwk2ical::Application.configure do
     :password => ENV['GMAIL_SMTP_PASSWORD']
   }
 
-  Htwk2ical::Application.config.middleware.use ExceptionNotifier,
-    :email_prefix         => '[HTWK2iCal] ',
-    :sender_address       => %{'notifier' <notifier@example.com>},
-    :exception_recipients => [$gmail_creds[:user]],
-    :smtp_settings        => {
-      :address              => 'smtp.gmail.com',
-      :port                 => 587,
-      :authentication       => :plain,
-      :domain               => $gmail_creds[:user],
-      :user_name            => $gmail_creds[:user],
-      :password             => $gmail_creds[:password],
-      :enable_starttls_auto => true
+  Htwk2ical::Application.config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix         => '[HTWK2iCal] ',
+      :sender_address       => %{'notifier' <notifier@example.com>},
+      :exception_recipients => [$gmail_creds[:user]],
+      :smtp_settings        => {
+        :address              => 'smtp.gmail.com',
+        :port                 => 587,
+        :authentication       => :plain,
+        :domain               => $gmail_creds[:user],
+        :user_name            => $gmail_creds[:user],
+        :password             => $gmail_creds[:password],
+        :enable_starttls_auto => true
+      }
     }
 
   config.action_controller.default_url_options = {:host => 'www.htwk-stundenplan.de'}
