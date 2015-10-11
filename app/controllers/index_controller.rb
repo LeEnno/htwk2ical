@@ -4,6 +4,12 @@ class IndexController < ApplicationController
       render('maintenance', :layout => 'maintenance') && return
     end
     @landing_page = true
+
+    # some bots try to load calendars from index
+    if request.format.to_sym == :ics
+      render :text => 'No calendars to be found on index', :status => 404
+      return
+    end
   end
 
 
