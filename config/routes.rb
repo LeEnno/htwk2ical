@@ -14,5 +14,5 @@ Htwk2ical::Application.routes.draw do
 
   match "/subjects"          => "calendar#get_subjects", :as => 'subjects', :defaults => {:format => 'json'}
   match "/studium_generales" => "calendar#get_studium_generales", :as => 'studium_generales', :defaults => {:format => 'json'}
-  match ":calendar_secret"   => "calendar#get", :constraints => {:calendar_secret => /\w{8}/}, :as => 'calender_get', :constraints => {:format => 'ics'}
+  match ":calendar_secret"   => "calendar#get", :constraints => {:calendar_secret => /\w{8}/}, :as => 'calender_get', :defaults => {:format => 'ics'}
 end
