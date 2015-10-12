@@ -1,6 +1,6 @@
 Htwk2ical::Application.routes.draw do
 
-  scope "(:locale)", :locale => /en|de/, :constraints => { :format => 'html' } do
+  scope "(:locale)", :locale => /en|de/, :constraints => {:format => 'html'} do
     root :to                                => 'index#index'
     match "donate"                          => "index#donate", :as => 'donate'
     match "donate/thx"                      => "index#donate_thx", :as => 'donate_thx'
@@ -14,5 +14,5 @@ Htwk2ical::Application.routes.draw do
 
   match "/subjects"          => "calendar#get_subjects", :as => 'subjects', :defaults => {:format => 'json'}
   match "/studium_generales" => "calendar#get_studium_generales", :as => 'studium_generales', :defaults => {:format => 'json'}
-  match ":calendar_secret"   => "calendar#get", :constraints => {:calendar_secret => /\w{8}/}, :as => 'calender_get', :defaults => {:format => 'ics'}
+  match ":calendar_secret"   => "calendar#get", :constraints => {:calendar_secret => /\w{8}/}, :as => 'calender_get', :constraints => {:format => 'ics'}
 end
