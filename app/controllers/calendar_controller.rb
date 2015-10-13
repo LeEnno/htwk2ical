@@ -55,16 +55,15 @@ class CalendarController < ApplicationController
 
 
   def get_link
-    if params[:subject_ids].nil? || params[:subject_ids].blank?
+    if params[:subject_ids].blank?
       return _redirect_to_calendar_path
 
-    elsif params[:course_ids].nil? || params[:course_ids].blank?
+    elsif params[:course_ids].blank? || params[:course_aliases].blank?
       flash[:notice] = 'Bitte wähle Module, die dein Kalender beinhalten soll!'
-      return redirect_to(
-        url_for :action => 'choose_courses',
-        :test => 1,
-        :'subject-titles' => params[:subject_ids].collect {|i| Subject.find(i).title}
-      ).gsub(/:3000:3000/, ':3000') # gsub for doubled port fix
+      return redirect_to url_for(
+          :action => 'choose_courses',
+          :'subject-titles' => params[:subject_ids].collect {|i| Subject.find(i).title}
+      )
     end
 
     @add_calendar_page = true

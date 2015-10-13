@@ -63,7 +63,7 @@ module Htwk2ical
     # see http://guides.rubyonrails.org/asset_pipeline.html#precompiling-assets
     config.assets.initialize_on_precompile = true
 
-    config.action_controller.default_url_options = {:host => 'localhost:3000'}
+    # config.action_controller.default_url_options = {:host => 'localhost:3000'}
 
 
     # custom config

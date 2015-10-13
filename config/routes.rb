@@ -1,6 +1,6 @@
 Htwk2ical::Application.routes.draw do
 
-  scope "(:locale)", :locale => /en|de/, :constraints => {:format => 'html'} do
+  scope "(:locale)", :locale => /en|de/, :constraints => -> (req) { req.format.to_s =~ /html/ } do
     root :to                                => 'index#index'
     match "donate"                          => "index#donate", :as => 'donate'
     match "donate/thx"                      => "index#donate_thx", :as => 'donate_thx'
