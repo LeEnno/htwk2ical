@@ -7,7 +7,7 @@ class CalendarController < ApplicationController
   def get
     calendar = Calendar.find_by_secret(params[:calendar_secret])
     if calendar.nil?
-      render :status => 404
+      render :nothing => true, :status => 404
       return
     end
 
