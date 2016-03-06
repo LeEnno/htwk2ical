@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.2.4'
 
-gem 'rails', '~> 3.2.6'
+gem 'rails', '~> 3.2.22'
 
 
 group :development, :test do
@@ -15,19 +15,12 @@ group :development, :test do
 end
 
 
-group :test do
-  gem 'sqlite3'
-end
-
-
 group :production do
   gem 'pg'
   gem 'thin'
 end
 
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails',   '>= 3.2.3'
   gem 'coffee-rails', '>= 3.2.1'
@@ -36,7 +29,6 @@ group :assets do
 
   gem 'therubyracer', '>= 0.12.0'
   gem 'less-rails'
-  # gem 'twitter-bootstrap-rails'
 end
 
 
@@ -44,3 +36,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails', '4.0.1'
 
 gem 'exception_notification'
+
+
+# seems to be necessary for rails 3.2 to work with ruby 2.2.4
+gem 'test-unit', '~> 3.0'
