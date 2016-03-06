@@ -29,6 +29,7 @@ group :assets do
 
   gem 'therubyracer', '>= 0.12.0'
   gem 'less-rails'
+  gem 'sqlite3' # necessary to make precompiling work
 end
 
 
