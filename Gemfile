@@ -12,15 +12,16 @@ group :development, :test do
   gem 'guard-livereload', :require => false
   gem 'rack-livereload'
   gem 'rb-fsevent',       :require => false
+end
 
-  # former group `:assets`, which heroku didn't ignore when deploying, so we
-  # move it here
+
+group :assets do
   gem 'sass-rails',   '>= 3.2.3'
   gem 'coffee-rails', '>= 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer', '>= 0.12.0'
   gem 'less-rails'
-  gem 'sqlite3' # necessary to make precompiling work
+  gem 'sqlite3'
 end
 
 
