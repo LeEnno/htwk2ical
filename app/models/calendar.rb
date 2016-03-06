@@ -10,7 +10,7 @@ class Calendar < ActiveRecord::Base
 
   before_create :_generate_secret
 
-  # TODO comment
+  # makes sure only valid subjects and courses are added
   def initialize(subject_ids, course_ids)
     super()
 
@@ -26,16 +26,13 @@ class Calendar < ActiveRecord::Base
 
   # Adds transmitted aliases for selected courses. Throws error if transmitted
   # course-ID is invalid.
-  def add_aliases(course_aliases_arr, course_ids)
-    # clean unused aliases
-    course_aliases_arr.reject! { |key, val| !course_ids.include?(key) }
-
-    course_aliases_arr.each do |course_id, custom_name|
+  def add_aliases(course_aliases_hash)
+    course_aliases_hash.each do |course_id, custom_name|
       course = courses.find(course_id)
       next if course.nil?
 
       # add alias if different from actual course-title
-      if course_aliases_arr[course_id] != course.title
+      if course_aliases_hash[course_id] != course.title
         course_aliases.find_by_course_id(course_id).update_attribute(:custom_name, custom_name)
       end
     end

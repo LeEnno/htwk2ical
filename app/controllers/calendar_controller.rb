@@ -70,7 +70,8 @@ class CalendarController < ApplicationController
 
     calendar = Calendar.new(params[:subject_ids], params[:course_ids])
     calendar.save
-    calendar.add_aliases(params[:course_aliases], params[:course_ids])
+    aliases = params[:course_aliases].reject { |key, val| !params[:course_ids].include?(key) }
+    calendar.add_aliases(aliases)
     @secret = calendar.secret
   end
 
