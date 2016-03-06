@@ -11,7 +11,7 @@ class Calendar < ActiveRecord::Base
   before_create :_generate_secret
 
   # TODO comment
-  def initialize(subject_ids, course_ids, course_aliases_arr)
+  def initialize(subject_ids, course_ids)
     super()
 
     # validate subjects, add courses and create alias relationships
@@ -21,15 +21,12 @@ class Calendar < ActiveRecord::Base
 
       subjects << subject
       self.courses = Course.new_calendar_courses(course_ids)
-      add_aliases(course_aliases_arr, course_ids)
     end
   end
 
-  # Saves changes and adds transmitted aliases for selected courses. Throws
-  # error if transmitted course-ID is invalid.
+  # Adds transmitted aliases for selected courses. Throws error if transmitted
+  # course-ID is invalid.
   def add_aliases(course_aliases_arr, course_ids)
-    save
-
     # clean unused aliases
     course_aliases_arr.reject! { |key, val| !course_ids.include?(key) }
 

@@ -67,11 +67,11 @@ class CalendarController < ApplicationController
     end
 
     @add_calendar_page = true
-    @secret = Calendar.new(
-      params[:subject_ids],
-      params[:course_ids],
-      params[:course_aliases]
-    ).secret
+
+    calendar = Calendar.new(params[:subject_ids], params[:course_ids])
+    calendar.save
+    calendar.add_aliases(params[:course_aliases], params[:course_ids])
+    @secret = calendar.secret
   end
 
 
