@@ -29,7 +29,6 @@ group :assets do
 
   gem 'therubyracer', '>= 0.12.0'
   gem 'less-rails'
-  gem 'sqlite3' # necessary to make precompiling work
 end
 
 
@@ -39,5 +38,5 @@ gem 'jquery-ui-rails', '4.0.1'
 gem 'exception_notification'
 
 
-# seems to be necessary for rails 3.2 to work with ruby 2.2.4
-gem 'test-unit', '~> 3.0'
+gem 'test-unit', '~> 3.0' # necessary for rails 3.2 to work with ruby 2.2.4
+gem 'sqlite3' # necessary to make precompiling work
