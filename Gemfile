@@ -7,6 +7,7 @@ gem 'rails', '~> 3.2.22'
 
 group :development, :test do
   gem 'mysql2'
+  gem 'sqlite3' # necessary to make precompiling work
 
   # LiveReload 
   gem 'guard-livereload', :require => false
@@ -39,4 +40,3 @@ gem 'exception_notification'
 
 
 gem 'test-unit', '~> 3.0' # necessary for rails 3.2 to work with ruby 2.2.4
-gem 'sqlite3' # necessary to make precompiling work
