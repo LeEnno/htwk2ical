@@ -69,25 +69,25 @@ module Htwk2ical
     # --------------------------------------------------------------------------
 
     # maintenanace mode
-    config.is_maintenance = false
+    config.is_maintenance = true
 
     # calendars created before this date will be told to update
-    config.latest_valid_date = Time.new(2016, 9, 17, 17)
+    config.latest_valid_date = Time.new(2017, 3, 10, 19)
 
     # date and week when semester started
-    config.start_date = Time.new(2016, 8, 29)
-    config.start_week = 35
+    config.start_date = Time.new(2017, 4, 3)
+    config.start_week = 14
 
     # path to XML files for subjects and courses
-    config.all_subjects_xml_url = 'http://stundenplan.htwk-leipzig.de:8080/stundenplan/semgrp/semgrp_ws.xml'
-    config.all_courses_xml_url  = 'http://stundenplan.htwk-leipzig.de:8080/stundenplan/modul/modul_ws.xml'
+    config.all_subjects_xml_url = 'http://stundenplan.htwk-leipzig.de:8080/stundenplan/semgrp/semgrp_ss.xml'
+    config.all_courses_xml_url  = 'http://stundenplan.htwk-leipzig.de:8080/stundenplan/modul/modul_ss.xml'
 
     # ID of XML node in 'all_courses_xml_url' that contains all studium generale
     # modules
-    config.studium_generale_fakultaet_id = '%23SPLUS0AC5B0'
+    config.studium_generale_fakultaet_id = '%23SPLUS905495'
 
     # base path for single schedule per subject and studium generale
-    config.single_subjects_html_url   = 'http://stundenplan.htwk-leipzig.de:8080/ws/Berichte/Text-Listen;Studenten-Sets;name;###SLUG###?template=UNEinzelGru&weeks=35-63'
-    config.studium_generales_html_url = 'http://stundenplan.htwk-leipzig.de:8080/ws/Berichte/Text-Listen;Module;id;###SLUG###?template=UNEinzelLV&weeks=35-63'
+    config.single_subjects_html_url   = 'http://stundenplan.htwk-leipzig.de:8080/ss/Berichte/Text-Listen;Studenten-Sets;name;###SLUG###?template=UNEinzelGru&weeks=9-35'
+    config.studium_generales_html_url = 'http://stundenplan.htwk-leipzig.de:8080/ss/Berichte/Text-Listen;Module;id;###SLUG###?template=UNEinzelLV&weeks=9-35'
   end
 end
