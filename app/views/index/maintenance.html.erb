@@ -2,15 +2,12 @@
 <% term_str   = 'Wintersemester 2017/18' %>
 
 <div class="maintenance-head">
+  <small>Danke für eure Spenden 👍</small>
+ 
   <h1>Was ist mit <em>HTWK2iCal</em> passiert?</h1>
-  <p class="lead">Das verrate ich gleich, aber erstmal eine Bitte.</p>
-  <p class="lead-sub">Dieses Semester ist das erste in der 7-semestrigen Geschichte von HTWK2iCal, in dem der Betrag zur Tilgung der Betriebskosten nicht zusammen gekommen ist.<br />Lasst uns das bitte fixen.</p>
-</div>
 
-<%= render template: 'index/donate' %>
+  <img src="<%= asset_path('skepticalbaby.jpg') %>" alt="">
 
-<div class="maintenance-head">
-  <small>Back to topic...</small>
   <p class="lead">
     Der Stundenplan für das <%= term_str %> wird<br />
     hier ab <strong><%= start_date %></strong> zur Verfügung stehen.
