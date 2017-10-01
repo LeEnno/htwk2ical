@@ -157,8 +157,8 @@ class Subject < ActiveRecord::Base
   # See 'make_course_hashes' for more information.
   def self._make_array(html, subject_id)
     html = html
-      .gsub(/<!DOCTYPE.*<p><span >Mo/m, '<p><span >Mo')        # delete pre-table
-      .gsub(/<table   border.*<\/html>/m, "")                  # delete post-table
+      .gsub(/<!DOCTYPE.*<p><span class='labelone'>Mo/m, "<p><span class='labelone'>Mo") # delete pre-table
+      .gsub(/\r\n<table class='footer-border-args.*html>/m, '') # delete post-table
   
     html = strip_tags(html).strip                              # strip tags
       .gsub(/&nbsp;/, 'LEER')                                  # convert spaces

@@ -18,3 +18,5 @@
 
 # Sublime
 *.sublime-*
+
+.byebug_history
