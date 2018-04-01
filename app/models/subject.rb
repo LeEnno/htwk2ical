@@ -282,7 +282,7 @@ class Subject < ActiveRecord::Base
       category.gsub!(/( \(.*\))* \((Bachelor|Master|Diplom)?.*\)/, ' (\2)')
     end
 
-    label    = title.gsub(/ \(.*\)/, '')
+    label    = title.gsub(/ \((?!VZ|TZ).*\)/, '')
     label   += " – #{category}" if category.present?
 
     # TODO DRY
