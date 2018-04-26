@@ -12,7 +12,7 @@ DTSTART;TZID=Europe/Berlin:<%= event[:start] %>
 DTEND;TZID=Europe/Berlin:<%= event[:end] %>
 SUMMARY:<%= event[:summary].html_safe %>
 <% if event[:location].present? %>
-LOCATION:<%= event[:location] %>
+LOCATION:<%= event[:location].gsub(',', '\,') %>
 <% end %>
 SEQUENCE:0
 DESCRIPTION: <%= event[:description] %>
