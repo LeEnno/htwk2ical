@@ -24,11 +24,6 @@ class IndexController < ApplicationController
   end
 
 
-  def imprint
-    render :layout => 'imprint'
-  end
-
-
   private
 
 
