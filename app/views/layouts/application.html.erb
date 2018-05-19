@@ -51,10 +51,6 @@
                           contact_path,
                           :class => ('active' if @contact_page) %>
             </li>
-            <li>
-              <%= link_to '<span class="glyphicon glyphicon-info-sign"></span> Impressum'.html_safe,
-                          imprint_path %>
-            </li>
           </ul>
         </div><%# /.navbar-collapse %>
       </nav>
@@ -66,6 +62,11 @@
 
     <p class="footer muted">
       HTWK2iCal wird unterstützt durch <%= link_to 'Pictrs.com, das Shopsystem für Fotografen', 'http://www.pictrs.com' %>.
+
+      <ul class="footer-links">
+        <li><%= link_to 'Impressum', imprint_path %></li>
+        <li><%= link_to 'Datenschutz', privacy_path %></li>
+      </ul>
     </p>
 
 

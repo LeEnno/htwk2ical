@@ -7,6 +7,7 @@ Htwk2ical::Application.routes.draw do
     match "faq"                             => "index#faq", :as => 'faq'
     match "contact"                         => "index#contact", :as => 'contact'
     match "imprint"                         => "index#imprint", :as => 'imprint'
+    match "privacy"                         => "index#privacy", :as => 'privacy'
     match "calendar(/:subject_ids)"         => "calendar#choose_subjects", :constraints => {:subject_ids => /(-?\d+)+/}, :as => 'calendar'
     match "calendar/courses(/:subject_ids)" => "calendar#choose_courses", :constraints => {:subject_ids => /(-?\d+)+/}, :as => 'calendar_courses'
     match "calendar/link"                   => "calendar#get_link", :as => 'calendar_link'
