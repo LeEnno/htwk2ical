@@ -69,13 +69,13 @@ module Htwk2ical
     # --------------------------------------------------------------------------
 
     # maintenanace mode
-    config.is_maintenance = true
+    config.is_maintenance = false
 
     # calendars created before this date will be told to update
     config.latest_valid_date = Time.new(2018, 9, 19, 19)
 
     # date and week when semester started
-    config.start_date = Time.new(2018, 3, 15)
+    config.start_date = Time.new(2018, 10, 15)
     config.start_week = 42
 
     # path to XML files for subjects and courses
