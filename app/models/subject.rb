@@ -75,6 +75,7 @@ class Subject < ActiveRecord::Base
       .update_attribute(:value, @sg_courses.values.to_json)
 
     puts 'done'
+    puts 'test'
     puts 'skipped subjects:', skipped if skipped.count > 0
     puts 'subjects not found:', not_found if not_found.count > 0
   end
