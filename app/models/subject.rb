@@ -62,9 +62,7 @@ class Subject < ActiveRecord::Base
       schedule_arr = _make_array(schedule_html, s.id) # TODO into courses?
 
       # cache extracted
-      Subject.find(s.id).update_attributes(
-        :cached_schedule => schedule_arr
-      )
+      Subject.find(s.id).update_attribute(:cached_schedule, schedule_arr)
     end
 
     puts 'updating cached_schedules done'
@@ -74,7 +72,7 @@ class Subject < ActiveRecord::Base
     # TODO constantify
     SubjectCache
       .find_or_create_by_key('studium_generales')
-      .update_attributes(:value => @sg_courses.values.to_json)
+      .update_attribute(:value, @sg_courses.values.to_json)
 
     puts 'done'
     puts 'skipped subjects:', skipped if skipped.count > 0
@@ -130,7 +128,7 @@ class Subject < ActiveRecord::Base
       # TODO DRY
       # TODO constantify
       if !mode_hash[:is_sg_mode]
-        SubjectCache.find_or_create_by_key('subjects').update_attributes(:value => subjects_arr.to_json)
+        SubjectCache.find_or_create_by_key('subjects').update_attribute(:value, subjects_arr.to_json)
       end
     end
   end
