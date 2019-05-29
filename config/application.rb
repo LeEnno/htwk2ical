@@ -87,7 +87,7 @@ module Htwk2ical
     config.studium_generale_fakultaet_id = '%23SPLUS905495'
 
     # base path for single schedule per subject and studium generale
-    config.single_subjects_html_url   = 'http://stundenplan.htwk-leipzig.de:8080/ss/Berichte/Text-Listen;Studenten-Sets;name;###SLUG###?template=UNEinzelGru&weeks=9-35'
-    config.studium_generales_html_url = 'http://stundenplan.htwk-leipzig.de:8080/ss/Berichte/Text-Listen;Module;id;###SLUG###?template=UNEinzelLV&weeks=9-35'
+    config.single_subjects_html_url   = 'https://stundenplan.htwk-leipzig.de/ss/Berichte/Text-Listen;Studenten-Sets;name;###SLUG###?template=UNEinzelGru&weeks=9-35'
+    config.studium_generales_html_url = 'https://stundenplan.htwk-leipzig.de/ss/Berichte/Text-Listen;Module;id;###SLUG###?template=UNEinzelLV&weeks=9-35'
   end
 end
