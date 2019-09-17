@@ -66,23 +66,17 @@ Htwk2ical::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # exception_notifier
-  $gmail_creds = {
-    :user     => ENV['GMAIL_SMTP_USER'],
-    :password => ENV['GMAIL_SMTP_PASSWORD']
-  }
-
-  Htwk2ical::Application.config.middleware.use ExceptionNotification::Rack,
+  config.middleware.use ExceptionNotification::Rack,
     :email => {
       :email_prefix         => '[HTWK2iCal] ',
-      :sender_address       => %{'notifier' <notifier@example.com>},
-      :exception_recipients => [$gmail_creds[:user]],
+      :sender_address       => %{'notifier' <notifier@htwk-stundenplan.de>},
+      :exception_recipients => [ENV['GMAIL_SMTP_USER']],
       :smtp_settings        => {
         :address              => 'smtp.gmail.com',
         :port                 => 587,
         :authentication       => :plain,
-        :domain               => $gmail_creds[:user],
-        :user_name            => $gmail_creds[:user],
-        :password             => $gmail_creds[:password],
+        :user_name            => ENV['GMAIL_SMTP_USER'],
+        :password             => ENV['GMAIL_SMTP_PASSWORD'],
         :enable_starttls_auto => true
       }
     }
