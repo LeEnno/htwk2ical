@@ -8,7 +8,6 @@ class IndexController < ApplicationController
 
 
   def donate
-    raise 'test error 17'
     @donate_page = true
     _set_donate_vars
   end
