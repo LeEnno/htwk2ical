@@ -228,7 +228,7 @@ class Subject < ActiveRecord::Base
       end
     end
 
-    courses_splitted_by_days.each_with_index do |day_courses_str, c_i|
+    courses_splitted_by_days.each do |day_courses_str|
       next if day_courses_str.empty?
       if day_courses_str.match(/^\r\n(So)?$/) # TODO "(So)?" necessary?
         converted_courses << []
@@ -240,7 +240,7 @@ class Subject < ActiveRecord::Base
       # fix breaking user input
       day_courses_str = day_courses_str.gsub("Sperrzeit SEM, S. Omieczynski\r\n\r\n\r\n", "Sperrzeit SEM, S. Omieczynski\r\n")
 
-      day_courses_str.split("\r\n\r\n\r\n").each_with_index do |course_str, d_i|
+      day_courses_str.split("\r\n\r\n\r\n").each do |course_str|
         next if course_str.empty?
 
         course_arr   = course_str.split("\r\n")
