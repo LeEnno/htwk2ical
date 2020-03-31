@@ -75,7 +75,7 @@ module Htwk2ical
     config.latest_valid_date = Time.new(2020, 3, 31, 20)
 
     # date and week when semester started
-    config.start_date = Time.new(2022, 4, 6)
+    config.start_date = Time.new(2020, 4, 6)
     config.start_week = 15
 
     # path to XML files for subjects and courses
