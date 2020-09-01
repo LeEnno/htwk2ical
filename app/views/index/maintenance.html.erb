@@ -1,10 +1,16 @@
-<% start_date = '01.04.' %>
-<% term_str   = 'Sommersemester 2020' %>
+<% start_date = '01.10.' %>
+<% term_str   = 'Wintersemester 2020/21' %>
 
 <div class="maintenance-head">
   <h1>Was ist mit <em>HTWK2iCal</em> passiert?</h1>
+  <p class="lead">Das verrate ich gleich, aber erstmal eine Bitte.</p>
+  <p class="lead-sub">Dieses Semester ist das zweite in der 13-semestrigen (!) Geschichte von HTWK2iCal, in dem der Betrag zur Tilgung der Betriebskosten nicht zusammen gekommen ist.<br />Lasst uns das bitte fixen.</p>
+</div>
 
-  <img src="<%= asset_path('cat_is_not_amused.jpg') %>" alt="">
+<%= render template: 'index/donate' %>
+
+<div class="maintenance-head">
+  <small>Back to topic...</small>
 
   <p class="lead">
     Der Stundenplan für das <%= term_str %> wird<br />
