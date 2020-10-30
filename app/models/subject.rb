@@ -248,6 +248,8 @@ class Subject < ActiveRecord::Base
         course_title = course_arr[4]
         next if course_title == 'LEER'
 
+        puts day_courses_str.inspect if course_title.nil?
+
         course = sg_course || Course.find_or_create_by_title(course_title.strip)
         course_hash = {
           :weeks    => _make_week_array(course_arr[0]),
