@@ -53,7 +53,7 @@ class Subject < ActiveRecord::Base
       if schedule_html.match(/503 Service Temporarily Unavailable/)
         puts 'aborted because of 503 error'
         return
-      elsif schedule_html.match(/400  Falsche Anfrage/)
+      elsif schedule_html.match(/(400  Falsche Anfrage|404 Not Found)/)
         not_found << ordered_title + " (#{s.id})"
         puts 'not found'
         next
