@@ -240,6 +240,8 @@ class Subject < ActiveRecord::Base
       # fix breaking user input
       day_courses_str = day_courses_str.gsub("Sperrzeit SEM, S. Omieczynski\r\n\r\n\r\n", "Sperrzeit SEM, S. Omieczynski\r\n")
       day_courses_str = day_courses_str.gsub("Ersti-Rallye\r\n\r\n\r\n", "Ersti-Rallye\r\n")
+      day_courses_str = day_courses_str.gsub("Hörsaal oder Online-Video\r\n\r\n\r\n", "Hörsaal oder Online-Video\r\n")
+      day_courses_str = day_courses_str.gsub("Hörsaal 4,\r\nBemerkung", "Hörsaal 4, Bemerkung")
 
       day_courses_str.split("\r\n\r\n\r\n").each do |course_str|
         next if course_str.empty?
