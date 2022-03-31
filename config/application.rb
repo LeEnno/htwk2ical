@@ -69,7 +69,7 @@ module Htwk2ical
     # --------------------------------------------------------------------------
 
     # maintenanace mode
-    config.is_maintenance = true
+    config.is_maintenance = false
 
     # calendars created before this date will be told to update
     config.latest_valid_date = Time.new(2022, 3, 31, 20)
