@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: mein_cooles_password
+    ports:
+      - 5432:5432
+
+  rails:
+    build: .
+    command: bash -lc 'tail -f /dev/null'
+    volumes:
+      - .:/htwk2ical
+      - gems:/usr/local/bundle
+    environment:
+      BOOTSNAP_CACHE_DIR: /tmp/cache
+      SPROCKETS_CACHE_PATH: /tmp/cache
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+
+volumes:
+  gems:
+  pgdata:
