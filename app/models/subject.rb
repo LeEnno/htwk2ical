@@ -1,8 +1,7 @@
 # encoding: utf-8
 include ActionView::Helpers::SanitizeHelper
 
-class Subject < ActiveRecord::Base
-  attr_accessible :cached_schedule, :extended_title, :title
+class Subject < ApplicationRecord
   serialize :cached_schedule
 
   has_and_belongs_to_many :courses
@@ -71,7 +70,7 @@ class Subject < ActiveRecord::Base
     # TODO DRY
     # TODO constantify
     SubjectCache
-      .find_or_create_by_key('studium_generales')
+      .find_or_create_by(key: 'studium_generales')
       .update_attribute(:value, @sg_courses.values.to_json)
 
     puts 'done'
@@ -111,7 +110,7 @@ class Subject < ActiveRecord::Base
         title.gsub!(/Stud. gen. +/, '') if mode_hash[:is_sg_mode]
         
         category = mode_hash[:is_sg_mode] ? nil : element.parent.attributes['name']
-        subject  = Subject.find_or_create_by_title(title)
+        subject  = Subject.find_or_create_by(title: title)
         subjects_arr << _make_autocomplete_hash(title, category, subject.id)
 
         if mode_hash[:is_sg_mode] && subject.slug.nil?
@@ -128,7 +127,7 @@ class Subject < ActiveRecord::Base
       # TODO DRY
       # TODO constantify
       if !mode_hash[:is_sg_mode]
-        SubjectCache.find_or_create_by_key('subjects').update_attribute(:value, subjects_arr.to_json)
+        SubjectCache.find_or_create_by(key: 'subjects').update_attribute(:value, subjects_arr.to_json)
       end
     end
   end
@@ -144,7 +143,7 @@ class Subject < ActiveRecord::Base
       ? Htwk2ical::Application.config.studium_generales_html_url \
       : Htwk2ical::Application.config.single_subjects_html_url
     
-    url = url.gsub(/###SLUG###/, URI.encode(slug))
+    url = url.gsub(/###SLUG###/, URI::Parser.new.escape(slug))
 
     _fetch_contents_from_url(url).force_encoding("ISO-8859-1").encode("UTF-8")
   end
@@ -216,7 +215,7 @@ class Subject < ActiveRecord::Base
 
       sg_title    = matches[1]
       sg_lecturer = matches[2]
-      sg_course   = Course.find_or_create_by_title(sg_title.strip)
+      sg_course   = Course.find_or_create_by(title: sg_title.strip)
       subject.courses << sg_course
       if @sg_courses.has_key?(subject.id) && @sg_courses[subject.id].empty?
         # TODO DRY (_make_autocomplete_hash)
@@ -259,7 +258,7 @@ class Subject < ActiveRecord::Base
 
         puts day_courses_str.inspect if course_title.nil?
 
-        course = sg_course || Course.find_or_create_by_title(course_title.strip)
+        course = sg_course || Course.find_or_create_by(title: course_title.strip)
         course_hash = {
           :weeks    => _make_week_array(course_arr[0]),
           :start    => _make_time(course_arr[1]),

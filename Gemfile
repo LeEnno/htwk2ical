@@ -1,35 +1,34 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.5.6'
+ruby "3.1.2"
 
-gem 'rails', '~> 3.2.22'
+# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 7.0.4"
 
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem "sprockets-rails"
 
-group :development, :test do
-  gem 'mysql2'
-  gem 'byebug'
-end
+# Use postgresql as the database for Active Record
+gem "pg", "~> 1.1"
 
+# Use the Puma web server [https://github.com/puma/puma]
+gem "puma", "~> 5.0"
 
-group :assets do
-  gem 'sass-rails',   '>= 3.2.3'
-  gem 'json', '>= 1.8.5' # uglifier needs it and older versions don't work with newer ruby versions
-  gem 'uglifier', '>= 1.0.3'
-  gem 'therubyracer', '>= 0.12.0' # necessary for less-rails
-  gem 'less-rails'
-  gem 'sqlite3'
-end
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
+# Reduces boot times through caching; required in config/boot.rb
+gem "bootsnap", require: false
 
-group :production do
-  gem 'pg'
-  gem 'thin'
-end
+# Use Sass to process CSS
+gem "sassc-rails"
 
-
-gem 'jquery-rails'
+# gem 'jquery-rails'
 gem 'jquery-ui-rails', '4.0.1'
 
-gem 'exception_notification'
+# xml traversing for rebuilding subject cache
+gem 'rexml'
 
-gem 'test-unit', '~> 3.0' # rails console needs it on heroku, https://stackoverflow.com/a/27802967/1531580
+# report application errors by email
+gem 'exception_notification'

@@ -1,0 +1,68 @@
+@import 'vars';
+
+// VARIABLES
+// -----------------------------------------------------------------------------
+$ratingIconDiameter: 20px;
+$ratingIconPaddingRight: 12px;
+$ratingIndent: 26px;
+$ratingParagraphPadding: 24px;
+$possibilitySpace: 50px;
+
+// SHARED
+// -----------------------------------------------------------------------------
+.instruction {margin:0 0 90px; font-size:2.4em; font-weight:$alternatingFontWeight;}
+
+// CHOOSE COURSES
+// -----------------------------------------------------------------------------
+.choose-courses {
+  h2 {margin-bottom:50px; text-align:center; font-size:2.4em;}
+  .row {margin-bottom:20px;}
+  label {display:inline; margin-top:10px; padding:10px 10px 10px 0; font-weight:normal;}
+  .col-sm-4 {margin-bottom:20px;}
+}
+
+.studium-generale-ellipses {line-height:34px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.studium-generale-link {margin-left:52px;}
+.separate-batch-selector {margin-top:10px; margin-bottom:10px;}
+
+.choose-more-subjects-wrapper {padding:15px 10px 0; line-height:1.4; font-size:1.2em;}
+.btn-create-calendar {display:block; margin:80px auto 0;}
+
+.pulsate {
+  animation:pulsate 0.5s ease-out;
+  animation-iteration-count:1;
+}
+
+@keyframes pulsate {
+  0% {transform:scale(1.0, 1.0);}
+  50% {transform:scale(1.15, 1.15);}
+  100% {transform:scale(1.0, 1.0);}
+}
+
+// GET LINK
+// -----------------------------------------------------------------------------
+.generated-link {font-size:1.8em; text-align:center;}
+.calendar-url {display:block; margin-top:20px; font-size:1.3em; color:$mainGreen; word-wrap:break-word;}
+
+.possibilities {margin-top:$possibilitySpace + 60px;
+  h2 {margin:24px 10px $possibilitySpace; text-align:center; line-height:110%; font-weight:$alternatingFontWeight;}
+  .disadvantage,
+  .advantage {position:relative; min-height:35px; margin-bottom:$ratingIconPaddingRight; padding:0 $ratingParagraphPadding 0 $ratingIndent + $ratingParagraphPadding; font-size:1.2em; line-height:140%;}
+  .glyphicon {position:absolute; top:-2px; left:12px; color:$mainGreen; font-size:1.4em;}
+  .btn-default {padding-left:36px;}
+  .glyphicon-download-alt {top:11px; font-size:inherit; color:inherit;}
+  a {position:relative; top:32px;
+    &:before, &:after {content:""; position:absolute; width:5px; height:24px; background-color:#fff;}
+    &:before {left:-6px;}
+    &:after {right:-6px;}
+  }
+}
+
+.possibility-subscribe,
+.possibility-download {margin:0 (100% / 24) 80px; border:1px solid $mainGreen; border-radius:16px;}
+.possibility-download {border-color:#ccc;}
+.disadvantage .glyphicon {color:#d4544b;}
+
+.alert-donate {padding-top:40px; font-size:120%; font-weight:$alternatingFontWeight;
+  h3 {margin-bottom:18px;}
+}

@@ -1,3 +1,2 @@
-class SubjectCache < ActiveRecord::Base
-  attr_accessible :key, :value
+class SubjectCache < ApplicationRecord
 end

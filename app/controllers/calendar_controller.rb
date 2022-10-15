@@ -5,7 +5,7 @@ class CalendarController < ApplicationController
 
 
   def get
-    calendar = Calendar.find_by_secret(params[:calendar_secret])
+    calendar = Calendar.find_by(secret: params[:calendar_secret])
     if calendar.nil?
       render :nothing => true, :status => 404
       return
@@ -68,7 +68,7 @@ class CalendarController < ApplicationController
 
     @add_calendar_page = true
 
-    calendar = Calendar.new(params[:subject_ids], params[:course_ids])
+    calendar = Calendar.new(subjects: Subject.find(params[:subject_ids]), courses: Course.find(params[:course_ids]))
     calendar.save
     aliases = params[:course_aliases].reject { |key, val| !params[:course_ids].include?(key) }
     calendar.add_aliases(aliases)
@@ -77,11 +77,11 @@ class CalendarController < ApplicationController
 
 
   def get_subjects
-    render :json => SubjectCache.find_by_key('subjects').value
+    render :json => SubjectCache.find_by(key: 'subjects').value
   end
 
   def get_studium_generales
-    render :json => SubjectCache.find_by_key('studium_generales').value
+    render :json => SubjectCache.find_by(key: 'studium_generales').value
   end
 
 

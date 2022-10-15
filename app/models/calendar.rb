@@ -1,28 +1,13 @@
 # encoding: UTF-8
 # TODO must have secret
-class Calendar < ActiveRecord::Base
-  attr_accessible :secret
-
+class Calendar < ApplicationRecord
   has_many :course_aliases, :dependent => :destroy
-  has_many :courses, :through => :course_aliases,
-           :select => "course_aliases.custom_name as custom_name, courses.*"
+  has_many :courses,
+           -> { select("course_aliases.custom_name as custom_name, courses.*") },
+           :through => :course_aliases
   has_and_belongs_to_many :subjects
 
   before_create :_generate_secret
-
-  # makes sure only valid subjects and courses are added
-  def initialize(subject_ids, course_ids)
-    super()
-
-    # validate subjects, add courses and create alias relationships
-    subject_ids.each do |subject_id|
-      subject = Subject.find(subject_id)
-      raise ArgumentError, "invalid subject-ID" if subject.nil?
-
-      subjects << subject
-      self.courses = Course.new_calendar_courses(course_ids)
-    end
-  end
 
   # Adds transmitted aliases for selected courses. Throws error if transmitted
   # course-ID is invalid.
@@ -33,7 +18,7 @@ class Calendar < ActiveRecord::Base
 
       # add alias if different from actual course-title
       if course_aliases_hash[course_id] != course.title
-        course_aliases.find_by_course_id(course_id).update_attribute(:custom_name, custom_name)
+        course_aliases.find_by(course_id: course_id).update_attribute(:custom_name, custom_name)
       end
     end
   end
@@ -105,7 +90,7 @@ class Calendar < ActiveRecord::Base
     require 'digest/md5'
     begin
       self.secret = Digest::MD5.hexdigest((Time.now.to_i + rand(1..99)).to_s).to_s[0..7]
-    end while Calendar.find_by_secret(self.secret)
+    end while Calendar.find_by(secret: self.secret)
   end
 
   # Extracts all courses' titles and IDs into a hash. Values can then be

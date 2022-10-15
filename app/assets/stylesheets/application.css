@@ -12,7 +12,6 @@
  *= require jquery.ui.core
  *= require jquery.ui.autocomplete
  *= require bootstrap/css/bootstrap
- *= require bootstrap_and_overrides
- *= dont require base
- *= dont require_tree .
+ *= require base
+ *= require_tree .
  */
