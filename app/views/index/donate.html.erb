@@ -21,12 +21,15 @@
       <div class="col-sm-6">
         <h3>Wieso willst <em>du</em> mein Geld?</h3>
         <p>Dieses Tool hier ist <strong>kein</strong> offizielles Angebot der HTWK Leipzig. Es wird von mir unter heftigstem Mate-Konsum in meiner Freizeit entwickelt. Ich sorge dafür, dass Fehler behoben werden und helfe aus, wenn ihr Fragen habt. Das macht mir Spaß und das mache ich gern. Ernsthaft.</p>
-        <p>Aufgrund der Popularität und der anfallenden Datenmenge musste ich aber von Anfang an etwas für den Betrieb der Datenbank-Server zahlen, was ursprünglich nicht geplant war. Diese Kosten möchte ich ungern allein stemmen.</p>
+        <p>Aufgrund der Popularität und der anfallenden Datenmenge musste ich aber von Anfang an etwas für den Betrieb der Datenbank-Server zahlen, was ursprünglich nicht geplant war. Auch der Webserver ist leider nicht mehr kostenlos. Diese Kosten möchte ich ungern allein stemmen.</p>
       </div>
 
       <div class="col-sm-6">
         <h3>Und wieviel davon willst du?</h3>
-        <p><a href="https://www.heroku.com/">Heroku</a>, der Dienst, der das alles hier hostet, kriegt von mir <%= format_dollar @amount_heroku %> pro Monat. Pro Semester macht das ca. <strong><%= format_euro @amount_max %></strong>. Das sollten wir hinkriegen, oder?</p>
+        <p>
+          <a href="https://www.heroku.com/">Heroku</a>, der Dienst, der das alles hier hostet, kriegt von mir <%= format_dollar @amount_heroku %> pro Monat.
+          Pro Semester macht das ca. <strong><%= format_euro @amount_max %></strong>. Das sollten wir hinkriegen, oder?
+        </p>
         <p>Alles, was darüber hinaus geht, werde ich spenden.</p>
       </div>
     </div>
