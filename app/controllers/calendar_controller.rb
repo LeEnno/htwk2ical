@@ -11,7 +11,12 @@ class CalendarController < ApplicationController
       return
     end
 
-    calendar.update_attribute(:fetched_at, Time.now)
+    begin
+      calendar.update_attribute(:fetched_at, Time.now)
+    rescue PG::ReadOnlySqlTransaction
+      # if heroku is in temporary maintenance mode: ignore updating fetched_at
+      # and instead make sure to return calendar data
+    end
 
     @events = calendar.events
     @now    = Time.now.strftime("%Y%m%d\T%H%M%S")
