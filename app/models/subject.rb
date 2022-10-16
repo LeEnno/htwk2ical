@@ -256,7 +256,11 @@ class Subject < ApplicationRecord
         course_title = course_arr[4]
         next if course_title == 'LEER'
 
-        puts day_courses_str.inspect if course_title.nil?
+        if course_title.nil?
+          puts day_courses_str.inspect
+        else
+          course_title.gsub!(/&amp;/, '&')
+        end
 
         course = sg_course || Course.find_or_create_by(title: course_title.strip)
         course_hash = {
