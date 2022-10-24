@@ -32,3 +32,6 @@ gem 'rexml'
 
 # report application errors by email
 gem 'exception_notification'
+
+# https://github.com/LeEnno/htwk2ical/pull/9
+gem 'nokogiri', '>= 1.13.9'

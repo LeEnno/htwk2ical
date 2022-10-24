@@ -107,7 +107,7 @@ GEM
     net-smtp (0.3.2)
       net-protocol
     nio4r (2.5.8)
-    nokogiri (1.13.8)
+    nokogiri (1.13.9)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     pg (1.4.4)
@@ -177,6 +177,7 @@ DEPENDENCIES
   bootsnap
   exception_notification
   jquery-ui-rails (= 4.0.1)
+  nokogiri (>= 1.13.9)
   pg (~> 1.1)
   puma (~> 5.0)
   rails (~> 7.0.4)
