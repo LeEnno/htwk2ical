@@ -1,6 +1,11 @@
 class IndexController < ApplicationController
   def index
-    if Htwk2ical::Application.config.is_maintenance
+    config = Htwk2ical::Application.config
+    if config.is_maintenance
+      if config.show_donation_call
+        _set_donate_vars
+        @show_donation_call = true
+      end
       render('maintenance', :layout => 'maintenance') && return
     end
     @landing_page = true
