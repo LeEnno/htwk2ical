@@ -24,7 +24,7 @@ module Htwk2ical
 
     # maintenanace mode
     config.is_maintenance     = true
-    config.show_donation_call = true
+    config.show_donation_call = false
 
     # calendars created before this date will be told to update
     config.latest_valid_date = Time.new(2023, 4, 2, 20, 39)
