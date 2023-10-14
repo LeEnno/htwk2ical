@@ -25,7 +25,7 @@ gem "bootsnap", require: false
 gem "sassc-rails"
 
 # gem 'jquery-rails'
-gem 'jquery-ui-rails', '4.0.1'
+gem 'jquery-ui-rails', '6.0.1'
 
 # xml traversing for rebuilding subject cache
 gem 'rexml'
