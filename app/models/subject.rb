@@ -244,7 +244,8 @@ class Subject < ApplicationRecord
         'Hörsaal oder Online-Video',
         'Opal-Schulungen',
         'Maximilian Cieschek',
-        'Abschlussgespräch'
+        'Abschlussgespräch',
+        'Unternehmen stellen sich vor'
       ].each do |phrase|
         day_courses_str = day_courses_str.gsub("#{phrase}\r\n\r\n\r\n", "#{phrase}\r\n")
       end
