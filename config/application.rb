@@ -23,7 +23,7 @@ module Htwk2ical
     # --------------------------------------------------------------------------
 
     # maintenanace mode
-    config.is_maintenance     = true
+    config.is_maintenance     = false
     config.show_donation_call = false
 
     # calendars created before this date will be told to update
