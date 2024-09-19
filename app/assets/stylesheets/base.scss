@@ -87,3 +87,10 @@ hr {height:1px; margin:50px 0; border:0; background-image: linear-gradient(left,
 .footer-links {margin:0; padding:0; list-style:none; text-align:center;
   li {display:inline;}
 }
+
+.promo {padding-inline:20px;
+  h1 {color:$mainGreen;}
+  h1 + p {margin-top:20px;}
+  .lead {margin-top: 20px;}
+  p:has(.btn-lg) {margin: 40px 0;}
+}

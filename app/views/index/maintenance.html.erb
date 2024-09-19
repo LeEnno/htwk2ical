@@ -1,5 +1,5 @@
-<% start_date = '01.04.' %>
-<% term_str   = 'Sommersemester 24' %>
+<% start_date = '07.10.' %>
+<% term_str   = 'Wintersemester 24/25' %>
 
 <% if @show_donation_call %>
   <div class="maintenance-head">
@@ -12,16 +12,21 @@
   <%= render(template: 'index/donate') %>
 <% end %>
 
+<div class="whatsnew-wrapper promo text-center">
+  <h1>Hurra! Hurra!<br>Ein neuer Stundenplan ist da!</h1>
+  <p>Es ist Zeit HTWK2iCal in die wohlverdiente Rente zu schicken und Platz für junges Blut zu machen.</p>
+  <p>
+    <a href="https://cal.htwk-leipzig.de" class="btn btn-success btn-lg">Auf zum HTWKalender</a>
+  </p>
+  <p><small>Dieses Tool hier wird euch noch bis<br><strong>zum Ende des Wintersemesters 24/25</strong><br>erhalten bleiben.</small></p>
+</div>
+
 <div class="maintenance-head">
   <% if @show_donation_call %>
     <small>Back to topic...</small>
-  <% else %>
-    <small>Danke für eure Spenden 👍</small>
   <% end %>
 
   <h1>Was ist mit <em>HTWK2iCal</em> passiert?</h1>
-
-  <img src="<%= asset_path('cat_is_not_amused.jpg') %>" alt="">
 
   <p class="lead">
     Der Stundenplan für das <%= term_str %> wird<br />
