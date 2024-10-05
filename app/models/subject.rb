@@ -245,7 +245,8 @@ class Subject < ApplicationRecord
         'Opal-Schulungen',
         'Maximilian Cieschek',
         'Abschlussgespräch',
-        'Unternehmen stellen sich vor'
+        'Unternehmen stellen sich vor',
+        'fakultativ: Exkursion zur Tagung der Fachgruppe Dokumentation im Deutschen Museumsbund, Berlin"'
       ].each do |phrase|
         day_courses_str = day_courses_str.gsub("#{phrase}\r\n\r\n\r\n", "#{phrase}\r\n")
       end
