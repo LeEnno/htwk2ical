@@ -12,7 +12,18 @@
     <% end -%>
   </head>
   <body class="<%= @landing_page.nil? ? 'not-landing-page' : 'landing-page' %>">
-    
+
+    <% if @landing_page %>
+      <div class="whatsnew-wrapper promo text-center">
+        <h1>Hurra! Hurra!<br>Ein neuer Stundenplan ist da!</h1>
+        <p>Es ist Zeit HTWK2iCal in die wohlverdiente Rente zu schicken und Platz für junges Blut zu machen.</p>
+        <p>
+          <a href="https://cal.htwk-leipzig.de" class="btn btn-success btn-lg">Auf zum HTWKalender</a>
+        </p>
+        <p><small>Dieses Tool hier wird euch noch bis<br><strong>zum Ende des Wintersemesters 24/25</strong><br>erhalten bleiben.</small></p>
+      </div>
+    <% end %>
+
     <div class="width-wrapper-lg">
       <nav class="navbar navbar-default navbar-main" role="navigation">
         <%# for mobile %>
@@ -25,7 +36,7 @@
           </button>
           <%= link_to(root_path, :class => 'navbar-brand') do %>
             HTWK2iCal
-            <span class="label label-success">SS24</span>
+            <span class="label label-success">WS24/25</span>
           <% end %>
         </div>
 

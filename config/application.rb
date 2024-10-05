@@ -23,11 +23,11 @@ module Htwk2ical
     # --------------------------------------------------------------------------
 
     # maintenanace mode
-    config.is_maintenance     = true
+    config.is_maintenance     = false
     config.show_donation_call = false
 
     # calendars created before this date will be told to update
-    config.latest_valid_date = Time.new(2024, 4, 1)
+    config.latest_valid_date = Time.new(2024, 10, 5)
 
     # date and week when semester started
     config.start_date = Time.new(2024, 10, 7)
